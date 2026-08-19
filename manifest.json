@@ -1,0 +1,38 @@
+{
+  "name": "Café Crypto",
+  "short_name": "CafeCrypto",
+  "description": "Actualités crypto, prix en temps réel, airdrops et launchpool",
+  "start_url": "./cafe-crypto.html",
+  "display": "standalone",
+  "background_color": "#03050a",
+  "theme_color": "#f0b429",
+  "orientation": "portrait-primary",
+  "lang": "fr",
+  "categories": ["finance", "news"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='32' fill='%23080b14'/%3E%3Cpolygon points='24,58 30,154 162,154 168,58' fill='none' stroke='%23f0b429' stroke-width='8' stroke-linejoin='round'/%3E%3Cpath d='M162,78 Q188,78 188,112 Q188,146 162,146' fill='none' stroke='%23f0b429' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M14,154 Q96,176 178,154' fill='none' stroke='%23f0b429' stroke-width='8' stroke-linecap='round'/%3E%3Ctext x='96' y='124' text-anchor='middle' font-family='serif' font-size='56' fill='%23f0b429'%3E%E2%82%BF%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%23080b14'/%3E%3Cpolygon points='60,148 78,408 434,408 452,148' fill='none' stroke='%23f0b429' stroke-width='18' stroke-linejoin='round'/%3E%3Cpath d='M434,208 Q500,208 500,296 Q500,384 434,384' fill='none' stroke='%23f0b429' stroke-width='18' stroke-linecap='round'/%3E%3Cpath d='M38,408 Q256,464 474,408' fill='none' stroke='%23f0b429' stroke-width='18' stroke-linecap='round'/%3E%3Ctext x='256' y='332' text-anchor='middle' font-family='serif' font-size='148' fill='%23f0b429'%3E%E2%82%BF%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Airdrops",
+      "url": "./cafe-crypto.html#airdrops",
+      "description": "Voir les airdrops actifs"
+    },
+    {
+      "name": "Launchpool",
+      "url": "./cafe-crypto.html#launchpool",
+      "description": "Voir les pools de staking"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>404 — Page introuvable · Café Crypto</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;800&family=Syne+Mono&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#03050a;color:#d4e4f7;font-family:'Syne Mono',monospace;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(rgba(0,200,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,0.02) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;}
+.container{text-align:center;position:relative;z-index:1;padding:40px;}
+.code-404{font-family:'Orbitron',monospace;font-size:clamp(5rem,15vw,10rem);font-weight:800;background:linear-gradient(135deg,#f0b429,#00c8ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:8px;animation:pulse 3s ease infinite;}
+@keyframes pulse{0%,100%{filter:drop-shadow(0 0 20px rgba(240,180,41,0.3))}50%{filter:drop-shadow(0 0 40px rgba(0,200,255,0.5))}}
+.glitch{position:relative;}
+.glitch::before,.glitch::after{content:'404';position:absolute;top:0;left:0;right:0;background:linear-gradient(135deg,#f0b429,#00c8ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.glitch::before{animation:glitch1 2s infinite;clip-path:polygon(0 0,100% 0,100% 35%,0 35%);}
+.glitch::after{animation:glitch2 2s infinite;clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);}
+@keyframes glitch1{0%,100%{transform:translate(0)}33%{transform:translate(-3px,1px)}66%{transform:translate(3px,-1px)}}
+@keyframes glitch2{0%,100%{transform:translate(0)}33%{transform:translate(3px,-1px)}66%{transform:translate(-3px,1px)}}
+.subtitle{font-size:0.9rem;color:#4a6080;margin-bottom:8px;letter-spacing:2px;text-transform:uppercase;}
+.msg{font-size:1rem;color:#d4e4f7;margin-bottom:32px;line-height:1.7;}
+.msg span{color:#f0b429;}
+.cup{font-size:3rem;margin-bottom:16px;display:block;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:8px;background:linear-gradient(135deg,rgba(240,180,41,0.15),rgba(0,200,255,0.1));border:1px solid rgba(240,180,41,0.3);color:#f0b429;text-decoration:none;font-family:'Orbitron',monospace;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;transition:all 0.3s;}
+.btn:hover{background:linear-gradient(135deg,rgba(240,180,41,0.25),rgba(0,200,255,0.15));transform:translateY(-2px);box-shadow:0 8px 24px rgba(240,180,41,0.2);}
+.matrix{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.06;}
+</style>
+</head>
+<body>
+<canvas class="matrix" id="m"></canvas>
+<div class="container">
+  <span class="cup">☕</span>
+  <div class="code-404 glitch">404</div>
+  <div class="subtitle">Transaction échouée</div>
+  <div class="msg">
+    Cette page n'existe pas sur la blockchain.<br>
+    Peut-être a-t-elle été <span>liquidée</span> ou le lien est invalide.
+  </div>
+  <a href="./cafe-crypto.html" class="btn">↩ Retour au marché</a>
+</div>
+<script>
+const c=document.getElementById('m');
+const x=c.getContext('2d');
+c.width=window.innerWidth;c.height=window.innerHeight;
+const cols=Math.floor(c.width/16);
+const drops=Array(cols).fill(1);
+const chars='₿$01ETH%XRP#BTC';
+function draw(){
+  x.fillStyle='rgba(3,5,10,0.05)';x.fillRect(0,0,c.width,c.height);
+  x.fillStyle='#00e676';x.font='14px monospace';
+  drops.forEach((y,i)=>{
+    x.fillText(chars[Math.floor(Math.random()*chars.length)],i*16,y*16);
+    if(y*16>c.height&&Math.random()>0.975)drops[i]=0;
+    drops[i]++;
+  });
+}
+setInterval(draw,50);
+window.addEventListener('resize',()=>{c.width=window.innerWidth;c.height=window.innerHeight;});
+</script>
+</body>
+</html>
