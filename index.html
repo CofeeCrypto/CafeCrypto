@@ -1030,6 +1030,9 @@ img,canvas{max-width:100%;}
   </div>
 </div>
 
+<!-- ═══ CHARGEMENT DE LA BASE DE DONNÉES CRYPTOS ═══ -->
+<script src="cryptos-database.js"></script>
+
 <script>
 // ══════════════════════════════
 // DONNÉES DE SECOURS (utilisées uniquement si l'API CoinGecko est réellement injoignable)
@@ -1048,13 +1051,7 @@ const FALLBACK_COINS = [
   {id:'uniswap',name:'Uniswap',symbol:'uni',current_price:9,market_cap:6800000000,total_volume:150000000,price_change_percentage_24h:-0.8,price_change_percentage_7d_in_currency:0.5,image:'https://assets.coingecko.com/coins/images/12504/small/uniswap-logo.png',market_cap_rank:12,ath:44,atl:1.0,circulating_supply:750000000,total_supply:1000000000},
   {id:'matic-network',name:'Polygon',symbol:'pol',current_price:0.55,market_cap:5200000000,total_volume:200000000,price_change_percentage_24h:-1.5,price_change_percentage_7d_in_currency:-2.0,image:'https://assets.coingecko.com/coins/images/4713/small/polygon.png',market_cap_rank:13,ath:2.92,atl:0.003,circulating_supply:9500000000,total_supply:10000000000},
   {id:'pepe',name:'Pepe',symbol:'pepe',current_price:0.00001,market_cap:4200000000,total_volume:300000000,price_change_percentage_24h:5.0,price_change_percentage_7d_in_currency:10.0,image:'https://assets.coingecko.com/coins/images/29850/small/pepe-token.jpeg',market_cap_rank:14,ath:0.000017,atl:0.0000005,circulating_supply:420000000000000,total_supply:420000000000000},
-  {id:'shiba-inu',name:'Shiba Inu',symbol:'shib',current_price:0.00002,market_cap:12000000000,total_volume:500000000,price_change_percentage_24h:-2.0,price_change_percentage_7d_in_currency:-4.0,image:'https://assets.coingecko.com/coins/images/11939/small/shiba.png',market_cap_rank:15,ath:0.000086,atl:0.0000005,circulating_supply:589000000000000,total_supply:590000000000000},
-  {id:'injective-protocol',name:'Injective',symbol:'inj',current_price:28,market_cap:2600000000,total_volume:150000000,price_change_percentage_24h:2.0,price_change_percentage_7d_in_currency:4.0,image:'https://assets.coingecko.com/coins/images/12882/small/Secondary_Symbol.png',market_cap_rank:16,ath:52,atl:0.21,circulating_supply:93000000,total_supply:100000000},
-  {id:'sui',name:'Sui',symbol:'sui',current_price:1.2,market_cap:3400000000,total_volume:250000000,price_change_percentage_24h:3.0,price_change_percentage_7d_in_currency:6.0,image:'https://assets.coingecko.com/coins/images/26375/small/sui-ocean-square.png',market_cap_rank:17,ath:2.2,atl:0.30,circulating_supply:2800000000,total_supply:10000000000},
-  {id:'aptos',name:'Aptos',symbol:'apt',current_price:8,market_cap:3200000000,total_volume:120000000,price_change_percentage_24h:-1.0,price_change_percentage_7d_in_currency:-2.0,image:'https://assets.coingecko.com/coins/images/26455/small/aptos_round.png',market_cap_rank:18,ath:19.9,atl:3.1,circulating_supply:400000000,total_supply:1100000000},
-  {id:'arbitrum',name:'Arbitrum',symbol:'arb',current_price:0.75,market_cap:2200000000,total_volume:180000000,price_change_percentage_24h:0.5,price_change_percentage_7d_in_currency:1.0,image:'https://assets.coingecko.com/coins/images/16547/small/arbitrum.png',market_cap_rank:19,ath:2.4,atl:0.60,circulating_supply:2900000000,total_supply:10000000000},
-  {id:'optimism',name:'Optimism',symbol:'op',current_price:2.0,market_cap:2200000000,total_volume:120000000,price_change_percentage_24h:-0.5,price_change_percentage_7d_in_currency:0.8,image:'https://assets.coingecko.com/coins/images/25244/small/Optimism.png',market_cap_rank:20,ath:4.8,atl:0.40,circulating_supply:1100000000,total_supply:4300000000},
-  {id:'render-token',name:'Render',symbol:'rndr',current_price:7,market_cap:2600000000,total_volume:150000000,price_change_percentage_24h:2.5,price_change_percentage_7d_in_currency:5.0,image:'https://assets.coingecko.com/coins/images/11636/small/rndr.png',market_cap_rank:21,ath:13.5,atl:0.16,circulating_supply:380000000,total_supply:530000000}
+  {id:'shiba-inu',name:'Shiba Inu',symbol:'shib',current_price:0.00002,market_cap:12000000000,total_volume:500000000,price_change_percentage_24h:-2.0,price_change_percentage_7d_in_currency:-4.0,image:'https://assets.coingecko.com/coins/images/11939/small/shiba.png',market_cap_rank:15,ath:0.000086,atl:0.0000005,circulating_supply:589000000000000,total_supply:590000000000000}
 ];
 
 // ══════════════════════════════
@@ -1070,65 +1067,6 @@ function debounce(func,wait){let timeout;return function(...args){clearTimeout(t
 function safeUrl(url){try{const u=new URL(url||'https://coindesk.com');return u.protocol==='https:'?u.href:'https://coindesk.com';}catch{return 'https://coindesk.com';}}
 
 // ══════════════════════════════
-// FALLBACK IMAGES — remplace toute image cassée par le texte de repli (data-fallback)
-// ou une image de secours (data-fallback-src), au lieu de laisser l'icône "image cassée"
-// ══════════════════════════════
-document.addEventListener('error', function(e){
-  const img = e.target;
-  if(!img || img.tagName !== 'IMG') return;
-  if(img.dataset.fallbackApplied) return;
-  if(img.dataset.fallbackSrc && img.src !== img.dataset.fallbackSrc){
-    img.dataset.fallbackApplied = '1';
-    img.src = img.dataset.fallbackSrc;
-    return;
-  }
-  if(img.dataset.fallback){
-    img.dataset.fallbackApplied = '1';
-    img.style.display = 'none';
-    const parent = img.parentElement;
-    if(parent){
-      const span = document.createElement('span');
-      span.textContent = img.dataset.fallback;
-      span.style.cssText = 'display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-family:var(--mono);font-weight:700;color:var(--muted2);font-size:.6rem;';
-      parent.appendChild(span);
-    }
-  }
-}, true);
-
-// ══════════════════════════════
-// NOTIFICATIONS
-// ══════════════════════════════
-function showNotification(title,text,icon='🔔',duration=5000){
-  const container=$('notificationContainer');if(!container)return;
-  const notif=document.createElement('div');notif.className='notification';
-  notif.innerHTML=`<span class="notification-ico">${icon}</span><div class="notification-body"><div class="notification-title">${escapeHTML(title)}</div><div class="notification-text">${escapeHTML(text)}</div></div><button class="notification-close" aria-label="Fermer">×</button>`;
-  notif.querySelector('.notification-close').addEventListener('click',()=>notif.remove());
-  container.appendChild(notif);
-  setTimeout(()=>{notif.classList.add('hide');setTimeout(()=>notif.remove(),300);},duration);
-}
-
-// ══════════════════════════════
-// GESTION SÉCURISÉE DES CLICS
-// ══════════════════════════════
-function attachRowClickHandler(containerId){
-  const el=$(containerId);if(!el)return;
-  el.addEventListener('click',function(e){
-    const favBtn=e.target.closest('.top100-fav');
-    if(favBtn){
-      e.preventDefault();e.stopPropagation();
-      const id=favBtn.dataset.favId,sym=favBtn.dataset.favSym;
-      if(id)toggleFavorite(id,sym);
-      return;
-    }
-    const row=e.target.closest('[data-coin-id]');
-    if(row&&el.contains(row)){
-      const id=row.dataset.coinId;
-      if(id)openCryptoModal(id);
-    }
-  });
-}
-
-// ══════════════════════════════
 // PRIX — COINGECKO
 // ══════════════════════════════
 function symOf(coin){return(coin.symbol||'?').toUpperCase();}
@@ -1138,7 +1076,7 @@ let favorites=new Set();
 try{const saved=localStorage.getItem('cafeCryptoFavorites');if(saved)favorites=new Set(JSON.parse(saved));}catch(e){}
 
 // ══════════════════════════════
-// PRIX PRINCIPAL (données réelles CoinGecko, avec sparkline 7 jours)
+// PRIX PRINCIPAL (données réelles CoinPaprika, avec sparkline 7 jours)
 // ══════════════════════════════
 function mapPaprikaCoin(item){
   const q=item.quotes&&item.quotes.USD?item.quotes.USD:{};
@@ -1163,7 +1101,6 @@ function mapPaprikaCoin(item){
 
 async function fetchPrices(){
   try{
-    // CoinPaprika : API gratuite, sans clé, CORS ouvert (CoinGecko exige désormais une clé pour cet usage)
     const url=`https://api.coinpaprika.com/v1/tickers?quotes=USD`;
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
     const r=await fetch(url,{signal:controller.signal});clearTimeout(timeout);
@@ -1330,58 +1267,227 @@ function handleTabClick(e){
 }
 
 // ══════════════════════════════
-// RECHERCHE GLOBALE
+// RECHERCHE GLOBALE (AMÉLIORÉE)
 // ══════════════════════════════
-function setupSearch(){
-  const toggle=$('searchToggle'),wrapper=$('searchInputWrapper'),input=$('globalSearch'),results=$('searchResults');
-  if(!toggle||!wrapper||!input||!results)return;
+function setupSearch() {
+    const toggle = $('searchToggle');
+    const wrapper = $('searchInputWrapper');
+    const input = $('globalSearch');
+    const results = $('searchResults');
+    
+    if (!toggle || !wrapper || !input || !results) return;
 
-  toggle.addEventListener('click',function(e){
-    e.stopPropagation();
-    const willOpen=!wrapper.classList.contains('active');
-    wrapper.classList.toggle('active',willOpen);
-    toggle.setAttribute('aria-expanded',willOpen?'true':'false');
-    if(willOpen)input.focus();
-  });
+    toggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const willOpen = !wrapper.classList.contains('active');
+        wrapper.classList.toggle('active', willOpen);
+        toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        if (willOpen) input.focus();
+    });
 
-  input.addEventListener('input',debounce(function(){
-    const query=this.value.toLowerCase().trim();
-    if(!query){results.classList.remove('active');results.innerHTML='';return;}
-    const matches=allCoins.filter(c=>c.name.toLowerCase().includes(query)||c.symbol.toLowerCase().includes(query)).slice(0,8);
-    if(matches.length){
-      results.innerHTML=matches.map(coin=>{
-        const sym=symOf(coin);
-        return`<div class="search-result-item" data-coin-id="${escapeHTML(coin.id)}">
-          <img src="${escapeHTML(coin.image||'')}" alt="${escapeHTML(coin.name||'')}" loading="lazy" data-fallback="${escapeHTML(sym.slice(0,3))}">
-          <div class="search-result-info">
-            <div class="search-result-symbol">${escapeHTML(sym)}</div>
-            <div class="search-result-name">${escapeHTML(coin.name||'')}</div>
-          </div>
-          <div class="search-result-price">${fmtP(coin.current_price)}</div>
-        </div>`;
-      }).join('');
-    }else{
-      results.innerHTML='<div style="padding:14px;text-align:center;color:var(--muted2);font-size:.7rem;">Aucune crypto trouvée</div>';
-    }
-    results.classList.add('active');
-  },200));
+    input.addEventListener('input', debounce(function() {
+        const query = this.value.toLowerCase().trim();
+        if (!query) {
+            results.classList.remove('active');
+            results.innerHTML = '';
+            return;
+        }
+        
+        // Rechercher dans toutes les cryptos (top 100 + base de données étendue)
+        const matches = searchAllCoins(query).slice(0, 10);
+        
+        if (matches.length) {
+            results.innerHTML = matches.map(coin => {
+                const sym = symOf(coin);
+                const logoHTML = coin.image 
+                    ? `<img src="${escapeHTML(coin.image)}" alt="${escapeHTML(coin.name || '')}" loading="lazy" data-fallback="${escapeHTML(sym.slice(0, 3))}">`
+                    : `<div style="width:24px;height:24px;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.55rem;color:var(--muted2);">${escapeHTML(sym.slice(0, 3))}</div>`;
+                
+                return `
+                    <div class="search-result-item" data-coin-id="${escapeHTML(coin.id)}">
+                        ${logoHTML}
+                        <div class="search-result-info">
+                            <div class="search-result-symbol">${escapeHTML(sym)}</div>
+                            <div class="search-result-name">${escapeHTML(coin.name || '')}</div>
+                        </div>
+                        <div class="search-result-price">${coin.current_price ? fmtP(coin.current_price) : '—'}</div>
+                    </div>
+                `;
+            }).join('');
+        } else {
+            results.innerHTML = '<div style="padding:14px;text-align:center;color:var(--muted2);font-size:.7rem;">Aucune crypto trouvée</div>';
+        }
+        results.classList.add('active');
+    }, 200));
 
-  results.addEventListener('click',function(e){
-    const item=e.target.closest('[data-coin-id]');
-    if(!item)return;
-    openCryptoModal(item.dataset.coinId);
-    wrapper.classList.remove('active');
-    toggle.setAttribute('aria-expanded','false');
-    results.classList.remove('active');
-    input.value='';
-  });
+    // Clic sur un résultat de recherche
+    results.addEventListener('click', function(e) {
+        const item = e.target.closest('[data-coin-id]');
+        if (!item) return;
+        
+        const coinId = item.dataset.coinId;
+        const cryptoData = findCoinById(coinId);
+        
+        if (cryptoData) {
+            if (cryptoData.fromDatabase) {
+                // Crypto de la base de données étendue
+                openExtendedCryptoModal(cryptoData);
+            } else {
+                // Crypto du top 100
+                openCryptoModal(coinId);
+            }
+        }
+        
+        wrapper.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+        results.classList.remove('active');
+        input.value = '';
+    });
 
-  document.addEventListener('click',function(e){
-    if(!toggle.contains(e.target)&&!wrapper.contains(e.target)){
-      wrapper.classList.remove('active');
-      toggle.setAttribute('aria-expanded','false');
-    }
-  });
+    document.addEventListener('click', function(e) {
+        if (!toggle.contains(e.target) && !wrapper.contains(e.target)) {
+            wrapper.classList.remove('active');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+    });
+}
+
+// ══════════════════════════════
+// FONCTIONS DE RECHERCHE ÉTENDUES
+// ══════════════════════════════
+function searchAllCoins(query) {
+    // Recherche dans le top 100
+    const top100Matches = allCoins.filter(coin => 
+        coin.name.toLowerCase().includes(query) || 
+        coin.symbol.toLowerCase().includes(query) ||
+        coin.id.toLowerCase().includes(query)
+    ).map(coin => ({...coin, fromDatabase: false}));
+    
+    // Recherche dans la base de données étendue
+    const dbMatches = (window.CRYPTO_DB || []).filter(coin => 
+        coin.name.toLowerCase().includes(query) || 
+        coin.symbol.toLowerCase().includes(query) ||
+        coin.id.toLowerCase().includes(query) ||
+        (coin.description && coin.description.toLowerCase().includes(query))
+    ).map(coin => ({...coin, fromDatabase: true}));
+    
+    // Fusionner et dédupliquer
+    const seen = new Set();
+    const allMatches = [...top100Matches, ...dbMatches].filter(coin => {
+        if (seen.has(coin.id)) return false;
+        seen.add(coin.id);
+        return true;
+    });
+    
+    return allMatches;
+}
+
+function findCoinById(id) {
+    // Chercher dans le top 100
+    const top100 = allCoins.find(c => c.id === id);
+    if (top100) return {...top100, fromDatabase: false};
+    
+    // Chercher dans la base de données
+    const db = (window.CRYPTO_DB || []).find(c => c.id === id);
+    if (db) return {...db, fromDatabase: true};
+    
+    return null;
+}
+
+// ══════════════════════════════
+// MODALE ÉTENDUE POUR CRYPTOS DE LA BASE
+// ══════════════════════════════
+async function openExtendedCryptoModal(coin) {
+    const sym = symOf(coin);
+    
+    // Créer une modale personnalisée
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay active';
+    modal.id = 'extendedCryptoModal';
+    
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width:700px;">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <div style="width:28px;height:28px;border-radius:50%;overflow:hidden;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;">
+                        ${coin.image ? `<img src="${escapeHTML(coin.image)}" alt="" style="width:100%;height:100%;object-fit:cover;">` : escapeHTML(sym.slice(0, 3))}
+                    </div>
+                    <span>${escapeHTML(coin.name || '')}</span>
+                    <span style="color:var(--muted);font-family:var(--mono);font-size:.65rem;">${escapeHTML(sym)}</span>
+                </div>
+                <button class="modal-close" onclick="document.getElementById('extendedCryptoModal').remove()">×</button>
+            </div>
+            <div style="padding:16px;display:flex;flex-direction:column;gap:16px;max-height:70vh;overflow-y:auto;">
+                
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="width:56px;height:56px;border-radius:50%;overflow:hidden;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;">
+                        ${coin.image ? `<img src="${escapeHTML(coin.image)}" alt="" style="width:100%;height:100%;object-fit:cover;">` : escapeHTML(sym.slice(0, 3))}
+                    </div>
+                    <div>
+                        <div style="font-size:1.1rem;font-weight:700;">${escapeHTML(coin.name || '')}</div>
+                        <div style="font-size:.75rem;color:var(--muted2);">${escapeHTML(coin.symbol || '').toUpperCase()} · ${escapeHTML(coin.category || 'Crypto')}</div>
+                    </div>
+                </div>
+                
+                ${coin.description ? `
+                    <div style="font-size:.75rem;color:var(--muted);line-height:1.6;padding:12px;background:var(--s2);border-radius:8px;border:1px solid var(--b);">
+                        ${escapeHTML(coin.description.substring(0, 500))}${coin.description.length > 500 ? '…' : ''}
+                    </div>
+                ` : '<div style="font-size:.75rem;color:var(--muted);line-height:1.6;">Description non disponible pour cette crypto.</div>'}
+                
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+                    <div class="modal-info-stat">
+                        <div class="modal-info-stat-label">Prix</div>
+                        <div class="modal-info-stat-value">${coin.current_price ? fmtP(coin.current_price) : '—'}</div>
+                    </div>
+                    <div class="modal-info-stat">
+                        <div class="modal-info-stat-label">Market Cap</div>
+                        <div class="modal-info-stat-value">${coin.market_cap ? fmtBig(coin.market_cap) : '—'}</div>
+                    </div>
+                    <div class="modal-info-stat">
+                        <div class="modal-info-stat-label">Volume 24h</div>
+                        <div class="modal-info-stat-value">${coin.total_volume ? fmtBig(coin.total_volume) : '—'}</div>
+                    </div>
+                    <div class="modal-info-stat">
+                        <div class="modal-info-stat-label">Rang</div>
+                        <div class="modal-info-stat-value">${coin.market_cap_rank ? '#' + coin.market_cap_rank : '—'}</div>
+                    </div>
+                    <div class="modal-info-stat">
+                        <div class="modal-info-stat-label">Variation 24h</div>
+                        <div class="modal-info-stat-value" style="color:${(coin.price_change_percentage_24h || 0) >= 0 ? 'var(--green)' : 'var(--red)'}">
+                            ${coin.price_change_percentage_24h ? fmtPct(coin.price_change_percentage_24h) : '—'}
+                        </div>
+                    </div>
+                    <div class="modal-info-stat">
+                        <div class="modal-info-stat-label">Catégorie</div>
+                        <div class="modal-info-stat-value">${escapeHTML(coin.category || 'Crypto')}</div>
+                    </div>
+                </div>
+                
+                ${coin.website ? `
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <a href="${escapeHTML(safeUrl(coin.website))}" target="_blank" rel="noopener noreferrer" class="modal-info-btn" style="flex:1;min-width:140px;">
+                            🌐 Site officiel
+                        </a>
+                    </div>
+                ` : ''}
+                
+                ${coin.contractAddress ? `
+                    <div style="padding:12px;background:var(--s2);border-radius:8px;border:1px solid var(--b);">
+                        <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Adresse du contrat</div>
+                        <div style="font-family:var(--mono);font-size:.65rem;color:var(--cyan);word-break:break-all;">${escapeHTML(coin.contractAddress)}</div>
+                    </div>
+                ` : ''}
+                
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) modal.remove();
+    });
 }
 
 function toggleFavorite(id,sym){if(favorites.has(id)){favorites.delete(id);showNotification(`${sym} retiré des favoris`,'','⭐',3000);}else{favorites.add(id);showNotification(`${sym} ajouté aux favoris`,'','⭐',3000);}try{localStorage.setItem('cafeCryptoFavorites',JSON.stringify([...favorites]));}catch(e){}renderTop100();buildTriSections(allCoins);}
@@ -1709,8 +1815,6 @@ function updateMood(score,chg){
 
 // ══════════════════════════════
 // ÉVÉNEMENTS — pool réel d'événements crypto à venir, avec dates ISO.
-// La liste affichée est recalculée à chaque chargement : un événement dont la
-// date est dépassée disparaît automatiquement et est remplacé par le suivant du pool.
 // ══════════════════════════════
 const EVENTS_POOL=[
   {id:'rwa-brooklyn',title:'Real-World Asset Summit',icon:'🏢',start:'2026-09-01',end:'2026-09-02',location:'Brooklyn, New York',desc:'Sommet sur la tokenisation d\'actifs réels',details:'Rassemble les principaux acteurs de la tokenisation d\'actifs réels (immobilier, dette, matières premières) au William Vale, à Brooklyn.'},
@@ -1899,7 +2003,6 @@ function goToSlide(i){carouselIdx=i;updateCarousel();if(carouselTimer)clearInter
 
 // ══════════════════════════════
 // PAROLES DE CRYPTO — déclarations réelles et récentes, reformulées
-// (résumés en français d'après la presse spécialisée, pas des citations exactes)
 // ══════════════════════════════
 const CRYPTO_POSTS = [
   {
@@ -2284,6 +2387,18 @@ function initStaticControls(){
 }
 
 // ══════════════════════════════
+// NOTIFICATIONS
+// ══════════════════════════════
+function showNotification(title,text,icon='🔔',duration=5000){
+  const container=$('notificationContainer');if(!container)return;
+  const notif=document.createElement('div');notif.className='notification';
+  notif.innerHTML=`<span class="notification-ico">${icon}</span><div class="notification-body"><div class="notification-title">${escapeHTML(title)}</div><div class="notification-text">${escapeHTML(text)}</div></div><button class="notification-close" aria-label="Fermer">×</button>`;
+  notif.querySelector('.notification-close').addEventListener('click',()=>notif.remove());
+  container.appendChild(notif);
+  setTimeout(()=>{notif.classList.add('hide');setTimeout(()=>notif.remove(),300);},duration);
+}
+
+// ══════════════════════════════
 // INIT
 // ══════════════════════════════
 attachRowClickHandler('trendList');
@@ -2299,6 +2414,34 @@ setInterval(fetchPrices,60000);
 setInterval(fetchGlobal,120000);
 setInterval(fetchFearGreed,300000);
 setInterval(fetchNews,300000);
+
+// Vérifier que la base de données est chargée
+if (typeof CRYPTO_DB !== 'undefined') {
+    console.log(`✅ Base de données chargée : ${CRYPTO_DB.length} cryptos disponibles pour la recherche`);
+} else {
+    console.warn('⚠️ Base de données cryptos non trouvée');
+}
+
+// ══════════════════════════════
+// GESTION SÉCURISÉE DES CLICS
+// ══════════════════════════════
+function attachRowClickHandler(containerId){
+  const el=$(containerId);if(!el)return;
+  el.addEventListener('click',function(e){
+    const favBtn=e.target.closest('.top100-fav');
+    if(favBtn){
+      e.preventDefault();e.stopPropagation();
+      const id=favBtn.dataset.favId,sym=favBtn.dataset.favSym;
+      if(id)toggleFavorite(id,sym);
+      return;
+    }
+    const row=e.target.closest('[data-coin-id]');
+    if(row&&el.contains(row)){
+      const id=row.dataset.coinId;
+      if(id)openCryptoModal(id);
+    }
+  });
+}
 </script>
 </body>
 </html>
