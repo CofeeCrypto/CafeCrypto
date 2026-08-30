@@ -434,6 +434,32 @@ section{scroll-margin-top:200px;}
   padding:8px 14px;border-radius:6px;color:#fff;white-space:nowrap;
 }
 
+/* ─── FEAR & GREED ─── */
+.fng-section{margin-top:24px;}
+.fng-body{display:flex;align-items:center;gap:16px;padding:16px;}
+.fng-arc{flex-shrink:0;}
+.fng-right{flex:1;min-width:0;}
+.fng-score{font-family:var(--mono);font-size:2rem;font-weight:700;line-height:1;}
+.fng-label{font-size:.85rem;font-weight:600;margin-top:4px;}
+.fng-note{font-size:.7rem;color:var(--muted2);margin-top:4px;line-height:1.4;}
+.mood-line{padding:10px 16px;border-top:1px solid var(--b);border-bottom:1px solid var(--b);font-size:.75rem;color:var(--muted2);background:var(--s2);}
+.fng-history{padding:14px 16px;}
+.fng-history-title{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.fng-history-chart{width:100%;height:40px;display:block;}
+
+/* ─── ÉVÉNEMENTS ─── */
+.events-section{margin-top:24px;}
+.event-item{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--b);align-items:flex-start;transition:background .15s;}
+.event-item:last-child{border-bottom:none;}
+.event-item:hover{background:var(--s2);}
+.event-date{font-family:var(--mono);font-size:.6rem;font-weight:700;color:var(--gold);background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.2);border-radius:8px;padding:6px 8px;text-align:center;flex-shrink:0;min-width:64px;line-height:1.3;}
+.event-info{flex:1;min-width:0;}
+.event-title{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:3px;}
+.event-desc{font-size:.7rem;color:var(--muted2);line-height:1.4;}
+
+/* ─── PARTENAIRES ─── */
+.partners-section{margin-top:24px;}
+
 /* ─── COMMUNAUTÉ ─── */
 .community-section{margin-top:24px;}
 .soc-row{display:flex;gap:8px;padding:12px 14px;}
@@ -572,7 +598,6 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .fng-section{order:8;}
   .partners-section{order:9;}
   .community-section{order:10;}
-  .newsletter-section{order:11;}
   .chart-section{order:12;}
   
   .logo-bar{height:70px;padding:0 10px;}
@@ -897,17 +922,6 @@ img,canvas{max-width:100%;}
       <div class="soc-row">
         <a href="https://twitter.com/CafeCrypto_FR" target="_blank" rel="noopener noreferrer" class="soc-btn tw">𝕏 Twitter</a>
         <a href="https://t.me/CafeCryptoFR" target="_blank" rel="noopener noreferrer" class="soc-btn tg">✈️ Telegram</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- NEWSLETTER -->
-  <div class="newsletter-section">
-    <div class="card">
-      <div class="card-hdr"><div class="card-title">📧 Newsletter</div><span class="pill p-gold">Gratuit</span></div>
-      <div class="newsletter-body">
-        <input type="email" class="newsletter-input" placeholder="Votre email..." aria-label="Email">
-        <button class="newsletter-btn" id="newsletterBtn">S'abonner</button>
       </div>
     </div>
   </div>
@@ -1651,17 +1665,6 @@ $('eventsList').innerHTML=EVENTS.map(e=>`
   </div>`).join('');
 
 // ══════════════════════════════
-// NEWSLETTER
-// ══════════════════════════════
-function subscribeNewsletter(){
-  const email=document.querySelector('.newsletter-input').value;
-  if(!email){showNotification('Email requis','Veuillez entrer votre email','⚠️');return;}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showNotification('Email invalide','Veuillez entrer un email valide','⚠️');return;}
-  showNotification('Inscription réussie','Vous recevrez les dernières nouvelles crypto !','✅');
-  document.querySelector('.newsletter-input').value='';
-}
-
-// ══════════════════════════════
 // ACTUALITÉS
 // ══════════════════════════════
 let carouselItems=[],carouselIdx=0,carouselTimer=null;
@@ -2150,8 +2153,6 @@ function initStaticControls(){
     const tab=e.target.closest('.ctab[data-tf]');
     if(tab)loadChart(tab,tab.dataset.tf);
   });
-  const newsBtn=$('newsletterBtn');
-  if(newsBtn)newsBtn.addEventListener('click',subscribeNewsletter);
   const chartCloseBtn=$('chartModalCloseBtn');
   if(chartCloseBtn)chartCloseBtn.addEventListener('click',closeChartModal);
   const cryptoCloseBtn=$('cryptoModalCloseBtn');
