@@ -1133,7 +1133,7 @@ function attachRowClickHandler(containerId){
 // ══════════════════════════════
 function symOf(coin){return(coin.symbol||'?').toUpperCase();}
 function getBTC(){return allCoins.find(c=>symOf(c)==='BTC')||liveData['btc-bitcoin'];}
-let liveData={},btcUsd=0,btcChg24=0,allCoins=[],trendData=[],winData=[],loseData=[];
+let liveData={},btcUsd=0,btcChg24=0,allCoins=[],searchCoins=[],trendData=[],winData=[],loseData=[];
 let favorites=new Set();
 try{const saved=localStorage.getItem('cafeCryptoFavorites');if(saved)favorites=new Set(JSON.parse(saved));}catch(e){}
 
@@ -1164,19 +1164,22 @@ function mapPaprikaCoin(item){
 async function fetchPrices(){
   try{
     // CoinPaprika : API gratuite, sans clé, CORS ouvert (CoinGecko exige désormais une clé pour cet usage)
+    // L'API renvoie déjà la totalité des cryptos suivies (~2500) en un seul appel : on garde
+    // les 100 premières pour l'affichage du site, et jusqu'à 2100 pour la recherche uniquement.
     const url=`https://api.coinpaprika.com/v1/tickers?quotes=USD`;
-    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
+    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
     const r=await fetch(url,{signal:controller.signal});clearTimeout(timeout);
     if(!r.ok)throw new Error(r.status);
     const raw=await r.json();
     if(!Array.isArray(raw)||!raw.length)throw new Error('empty');
-    const data=raw
+    const sorted=raw
       .filter(c=>c.quotes&&c.quotes.USD&&c.quotes.USD.price)
       .sort((a,b)=>(a.rank||9999)-(b.rank||9999))
-      .slice(0,100)
+      .slice(0,2100)
       .map(mapPaprikaCoin);
-    allCoins=data;
-    allCoins.forEach(c=>{liveData[c.id]=c;});
+    searchCoins=sorted;
+    allCoins=sorted.slice(0,100);
+    searchCoins.forEach(c=>{liveData[c.id]=c;});
     const prevBtc=btcUsd;
     const btc=getBTC();
     btcUsd=btc?.current_price||btcUsd;
@@ -1186,6 +1189,7 @@ async function fetchPrices(){
   }catch(e){
     console.warn('CoinPaprika API failed, using fallback data:',e.message);
     allCoins = [...FALLBACK_COINS];
+    searchCoins = [...FALLBACK_COINS];
     allCoins.forEach(c=>{liveData[c.id]=c;});
     btcUsd=65000;btcChg24=2.5;
     buildTicker2();updateChartHeader();buildTop100();buildTriSections(allCoins);
@@ -1347,7 +1351,19 @@ function setupSearch(){
   input.addEventListener('input',debounce(function(){
     const query=this.value.toLowerCase().trim();
     if(!query){results.classList.remove('active');results.innerHTML='';return;}
-    const matches=allCoins.filter(c=>c.name.toLowerCase().includes(query)||c.symbol.toLowerCase().includes(query)).slice(0,8);
+    const scored=searchCoins
+      .map(c=>{
+        const name=(c.name||'').toLowerCase(),sym=(c.symbol||'').toLowerCase();
+        let score=-1;
+        if(sym===query)score=100;
+        else if(sym.startsWith(query))score=80;
+        else if(name.startsWith(query))score=60;
+        else if(name.includes(query)||sym.includes(query))score=40;
+        return{coin:c,score};
+      })
+      .filter(x=>x.score>0)
+      .sort((a,b)=>b.score-a.score||(a.coin.market_cap_rank||9999)-(b.coin.market_cap_rank||9999));
+    const matches=scored.slice(0,8).map(x=>x.coin);
     if(matches.length){
       results.innerHTML=matches.map(coin=>{
         const sym=symOf(coin);
