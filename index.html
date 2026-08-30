@@ -209,18 +209,18 @@ section{scroll-margin-top:200px;}
   object-fit:cover;
 }
 
-.top100-info{flex:1;min-width:0;}
+.top100-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;overflow:hidden;}
 .top100-symbol{
   font-size:.8rem;
   font-weight:700;
   color:var(--text);
-  display:inline;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 .top100-name{
   font-size:.6rem;
   color:var(--muted);
-  margin-left:6px;
-  display:inline;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -607,6 +607,9 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   
   .logo-bar{height:70px;padding:0 10px;}
   .search-container{top:60px;right:10px;}
+  .top100-spark{display:none;}
+  .top100-mcap{display:none;}
+  .top100-price{min-width:64px;}
 }
 
 /* ═══════════════════════════════
@@ -1795,6 +1798,30 @@ document.getElementById('eventsList').addEventListener('click',function(e){
 // ══════════════════════════════
 let carouselItems=[],carouselIdx=0,carouselTimer=null;
 
+// Traduction gratuite, sans clé (MyMemory). Best-effort : en cas d'échec,
+// le texte original est conservé plutôt que de bloquer l'affichage.
+async function translateToFR(text){
+  if(!text)return text;
+  try{
+    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),6000);
+    const r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.substring(0,480))}&langpair=en|fr`,{signal:controller.signal});
+    clearTimeout(timeout);
+    if(!r.ok)throw new Error('translate');
+    const j=await r.json();
+    const t=j?.responseData?.translatedText;
+    return (t&&!/INVALID|QUERY LENGTH/i.test(t))?t:text;
+  }catch(e){
+    return text;
+  }
+}
+
+async function translateItems(items){
+  return Promise.all(items.map(async item=>{
+    const [title,description]=await Promise.all([translateToFR(item.title),translateToFR(item.description)]);
+    return{...item,title,description};
+  }));
+}
+
 async function fetchNews(){
   try{
     const controller=new AbortController();
@@ -1806,7 +1833,7 @@ async function fetchNews(){
     const data=await response.json();
     
     if(data.Data&&data.Data.length>0){
-      carouselItems = data.Data.slice(0, 5).map(item => ({
+      const picked = data.Data.slice(0, 5).map(item => ({
         title:item.title||'',
         description:(item.body||'').substring(0,200),
         image:safeUrl(item.imageurl),
@@ -1814,6 +1841,7 @@ async function fetchNews(){
         pubDate:new Date(item.published_on*1000).toISOString(),
         _src:item.source_info?.name||'CryptoCompare'
       }));
+      carouselItems = await translateItems(picked);
       buildCarousel();
       const e=$('newsTime');
       if(e)e.textContent=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
@@ -1843,7 +1871,7 @@ async function fetchNews(){
       });
       if(allItems.length>0){
         allItems.sort((a,b)=>new Date(b.pubDate||0)-new Date(a.pubDate||0));
-        carouselItems=allItems.slice(0,5);
+        carouselItems=await translateItems(allItems.slice(0,5));
         buildCarousel();
         const e=$('newsTime');
         if(e)e.textContent=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
@@ -1916,8 +1944,22 @@ function goToSlide(i){carouselIdx=i;updateCarousel();if(carouselTimer)clearInter
 // ══════════════════════════════
 // PAROLES DE CRYPTO — déclarations réelles et récentes, reformulées
 // (résumés en français d'après la presse spécialisée, pas des citations exactes)
+// Seules celles de moins de 5 jours sont affichées ; ce pool doit être
+// réalimenté régulièrement pour rester à jour (pas de source Twitter/X en direct).
 // ══════════════════════════════
 const CRYPTO_POSTS = [
+  {
+    handle:'VitalikButerin', name:'Vitalik Buterin', emoji:'🦄',
+    date:'2026-08-27',
+    text:"Annonce vouloir consacrer davantage de temps aux réseaux sociaux décentralisés en 2026, critiquant au passage la nature très politisée de X.",
+    topic:'Décentralisation', pill:'p-cyan', source:'Today\'s Crypto News'
+  },
+  {
+    handle:'fundstrat', name:'Tom Lee (Fundstrat)', emoji:'📊',
+    date:'2026-08-29',
+    text:"Juge Ethereum « largement sous-évalué » et avance qu'ETH pourrait atteindre 6 000 $ d'ici la fin de l'année si le bitcoin grimpe à 150 000 $.",
+    topic:'Prévision', pill:'p-green', source:'TradingView'
+  },
   {
     handle:'cz_binance', name:'Changpeng Zhao (CZ)', emoji:'🟡',
     date:'2026-08-27',
@@ -1956,8 +1998,15 @@ const CRYPTO_POSTS = [
   }
 ];
 
+function getRecentPosts(maxDays){
+  const now=new Date();
+  return CRYPTO_POSTS
+    .filter(p=>(now-new Date(p.date))/86400000<maxDays)
+    .sort((a,b)=>new Date(b.date)-new Date(a.date));
+}
+
 function fetchCryptoTweets(){
-  return Promise.resolve(CRYPTO_POSTS.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)));
+  return Promise.resolve(getRecentPosts(5));
 }
 
 function renderTweets(posts) {
@@ -1965,7 +2014,7 @@ function renderTweets(posts) {
     if (!list) return;
     
     if (!posts.length) {
-        list.innerHTML = '<div class="loader-error">Aucune publication disponible pour le moment</div>';
+        list.innerHTML = '<div class="loader-error">Aucune déclaration de moins de 5 jours pour le moment</div>';
         return;
     }
     
