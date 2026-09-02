@@ -465,6 +465,16 @@ section{scroll-margin-top:200px;}
 .fng-label{font-size:.85rem;font-weight:600;margin-top:4px;}
 .fng-note{font-size:.7rem;color:var(--muted2);margin-top:4px;line-height:1.4;}
 .mood-line{padding:10px 16px;border-top:1px solid var(--b);border-bottom:1px solid var(--b);font-size:.75rem;color:var(--muted2);background:var(--s2);}
+.voice-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:calc(100% - 32px);margin:12px 16px 0;padding:11px;
+  border-radius:10px;border:1px solid var(--b2);background:var(--s2);
+  color:var(--cyan);font-family:var(--mono);font-size:.68rem;font-weight:600;
+  cursor:pointer;transition:all .2s;
+}
+.voice-btn:hover{border-color:var(--cyan);background:rgba(56,189,248,.07);}
+.voice-btn.speaking{color:var(--gold);border-color:var(--gold);background:rgba(240,180,41,.08);}
+.voice-btn:disabled{opacity:.5;cursor:not-allowed;}
 .fng-history{padding:14px 16px;}
 .fng-history-title{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
 .fng-history-chart{width:100%;height:40px;display:block;}
@@ -478,6 +488,39 @@ section{scroll-margin-top:200px;}
 .event-info{flex:1;min-width:0;}
 .event-title{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:3px;}
 .event-desc{font-size:.7rem;color:var(--muted2);line-height:1.4;}
+
+/* ─── RADAR DES BALEINES ─── */
+.whale-section{margin-top:24px;}
+.whale-list{max-height:420px;overflow-y:auto;}
+.whale-item{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--b);align-items:center;text-decoration:none;color:inherit;transition:background .15s;}
+.whale-item:last-child{border-bottom:none;}
+.whale-item:hover{background:var(--s2);}
+.whale-ico{width:34px;height:34px;border-radius:50%;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.whale-info{flex:1;min-width:0;}
+.whale-amount{font-family:var(--mono);font-size:.78rem;font-weight:700;color:var(--text);}
+.whale-usd{font-family:var(--mono);font-size:.65rem;color:var(--cyan);margin-left:6px;}
+.whale-meta{font-size:.65rem;color:var(--muted);margin-top:2px;}
+.whale-link{font-family:var(--mono);font-size:.6rem;color:var(--muted2);flex-shrink:0;}
+.whale-foot{padding:8px 16px 14px;font-family:var(--mono);font-size:.56rem;color:var(--muted);text-align:center;border-top:1px solid var(--b);}
+
+/* ─── AIRDROPS ─── */
+.airdrops-section{margin-top:24px;}
+.airdrop-list{display:flex;flex-direction:column;gap:12px;padding:14px;}
+.airdrop-item{display:flex;gap:12px;padding:13px;border-radius:12px;background:var(--s2);border:1px solid var(--b);transition:border-color .2s;}
+.airdrop-item:hover{border-color:rgba(167,139,250,.35);}
+.airdrop-ico{width:38px;height:38px;border-radius:10px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.airdrop-info{flex:1;min-width:0;}
+.airdrop-name-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.airdrop-name{font-size:.82rem;font-weight:700;color:var(--text);}
+.airdrop-status{font-family:var(--mono);font-size:.52rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:8px;}
+.airdrop-status.farm{color:var(--green);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);}
+.airdrop-status.claim{color:var(--gold);background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.25);}
+.airdrop-desc{font-size:.68rem;color:var(--muted2);line-height:1.5;margin-top:5px;}
+.airdrop-footer{display:flex;align-items:center;justify-content:space-between;margin-top:8px;gap:8px;}
+.airdrop-chain{font-family:var(--mono);font-size:.56rem;color:var(--muted);}
+.airdrop-link{font-family:var(--mono);font-size:.62rem;color:var(--purple);text-decoration:none;font-weight:600;white-space:nowrap;}
+.airdrop-link:hover{text-decoration:underline;}
+.airdrop-disclaimer{font-family:var(--mono);font-size:.5rem;color:var(--muted);text-align:center;padding:0 14px 14px;opacity:.65;}
 
 .partners-section{margin-top:24px;}
 
@@ -611,15 +654,17 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .col-right{display:contents;}
   .crypto-sections{order:1;}
   .top100-section{order:2;}
-  .articles-section{order:3;}
-  .pub-section{order:4;}
-  .crypto-tweets-section{order:5;}
-  .knowledge-section{order:6;}
-  .events-section{order:7;}
-  .fng-section{order:8;}
-  .partners-section{order:9;}
-  .community-section{order:10;}
-  .chart-section{order:12;}
+  .whale-section{order:3;}
+  .articles-section{order:4;}
+  .pub-section{order:5;}
+  .crypto-tweets-section{order:6;}
+  .knowledge-section{order:7;}
+  .airdrops-section{order:8;}
+  .events-section{order:9;}
+  .fng-section{order:10;}
+  .partners-section{order:11;}
+  .community-section{order:12;}
+  .chart-section{order:13;}
   
   .logo-bar{height:78px;padding:0 10px;}
   .search-container{top:60px;right:10px;}
@@ -779,6 +824,20 @@ img,canvas{max-width:100%;}
     </div>
   </div>
 
+  <!-- RADAR DES BALEINES -->
+  <div class="whale-section">
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">🐋 Radar des Baleines</div>
+        <span class="pill p-cyan">BTC · Temps réel</span>
+      </div>
+      <div class="whale-list" id="whaleList">
+        <div class="loader"><div class="spinner"></div>Chargement…</div>
+      </div>
+      <div class="whale-foot">Grosses transactions Bitcoin confirmées (≥ 100 BTC) · source : Blockchair · actualisé toutes les 12h</div>
+    </div>
+  </div>
+
   <!-- ACTUALITÉS CARROUSEL -->
   <div class="articles-section">
     <div class="card">
@@ -917,10 +976,23 @@ img,canvas{max-width:100%;}
         </div>
       </div>
       <div class="mood-line" id="moodLine">☕ Analyse de l'ambiance du marché…</div>
+      <button class="voice-btn" id="voiceSummaryBtn">🔊 Écouter le résumé du marché</button>
       <div class="fng-history">
         <div class="fng-history-title">Historique réel · 7 derniers jours (source : alternative.me)</div>
         <canvas class="fng-history-chart" id="fngHistoryChart" role="img" aria-label="Historique de l'indice Fear and Greed sur 7 jours"></canvas>
       </div>
+    </div>
+  </div>
+
+  <!-- AIRDROPS À FARMER -->
+  <div class="airdrops-section">
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">🪂 Airdrops à farmer</div>
+        <span class="pill p-purple">À jour</span>
+      </div>
+      <div class="airdrop-list" id="airdropList"></div>
+      <p class="airdrop-disclaimer">⚠️ Aucun airdrop n'est garanti · ne partagez jamais votre phrase secrète · DYOR</p>
     </div>
   </div>
 
@@ -1811,6 +1883,134 @@ document.getElementById('eventsList').addEventListener('click',function(e){
 });
 
 // ══════════════════════════════
+// RADAR DES BALEINES — vraies transactions Bitcoin confirmées (Blockchair, sans clé)
+// Whale Alert exige désormais une clé API payante ; Blockchair reste gratuite pour
+// un usage raisonnable (actualisation ici toutes les 12h, largement dans la limite).
+// ══════════════════════════════
+async function fetchWhales(){
+  const list=$('whaleList');
+  try{
+    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
+    const url='https://api.blockchair.com/bitcoin/transactions?q=time(24h),output_total(10000000000..)&s=output_total(desc)&limit=8';
+    const r=await fetch(url,{signal:controller.signal});clearTimeout(timeout);
+    if(!r.ok)throw new Error(r.status);
+    const json=await r.json();
+    const rows=json.data||[];
+    if(!rows.length){
+      if(list)list.innerHTML='<div class="loader-error">Aucune transaction ≥ 100 BTC détectée sur les dernières 24h</div>';
+      return;
+    }
+    if(list)list.innerHTML=rows.map(tx=>{
+      const btc=(tx.output_total||0)/1e8;
+      const usd=tx.output_total_usd||0;
+      const isoTime=(tx.time||'').replace(' ','T')+'Z';
+      return `<a href="https://blockchair.com/bitcoin/transaction/${encodeURIComponent(tx.hash||'')}" target="_blank" rel="noopener noreferrer" class="whale-item">
+        <div class="whale-ico">🐋</div>
+        <div class="whale-info">
+          <div><span class="whale-amount">${btc.toLocaleString('fr-FR',{maximumFractionDigits:1})} BTC</span><span class="whale-usd">${fmtBig(usd)}</span></div>
+          <div class="whale-meta">${timeAgo(isoTime)} · confirmée</div>
+        </div>
+        <span class="whale-link">Voir →</span>
+      </a>`;
+    }).join('');
+  }catch(e){
+    console.warn('Blockchair whales:',e);
+    if(list)list.innerHTML='<div class="loader-error">Radar temporairement indisponible</div>';
+  }
+}
+fetchWhales();
+setInterval(fetchWhales,43200000); // 12h, comme demandé
+
+// ══════════════════════════════
+// AIRDROPS À FARMER — liste curée manuellement (pas d'API fiable et gratuite pour
+// détecter automatiquement les nouveaux airdrops). À METTRE À JOUR régulièrement :
+// ajouter/retirer des entrées dans AIRDROPS_POOL dès qu'un airdrop notable ouvre
+// son farming ou sa réclamation. Uniquement des liens vers les sites officiels.
+// ══════════════════════════════
+const AIRDROPS_POOL=[
+  {
+    name:'Monad',icon:'🟣',status:'claim',statusLabel:'Réclamation',
+    desc:"Le portail de réclamation de l'airdrop MON ouvre le 14 octobre 2026 pour les participants déjà éligibles.",
+    chain:'Layer 1',url:'https://www.monad.xyz'
+  },
+  {
+    name:'MegaETH (via GTE)',icon:'🔷',status:'farm',statusLabel:'Testnet',
+    desc:"Faucet ETH de testnet gratuit puis utilisation du DEX GTE : de quoi accumuler de l'activité potentiellement éligible aux deux projets.",
+    chain:'Testnet gratuit',url:'https://testnet.megaeth.com'
+  },
+  {
+    name:'Linea (points LXP)',icon:'🟢',status:'farm',statusLabel:'Points',
+    desc:"Programme de points actif depuis 2023 : bridge, swaps et liquidité sur Linea accumulent des LXP en vue d'une distribution de tokens.",
+    chain:'zkEVM · ConsenSys',url:'https://linea.build'
+  },
+  {
+    name:'Scroll (Marks)',icon:'🟠',status:'farm',statusLabel:'Points',
+    desc:"Après l'airdrop SCR de fin 2024, la saison 2 du système de Marks continue de récompenser l'activité on-chain sur Scroll.",
+    chain:'zkEVM Rollup',url:'https://scroll.io'
+  }
+];
+
+function renderAirdrops(){
+  const list=$('airdropList');if(!list)return;
+  list.innerHTML=AIRDROPS_POOL.map(a=>`
+    <div class="airdrop-item">
+      <div class="airdrop-ico">${a.icon}</div>
+      <div class="airdrop-info">
+        <div class="airdrop-name-row">
+          <span class="airdrop-name">${escapeHTML(a.name)}</span>
+          <span class="airdrop-status ${a.status}">${escapeHTML(a.statusLabel)}</span>
+        </div>
+        <div class="airdrop-desc">${escapeHTML(a.desc)}</div>
+        <div class="airdrop-footer">
+          <span class="airdrop-chain">${escapeHTML(a.chain)}</span>
+          <a href="${escapeHTML(safeUrl(a.url))}" target="_blank" rel="noopener noreferrer" class="airdrop-link">Site officiel →</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+renderAirdrops();
+
+// ══════════════════════════════
+// RÉSUMÉ VOCAL DU MARCHÉ — synthèse vocale native du navigateur, gratuite
+// ══════════════════════════════
+function speakMarketSummary(){
+  const btn=$('voiceSummaryBtn');
+  if(!('speechSynthesis' in window)){
+    showNotification('Non disponible',"Votre navigateur ne supporte pas la lecture vocale",'⚠️');
+    return;
+  }
+  if(window.speechSynthesis.speaking){
+    window.speechSynthesis.cancel();
+    if(btn){btn.classList.remove('speaking');btn.textContent='🔊 Écouter le résumé du marché';}
+    return;
+  }
+  const btcTxt=btcUsd?`Le bitcoin s'échange actuellement à ${Math.round(btcUsd).toLocaleString('fr-FR')} dollars, soit ${btcChg24>=0?'une hausse':'une baisse'} de ${Math.abs(btcChg24).toFixed(1)} pour cent sur les dernières vingt-quatre heures.`:'';
+  const fngScore=$('fngVal')?.textContent;
+  const fngLbl=$('fngLbl')?.textContent;
+  const fngTxt=(fngScore&&fngScore!=='—')?`L'indice de peur et d'avidité est à ${fngScore} sur cent, en zone ${fngLbl}.`:'';
+  let moverTxt='';
+  if(winData&&winData.length){
+    const top=winData[0];
+    moverTxt=`La plus forte hausse du jour revient à ${symOf(top)}, avec plus ${(top.price_change_percentage_24h||0).toFixed(1)} pour cent.`;
+  }
+  const newsTxt=(carouselItems&&carouselItems[0])?`À la une de l'actualité : ${carouselItems[0].title}.`:'';
+  const fullText=['Bonjour, voici le résumé du marché crypto.',btcTxt,fngTxt,moverTxt,newsTxt,'Bonne journée sur Café Crypto.'].filter(Boolean).join(' ');
+
+  const utter=new SpeechSynthesisUtterance(fullText);
+  utter.lang='fr-FR';
+  utter.rate=1;
+  const voices=window.speechSynthesis.getVoices();
+  const frVoice=voices.find(v=>v.lang&&v.lang.startsWith('fr'));
+  if(frVoice)utter.voice=frVoice;
+  utter.onstart=()=>{if(btn){btn.classList.add('speaking');btn.textContent='⏸️ Arrêter la lecture';}};
+  utter.onend=()=>{if(btn){btn.classList.remove('speaking');btn.textContent='🔊 Écouter le résumé du marché';}};
+  utter.onerror=()=>{if(btn){btn.classList.remove('speaking');btn.textContent='🔊 Écouter le résumé du marché';}};
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utter);
+}
+
+// ══════════════════════════════
 // ACTUALITÉS
 // ══════════════════════════════
 let carouselItems=[],carouselIdx=0,carouselTimer=null;
@@ -2358,6 +2558,8 @@ function initStaticControls(){
   if(cryptoCloseBtn)cryptoCloseBtn.addEventListener('click',closeCryptoModal);
   const eventCloseBtn=$('eventModalCloseBtn');
   if(eventCloseBtn)eventCloseBtn.addEventListener('click',closeEventModal);
+  const voiceBtn=$('voiceSummaryBtn');
+  if(voiceBtn)voiceBtn.addEventListener('click',speakMarketSummary);
   const cryptoChartBtn=$('cryptoModalChartBtn');
   if(cryptoChartBtn)cryptoChartBtn.addEventListener('click',function(){
     if(currentInfoModalCoinId){closeCryptoModal();openChartModal(currentInfoModalCoinId);}
