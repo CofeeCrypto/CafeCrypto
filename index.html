@@ -1891,7 +1891,7 @@ async function fetchWhales(){
   const list=$('whaleList');
   try{
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
-    const url='https://api.blockchair.com/bitcoin/transactions?q=time(24h),output_total(10000000000..)&s=output_total(desc)&limit=8';
+    const url='https://api.blockchair.com/bitcoin/transactions?q=time(~P1D),output_total(10000000000..)&s=output_total(desc)&limit=8';
     const r=await fetch(url,{signal:controller.signal});clearTimeout(timeout);
     if(!r.ok)throw new Error(r.status);
     const json=await r.json();
