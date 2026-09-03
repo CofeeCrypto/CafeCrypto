@@ -114,7 +114,6 @@ section{scroll-margin-top:200px;}
 .p-green{color:var(--green);border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.07);}
 .p-cyan{color:var(--cyan);border-color:rgba(56,189,248,.25);background:rgba(56,189,248,.07);}
 .p-orange{color:var(--orange);border-color:rgba(251,146,60,.25);background:rgba(251,146,60,.07);}
-.p-red{color:var(--red);border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.07);}
 .p-gold{color:var(--gold);border-color:rgba(240,180,41,.25);background:rgba(240,180,41,.07);}
 .p-purple{color:var(--purple);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.07);}
 .p-static{color:var(--muted2);border-color:rgba(122,149,178,.25);background:rgba(122,149,178,.07);}
@@ -148,7 +147,6 @@ section{scroll-margin-top:200px;}
 .cr-right{text-align:right;flex-shrink:0;}
 .cr-price{font-family:var(--mono);font-size:.75rem;font-weight:500;color:var(--text);}
 .cr-chg{font-family:var(--mono);font-size:.65rem;font-weight:600;margin-top:2px;}
-.sparkline-mini{width:52px;height:22px;flex-shrink:0;}
 
 .chg-green{color:var(--green) !important;}
 .chg-red{color:var(--red) !important;}
@@ -256,12 +254,6 @@ section{scroll-margin-top:200px;}
   flex-shrink:0;
 }
 
-.top100-spark{
-  width:80px;
-  height:20px;
-  flex-shrink:0;
-}
-
 .top100-fav{
   width:18px;
   height:18px;
@@ -318,7 +310,6 @@ section{scroll-margin-top:200px;}
 .news-featured-excerpt{font-size:.8rem;color:var(--muted2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .news-featured-meta{display:flex;align-items:center;gap:10px;padding-top:8px;border-top:1px solid var(--b);margin-top:auto;}
 .news-featured-src{font-family:var(--mono);font-size:.6rem;color:var(--muted);}
-.news-featured-time{font-family:var(--mono);font-size:.6rem;color:var(--muted);}
 .news-featured-read{font-family:var(--mono);font-size:.6rem;color:var(--cyan);margin-left:auto;text-transform:uppercase;letter-spacing:.8px;}
 .carousel-controls{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 14px;border-top:1px solid var(--b);}
 .carousel-dots{display:flex;gap:6px;align-items:center;}
@@ -403,57 +394,25 @@ section{scroll-margin-top:200px;}
 .kb-modal-content-text td{padding:10px;border-bottom:1px solid var(--b);font-size:.8rem;}
 
 /* ─── PARTENAIRES ─── */
-.partners-intro{padding:2px 16px 12px;font-size:.72rem;color:var(--muted2);line-height:1.5;}
-.affs-grid{padding:0 14px 14px;display:flex;flex-direction:column;gap:14px;}
-
-.aff-card{
-  display:flex;flex-direction:column;
-  background:linear-gradient(165deg,var(--s2),var(--s1) 70%);
-  border:1px solid var(--b);border-radius:16px;
-  text-decoration:none;color:inherit;overflow:hidden;
-  position:relative;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+.partners-intro{padding:2px 16px 10px;font-size:.72rem;color:var(--muted2);line-height:1.5;}
+.affs-circles{display:flex;justify-content:space-around;gap:8px;padding:6px 12px 16px;flex-wrap:wrap;}
+.aff-circle{
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  width:92px;text-decoration:none;color:inherit;text-align:center;
+  transition:transform .2s ease;
 }
-.aff-card:hover{transform:translateY(-3px);border-color:var(--aff-accent,var(--gold));box-shadow:0 14px 30px -10px var(--aff-glow,rgba(240,180,41,.35));}
-.aff-card:active{transform:translateY(-1px) scale(.99);}
-
-.aff-rank{
-  position:absolute;top:12px;right:12px;z-index:2;
-  font-family:var(--mono);font-size:.58rem;font-weight:700;
-  color:#07090f;background:var(--aff-accent,var(--gold));
-  padding:3px 9px;border-radius:20px;letter-spacing:.5px;
+.aff-circle:hover{transform:translateY(-3px);}
+.aff-circle-logo{
+  width:64px;height:64px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--s2);border:2px solid var(--aff-accent,var(--b2));
+  box-shadow:0 0 0 3px var(--aff-glow,transparent);
+  overflow:hidden;position:relative;transition:box-shadow .2s ease;
 }
-.aff-rank.top{background:linear-gradient(135deg,#f0b429,#ff8c42);box-shadow:0 0 14px rgba(240,180,41,.5);}
-
-.aff-card-top{display:flex;align-items:flex-start;gap:14px;padding:16px 16px 12px;}
-.aff-logo-ico{
-  width:54px;height:54px;border-radius:16px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
-  background:var(--s1);border:2px solid var(--aff-accent,var(--b2));
-  box-shadow:0 0 0 4px var(--aff-glow,transparent);
-  overflow:hidden;position:relative;
-}
-.aff-logo-img{width:34px;height:34px;object-fit:contain;border-radius:6px;}
-.aff-info{flex:1;min-width:0;padding-top:2px;}
-.aff-name-row{display:flex;align-items:center;gap:6px;}
-.aff-name{font-size:1rem;font-weight:700;color:var(--text);}
-.aff-verified{color:var(--aff-accent,var(--cyan));font-size:.72rem;flex-shrink:0;}
-.aff-features{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;}
-.aff-feature{font-family:var(--mono);font-size:.55rem;padding:3px 8px;border-radius:8px;background:rgba(255,255,255,.05);color:var(--muted2);border:1px solid var(--b);}
-
-.aff-card-footer{
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-  margin:0 12px 12px;padding:12px 14px;border-radius:12px;
-  background:rgba(0,0,0,.35);border:1px solid var(--b);
-}
-.aff-bonus-label{font-family:var(--mono);font-size:.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;display:block;margin-bottom:3px;}
-.aff-bonus-value{font-size:.74rem;font-weight:700;color:var(--text);line-height:1.3;}
-.aff-btn-small{
-  font-family:var(--mono);font-size:.65rem;font-weight:700;
-  padding:9px 15px;border-radius:8px;color:#07090f;white-space:nowrap;
-  display:inline-flex;align-items:center;gap:5px;flex-shrink:0;
-  transition:transform .2s,filter .2s;
-}
-.aff-card:hover .aff-btn-small{filter:brightness(1.12);transform:translateX(2px);}
+.aff-circle:hover .aff-circle-logo{box-shadow:0 0 0 6px var(--aff-glow,transparent);}
+.aff-circle-img{width:36px;height:36px;object-fit:contain;border-radius:6px;}
+.aff-circle-name{font-size:.78rem;font-weight:700;color:var(--text);}
+.aff-circle-bonus{font-family:var(--mono);font-size:.55rem;color:var(--muted2);line-height:1.35;}
 .aff-disclaimer{font-family:var(--mono);font-size:.52rem;color:var(--muted);text-align:center;padding:0 14px 14px;opacity:.65;display:flex;align-items:center;justify-content:center;gap:5px;}
 
 /* ─── FEAR & GREED ─── */
@@ -488,20 +447,6 @@ section{scroll-margin-top:200px;}
 .event-info{flex:1;min-width:0;}
 .event-title{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:3px;}
 .event-desc{font-size:.7rem;color:var(--muted2);line-height:1.4;}
-
-/* ─── RADAR DES BALEINES ─── */
-.whale-section{margin-top:24px;}
-.whale-list{max-height:420px;overflow-y:auto;}
-.whale-item{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--b);align-items:center;text-decoration:none;color:inherit;transition:background .15s;}
-.whale-item:last-child{border-bottom:none;}
-.whale-item:hover{background:var(--s2);}
-.whale-ico{width:34px;height:34px;border-radius:50%;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
-.whale-info{flex:1;min-width:0;}
-.whale-amount{font-family:var(--mono);font-size:.78rem;font-weight:700;color:var(--text);}
-.whale-usd{font-family:var(--mono);font-size:.65rem;color:var(--cyan);margin-left:6px;}
-.whale-meta{font-size:.65rem;color:var(--muted);margin-top:2px;}
-.whale-link{font-family:var(--mono);font-size:.6rem;color:var(--muted2);flex-shrink:0;}
-.whale-foot{padding:8px 16px 14px;font-family:var(--mono);font-size:.56rem;color:var(--muted);text-align:center;border-top:1px solid var(--b);}
 
 /* ─── AIRDROPS ─── */
 .airdrops-section{margin-top:24px;}
@@ -587,10 +532,6 @@ canvas#btcChart{position:absolute;inset:0;width:100%!important;height:100%!impor
 }
 .modal-close:active{border-color:var(--red);color:var(--red);}
 .modal-chart{padding:16px;height:300px;}
-.modal-error{
-  text-align:center;padding:20px;color:var(--red);
-  font-family:var(--mono);font-size:.7rem;
-}
 
 /* ─── MODALE FICHE DÉTAILLÉE CRYPTO ─── */
 .modal-info{padding:16px;display:flex;flex-direction:column;gap:16px;}
@@ -642,7 +583,7 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .crypto-row:hover{background:var(--s2);}
   .c-arrow:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(56,189,248,.07);}
   .ctab:hover{background:var(--s2);color:var(--cyan);border-color:rgba(56,189,248,.3);}
-  .aff-card:hover{border-color:var(--gold);transform:translateY(-2px);}
+  .aff-circle:hover{transform:translateY(-4px);}
 }
 
 /* ═══════════════════════════════
@@ -654,21 +595,19 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .col-right{display:contents;}
   .crypto-sections{order:1;}
   .top100-section{order:2;}
-  .whale-section{order:3;}
-  .articles-section{order:4;}
-  .pub-section{order:5;}
-  .crypto-tweets-section{order:6;}
-  .knowledge-section{order:7;}
-  .airdrops-section{order:8;}
-  .events-section{order:9;}
-  .fng-section{order:10;}
-  .partners-section{order:11;}
-  .community-section{order:12;}
-  .chart-section{order:13;}
+  .articles-section{order:3;}
+  .pub-section{order:4;}
+  .crypto-tweets-section{order:5;}
+  .knowledge-section{order:6;}
+  .airdrops-section{order:7;}
+  .events-section{order:8;}
+  .fng-section{order:9;}
+  .partners-section{order:10;}
+  .community-section{order:11;}
+  .chart-section{order:12;}
   
   .logo-bar{height:78px;padding:0 10px;}
   .search-container{top:60px;right:10px;}
-  .top100-spark{display:none;}
   .top100-mcap{display:none;}
   .top100-price{min-width:64px;}
 }
@@ -821,20 +760,6 @@ img,canvas{max-width:100%;}
         <span class="pagination-info" id="top100PageInfo">Page 1 / 10</span>
         <button class="pagination-btn" id="top100Next">›</button>
       </div>
-    </div>
-  </div>
-
-  <!-- RADAR DES BALEINES -->
-  <div class="whale-section">
-    <div class="card">
-      <div class="card-hdr">
-        <div class="card-title">🐋 Radar des Baleines</div>
-        <span class="pill p-cyan">BTC · Temps réel</span>
-      </div>
-      <div class="whale-list" id="whaleList">
-        <div class="loader"><div class="spinner"></div>Chargement…</div>
-      </div>
-      <div class="whale-foot">Grosses transactions Bitcoin confirmées (≥ 100 BTC) · source : Blockchair · actualisé toutes les 12h</div>
     </div>
   </div>
 
@@ -1013,8 +938,8 @@ img,canvas{max-width:100%;}
         <div class="card-title">🤝 Partenaires</div>
         <span class="pill p-gold">Affiliés</span>
       </div>
-      <p class="partners-intro">Les plateformes d'échange que nous recommandons, classées par confiance et volume d'échange.</p>
-      <div class="affs-grid" id="affGrid"></div>
+      <p class="partners-intro">Les plateformes d'échange que nous recommandons.</p>
+      <div class="affs-circles" id="affGrid"></div>
       <p class="aff-disclaimer">⚠️ Liens affiliés · Investissez responsablement</p>
     </div>
   </div>
@@ -1124,7 +1049,7 @@ img,canvas{max-width:100%;}
 
 <script>
 // ══════════════════════════════
-// DONNÉES DE SECOURS (utilisées uniquement si l'API CoinGecko est réellement injoignable)
+// DONNÉES DE SECOURS (utilisées uniquement si l'API CoinPaprika est réellement injoignable)
 // ══════════════════════════════
 const FALLBACK_COINS = [
   {id:'bitcoin',name:'Bitcoin',symbol:'btc',current_price:65000,market_cap:1300000000000,total_volume:30000000000,price_change_percentage_24h:2.5,price_change_percentage_7d_in_currency:5.2,image:'https://assets.coingecko.com/coins/images/1/small/bitcoin.png',market_cap_rank:1,ath:69000,atl:67,circulating_supply:19000000,total_supply:21000000},
@@ -1221,7 +1146,7 @@ function attachRowClickHandler(containerId){
 }
 
 // ══════════════════════════════
-// PRIX — COINGECKO
+// PRIX — COINPAPRIKA
 // ══════════════════════════════
 function symOf(coin){return(coin.symbol||'?').toUpperCase();}
 function getBTC(){return allCoins.find(c=>symOf(c)==='BTC')||liveData['btc-bitcoin'];}
@@ -1230,7 +1155,7 @@ let favorites=new Set();
 try{const saved=localStorage.getItem('cafeCryptoFavorites');if(saved)favorites=new Set(JSON.parse(saved));}catch(e){}
 
 // ══════════════════════════════
-// PRIX PRINCIPAL (données réelles CoinGecko, avec sparkline 7 jours)
+// PRIX PRINCIPAL (données réelles CoinPaprika)
 // ══════════════════════════════
 function mapPaprikaCoin(item){
   const q=item.quotes&&item.quotes.USD?item.quotes.USD:{};
@@ -1248,8 +1173,7 @@ function mapPaprikaCoin(item){
     ath:q.ath_price,
     atl:null,
     circulating_supply:item.circulating_supply,
-    total_supply:item.total_supply,
-    sparkline_in_7d:null
+    total_supply:item.total_supply
   };
 }
 
@@ -1319,8 +1243,6 @@ function renderTop100(){
     const up=(coin.price_change_percentage_24h||0)>=0;
     const isFav=favorites.has(id);
     const rank=start+index+1;
-    const sparkData=coin.sparkline_in_7d?.price?.slice(-15)||[];
-    const sparkSvg=sparkData.length>1?`<svg class="top100-spark" viewBox="0 0 80 20" preserveAspectRatio="none"><polyline points="${sparkData.map((v,i)=>`${(i/(sparkData.length-1))*80},${20-((v-Math.min(...sparkData))/(Math.max(...sparkData)-Math.min(...sparkData)||1)*18+1)}`).join(' ')}" fill="none" stroke="${up?'#22c55e':'#ef4444'}" stroke-width="1.5"/></svg>`:'';
     
     return `
       <div class="top100-row" data-coin-id="${escapeHTML(id)}">
@@ -1330,7 +1252,6 @@ function renderTop100(){
           <span class="top100-symbol">${escapeHTML(sym)}</span>
           <span class="top100-name">${escapeHTML(coin.name||'')}</span>
         </div>
-        ${sparkSvg}
         <div class="top100-price">${fmtP(coin.current_price)}</div>
         <div class="top100-chg ${up?'up':'down'}">${fmtPct(coin.price_change_percentage_24h||0)}</div>
         <div class="top100-mcap">${fmtBig(coin.market_cap||0)}</div>
@@ -1353,7 +1274,6 @@ function top100NextPage(){const totalPages=Math.ceil(allCoins.length/top100PerPa
 function buildCryptoRow(coin,rank){
   const id=coin.id,sym=symOf(coin);
   const up=(coin.price_change_percentage_24h||0)>=0;
-  const spark=sparkSVG(coin.sparkline_in_7d?.price?.slice(-20)||[],up);
   const isFav=favorites.has(id);
   const logoHTML=coin.image?`<img src="${escapeHTML(coin.image)}" alt="${escapeHTML(coin.name||'')}" loading="lazy" data-fallback="${escapeHTML(sym.slice(0,3))}">`:escapeHTML(sym.slice(0,3));
   return`<a href="javascript:void(0)" class="crypto-row" data-coin-id="${escapeHTML(id)}">
@@ -1363,7 +1283,6 @@ function buildCryptoRow(coin,rank){
       <div class="cr-symbol">${escapeHTML(sym)}</div>
       <div class="cr-name">${escapeHTML(coin.name||'')}</div>
     </div>
-    ${spark}
     <div class="cr-right">
       <div class="cr-price">${fmtP(coin.current_price)}</div>
       <div class="cr-chg ${up?'chg-green':'chg-red'}">${fmtPct(coin.price_change_percentage_24h||0)}</div>
@@ -1371,8 +1290,6 @@ function buildCryptoRow(coin,rank){
     <button class="top100-fav${isFav?' active':''}" data-fav-id="${escapeHTML(id)}" data-fav-sym="${escapeHTML(sym)}" aria-label="${isFav?'Retirer':'Ajouter'} ${escapeHTML(sym)} aux favoris">${isFav?'★':'☆'}</button>
   </a>`;
 }
-
-function sparkSVG(arr,up){if(!arr||arr.length<2)return'';const w=52,h=22,mn=Math.min(...arr),mx=Math.max(...arr),r=mx-mn||1;const pts=arr.map((v,i)=>`${i*(w/(arr.length-1))},${h-((v-mn)/r*(h-3)+1.5)}`).join(' ');return`<svg class="sparkline-mini" viewBox="0 0 ${w} ${h}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${up?'#22c55e':'#ef4444'}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>`;}
 
 function buildTriSections(coins){
   trendData=[...coins].sort((a,b)=>(b.total_volume||0)-(a.total_volume||0));
@@ -1881,45 +1798,6 @@ document.getElementById('eventsList').addEventListener('click',function(e){
   const item=e.target.closest('[data-event-id]');
   if(item)openEventModal(item.dataset.eventId);
 });
-
-// ══════════════════════════════
-// RADAR DES BALEINES — vraies transactions Bitcoin confirmées (Blockchair, sans clé)
-// Whale Alert exige désormais une clé API payante ; Blockchair reste gratuite pour
-// un usage raisonnable (actualisation ici toutes les 12h, largement dans la limite).
-// ══════════════════════════════
-async function fetchWhales(){
-  const list=$('whaleList');
-  try{
-    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
-    const url='https://api.blockchair.com/bitcoin/transactions?q=time(~P1D),output_total(10000000000..)&s=output_total(desc)&limit=8';
-    const r=await fetch(url,{signal:controller.signal});clearTimeout(timeout);
-    if(!r.ok)throw new Error(r.status);
-    const json=await r.json();
-    const rows=json.data||[];
-    if(!rows.length){
-      if(list)list.innerHTML='<div class="loader-error">Aucune transaction ≥ 100 BTC détectée sur les dernières 24h</div>';
-      return;
-    }
-    if(list)list.innerHTML=rows.map(tx=>{
-      const btc=(tx.output_total||0)/1e8;
-      const usd=tx.output_total_usd||0;
-      const isoTime=(tx.time||'').replace(' ','T')+'Z';
-      return `<a href="https://blockchair.com/bitcoin/transaction/${encodeURIComponent(tx.hash||'')}" target="_blank" rel="noopener noreferrer" class="whale-item">
-        <div class="whale-ico">🐋</div>
-        <div class="whale-info">
-          <div><span class="whale-amount">${btc.toLocaleString('fr-FR',{maximumFractionDigits:1})} BTC</span><span class="whale-usd">${fmtBig(usd)}</span></div>
-          <div class="whale-meta">${timeAgo(isoTime)} · confirmée</div>
-        </div>
-        <span class="whale-link">Voir →</span>
-      </a>`;
-    }).join('');
-  }catch(e){
-    console.warn('Blockchair whales:',e);
-    if(list)list.innerHTML='<div class="loader-error">Radar temporairement indisponible</div>';
-  }
-}
-fetchWhales();
-setInterval(fetchWhales,43200000); // 12h, comme demandé
 
 // ══════════════════════════════
 // AIRDROPS À FARMER — liste curée manuellement (pas d'API fiable et gratuite pour
@@ -2484,35 +2362,20 @@ function closeKbModal() {
 // PARTENAIRES
 // ══════════════════════════════
 const AFFS=[
-  {rank:1,ico:'🟡',n:'Gate.io',domain:'gate.io',features:['Top 5 mondial','+1 700 cryptos'],bonus:"Jusqu'à 100 USDT + Box Mystère",btn:'Réclamer le bonus',url:'https://www.gate.com/fr/referral/earn-together/invite/VFUVBLOMUQ?ref=VFUVBLOMUQ&ref_type=103&utm_cmp=rXJBDjtJ&activity_id=1785938037929',accent:'#f0b429',glow:'rgba(240,180,41,.35)'},
-  {rank:2,ico:'🔵',n:'MEXC',domain:'mexc.com',features:['1 500+ cryptos','Frais 0%'],bonus:"Bonus jusqu'à 1 000 $",btn:'Obtenir le bonus',url:'https://s.mexc.com/referral/J3e63RmCvg',accent:'#2196f3',glow:'rgba(33,150,243,.35)'},
-  {rank:3,ico:'⚫',n:'OKX',domain:'okx.com',features:['Top 3 mondial','DEX & Futures'],bonus:"Bonus jusqu'à 10 000 $",btn:'Obtenir le bonus',url:'https://okx.com/join/60252789',accent:'#9ca3af',glow:'rgba(156,163,175,.3)'}
+  {ico:'⚫',n:'OKX',domain:'okx.com',bonus:"Jusqu'à 10 000 $",url:'https://okx.com/join/60252789',accent:'#9ca3af',glow:'rgba(156,163,175,.3)'},
+  {ico:'🟡',n:'Gate.io',domain:'gate.io',bonus:"100 USDT + Box Mystère",url:'https://www.gate.com/fr/referral/earn-together/invite/VFUVBLOMUQ?ref=VFUVBLOMUQ&ref_type=103&utm_cmp=rXJBDjtJ&activity_id=1785938037929',accent:'#f0b429',glow:'rgba(240,180,41,.35)'},
+  {ico:'🔵',n:'MEXC',domain:'mexc.com',bonus:"Jusqu'à 1 000 $",url:'https://s.mexc.com/referral/J3e63RmCvg',accent:'#2196f3',glow:'rgba(33,150,243,.35)'}
 ];
 
 $('affGrid').innerHTML=AFFS.map(a=>{
   const logoUrl=`https://www.google.com/s2/favicons?domain=${encodeURIComponent(a.domain)}&sz=128`;
   return `
-  <a href="${escapeHTML(safeUrl(a.url))}" target="_blank" rel="noopener nofollow noreferrer" class="aff-card" style="--aff-accent:${a.accent};--aff-glow:${a.glow}">
-    <span class="aff-rank${a.rank===1?' top':''}">${a.rank===1?'★ TOP':'#'+a.rank}</span>
-    <div class="aff-card-top">
-      <div class="aff-logo-ico">
-        <img src="${escapeHTML(logoUrl)}" alt="${escapeHTML(a.n)}" class="aff-logo-img" data-fallback="${escapeHTML(a.ico)}">
-      </div>
-      <div class="aff-info">
-        <div class="aff-name-row">
-          <span class="aff-name">${escapeHTML(a.n)}</span>
-          <span class="aff-verified" title="Plateforme reconnue">✓</span>
-        </div>
-        <div class="aff-features">${a.features.map(f=>`<span class="aff-feature">${escapeHTML(f)}</span>`).join('')}</div>
-      </div>
+  <a href="${escapeHTML(safeUrl(a.url))}" target="_blank" rel="noopener nofollow noreferrer" class="aff-circle" style="--aff-accent:${a.accent};--aff-glow:${a.glow}">
+    <div class="aff-circle-logo">
+      <img src="${escapeHTML(logoUrl)}" alt="${escapeHTML(a.n)}" class="aff-circle-img" data-fallback="${escapeHTML(a.ico)}">
     </div>
-    <div class="aff-card-footer">
-      <div>
-        <span class="aff-bonus-label">Offre de bienvenue</span>
-        <span class="aff-bonus-value">${escapeHTML(a.bonus)}</span>
-      </div>
-      <span class="aff-btn-small" style="background:${a.accent}">${escapeHTML(a.btn)} →</span>
-    </div>
+    <span class="aff-circle-name">${escapeHTML(a.n)}</span>
+    <span class="aff-circle-bonus">${escapeHTML(a.bonus)}</span>
   </a>`;
 }).join('');
 
