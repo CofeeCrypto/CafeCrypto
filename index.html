@@ -57,13 +57,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--f);min-height:100v
 .logo-bar{
   position:sticky;top:56px;z-index:400;
   display:flex;align-items:center;justify-content:center;
-  height:60px;background:rgba(7,9,15,.97);
+  height:96px;background:rgba(7,9,15,.97);
   border-bottom:1px solid rgba(240,180,41,.1);backdrop-filter:blur(24px);
-  padding:0 20px;
+  margin-bottom:24px;padding:0 20px;
 }
 
 .logo-center{display:flex;align-items:center;justify-content:center;position:relative;z-index:2;}
-.logo-text-main{font-family:var(--hp);font-size:1.5rem;letter-spacing:.5px;background:linear-gradient(90deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.logo-text-main{font-family:var(--hp);font-size:2.1rem;letter-spacing:.5px;background:linear-gradient(90deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .logo-vapors{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
 .logo-vapor-img{
   position:absolute;bottom:4px;
@@ -602,7 +602,8 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .main-grid{display:grid;grid-template-columns:1fr 310px;gap:24px;}
   .tri-grid{grid-template-columns:repeat(3,1fr);gap:14px;}
   .page{padding:40px 24px 60px;}
-  .logo-bar{height:72px;}
+  .logo-bar{height:120px;}
+  .logo-text-main{font-size:2.6rem;}
   .theme-btn{bottom:20px;right:20px;}
   .notification{top:166px;right:20px;left:auto;max-width:350px;}
   .crypto-row{min-height:auto;padding:10px 14px;}
@@ -632,7 +633,7 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .community-section{order:11;}
   .chart-section{order:12;}
   
-  .logo-bar{height:56px;padding:0 10px;}
+  .logo-bar{height:88px;padding:0 10px;}
   .search-container{top:60px;right:10px;}
   .top100-mcap{display:none;}
   .top100-price{min-width:64px;}
