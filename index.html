@@ -92,10 +92,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--f);min-height:100v
 
 /* Recherche positionnée à droite - FIXE */
 .search-container{
-  position:fixed;
+  position:absolute;
   right:20px;
-  top:70px;
-  z-index:400;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:401;
 }
 
 .search-toggle{width:36px;height:36px;border-radius:50%;background:var(--s2);border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;color:var(--muted2);}
@@ -634,7 +635,7 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .chart-section{order:12;}
   
   .logo-bar{height:88px;padding:0 10px;}
-  .search-container{top:60px;right:10px;}
+  .search-container{right:10px;}
   .top100-mcap{display:none;}
   .top100-price{min-width:64px;}
 }
@@ -674,22 +675,20 @@ img,canvas{max-width:100%;}
   </div>
 </div>
 
-<!-- ═══ LOGO CENTRÉ + RECHERCHE FLOTTANTE ═══ -->
+<!-- ═══ LOGO CENTRÉ + RECHERCHE INTÉGRÉE ═══ -->
 <div class="logo-bar">
   <div class="logo-vapors" id="logoVapors" aria-hidden="true"></div>
   <div class="logo-center">
     <a href="#" class="logo-text-main" style="text-decoration:none;">CaféCrypto</a>
   </div>
-</div>
-
-<!-- RECHERCHE GLOBALE (FIXE) -->
-<div class="search-container">
-  <button class="search-toggle" id="searchToggle" aria-label="Rechercher une crypto" aria-expanded="false">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-  </button>
-  <div class="search-input-wrapper" id="searchInputWrapper">
-    <input type="text" class="global-search" id="globalSearch" placeholder="🔍 Rechercher une crypto..." autocomplete="off"/>
-    <div class="search-results" id="searchResults"></div>
+  <div class="search-container">
+    <button class="search-toggle" id="searchToggle" aria-label="Rechercher une crypto" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </button>
+    <div class="search-input-wrapper" id="searchInputWrapper">
+      <input type="text" class="global-search" id="globalSearch" placeholder="🔍 Rechercher une crypto..." autocomplete="off"/>
+      <div class="search-results" id="searchResults"></div>
+    </div>
   </div>
 </div>
 
