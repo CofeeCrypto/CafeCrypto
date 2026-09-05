@@ -84,7 +84,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--f);min-height:100v
   0%{transform:translate(var(--drift,0px),0);opacity:0;}
   12%{opacity:.9;}
   75%{opacity:.3;}
-  100%{transform:translate(var(--drift,0px),-58px);opacity:0;}
+  100%{transform:translate(var(--drift,0px),var(--rise,-58px));opacity:0;}
 }
 @media(prefers-reduced-motion:reduce){
   .logo-vapor-img,.logo-vapor-fallback{display:none;}
@@ -2450,8 +2450,11 @@ function spawnLogoVapor(){
   // sortir tantôt à gauche, tantôt à droite, jamais à une place fixe.
   const onLeft=Math.random()<0.5;
   const pos=2+Math.random()*32; // 2% à 34%
-  const dur=(3.6+Math.random()*1.8).toFixed(2)+'s'; // vitesse moyenne, légèrement variable
   const drift=(Math.random()*10-5).toFixed(1); // léger zigzag horizontal aléatoire
+  const barHeight=container.clientHeight||96;
+  const rise=barHeight-4; // monte jusqu'en haut de l'en-tête, au ras des tickers
+  const speed=15+Math.random()*6; // px/s — vitesse moyenne normale, légèrement variable
+  const dur=(rise/speed).toFixed(2)+'s';
 
   let el;
   if(coin&&coin.image){
@@ -2471,6 +2474,7 @@ function spawnLogoVapor(){
   el.style.animationDuration=dur;
   if(onLeft)el.style.left=pos+'%';else el.style.right=pos+'%';
   el.style.setProperty('--drift',drift+'px');
+  el.style.setProperty('--rise',(-rise)+'px');
 
   container.appendChild(el);
   setTimeout(()=>el.remove(),parseFloat(dur)*1000+200);
