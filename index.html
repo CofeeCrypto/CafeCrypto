@@ -477,6 +477,19 @@ section{scroll-margin-top:200px;}
 
 /* ─── AIRDROPS ─── */
 .airdrops-section{margin-top:24px;}
+
+/* ─── SANTÉ DU RÉSEAU ─── */
+.netstats-section{margin-top:24px;}
+.netstats-body{display:flex;flex-direction:column;gap:0;}
+.netstats-chain{padding:14px 16px;border-bottom:1px solid var(--b);}
+.netstats-chain:last-child{border-bottom:none;}
+.netstats-chain-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:.8rem;font-weight:700;color:var(--text);}
+.netstats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.netstats-stat{background:var(--s2);border:1px solid var(--b);border-radius:10px;padding:9px 10px;}
+.netstats-stat-label{font-family:var(--mono);font-size:.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+.netstats-stat-value{font-family:var(--mono);font-size:.8rem;font-weight:700;color:var(--text);}
+.netstats-stat-value.small{font-size:.68rem;}
+.netstats-foot{padding:8px 16px 14px;font-family:var(--mono);font-size:.56rem;color:var(--muted);text-align:center;border-top:1px solid var(--b);}
 .airdrop-list{display:flex;flex-direction:column;gap:12px;padding:14px;}
 .airdrop-item{display:flex;gap:12px;padding:13px;border-radius:12px;background:var(--s2);border:1px solid var(--b);transition:border-color .2s;}
 .airdrop-item:hover{border-color:rgba(167,139,250,.35);}
@@ -505,6 +518,36 @@ section{scroll-margin-top:200px;}
 .soc-btn.tg{background:rgba(0,136,204,.07);border-color:rgba(0,136,204,.2);color:#0088cc;}
 
 /* ─── GRAPHIQUE BTC ─── */
+/* ─── EXPLORATEUR D'ADRESSES ─── */
+.explorer-section{margin-top:24px;}
+.explorer-body{padding:16px;}
+.explorer-intro{font-size:.72rem;color:var(--muted2);line-height:1.5;margin-bottom:12px;}
+.explorer-search-row{display:flex;gap:8px;}
+.explorer-input{flex:1;min-width:0;padding:11px 12px;border-radius:10px;border:1px solid var(--b2);background:var(--s2);color:var(--text);font-family:var(--mono);font-size:.72rem;outline:none;transition:border-color .2s;}
+.explorer-input:focus{border-color:var(--purple);}
+.explorer-input::placeholder{color:var(--muted);}
+.explorer-btn{flex-shrink:0;padding:11px 16px;border-radius:10px;border:none;background:var(--purple);color:#07090f;font-family:var(--mono);font-size:.68rem;font-weight:700;cursor:pointer;transition:filter .2s;}
+.explorer-btn:hover{filter:brightness(1.1);}
+.explorer-btn:disabled{opacity:.5;cursor:not-allowed;}
+.explorer-result{margin-top:14px;}
+.explorer-card{background:var(--s2);border:1px solid var(--b);border-radius:12px;padding:14px;}
+.explorer-addr-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.explorer-addr{font-family:var(--mono);font-size:.68rem;color:var(--muted2);word-break:break-all;}
+.explorer-chain-badge{font-family:var(--mono);font-size:.55rem;font-weight:700;padding:3px 8px;border-radius:8px;flex-shrink:0;}
+.explorer-chain-badge.btc{color:var(--gold);background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.25);}
+.explorer-chain-badge.eth{color:var(--cyan);background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);}
+.explorer-balance-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.explorer-stat{background:var(--s1);border:1px solid var(--b);border-radius:10px;padding:10px;}
+.explorer-stat-label{font-family:var(--mono);font-size:.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+.explorer-stat-value{font-family:var(--mono);font-size:.82rem;font-weight:700;color:var(--text);}
+.explorer-tx-title{font-family:var(--mono);font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;}
+.explorer-tx-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--b);}
+.explorer-tx-amount{font-family:var(--mono);font-size:.72rem;font-weight:700;}
+.explorer-tx-amount.in{color:var(--green);}
+.explorer-tx-amount.out{color:var(--red);}
+.explorer-tx-time{font-family:var(--mono);font-size:.6rem;color:var(--muted);}
+.explorer-error{color:var(--red);font-size:.75rem;text-align:center;padding:16px;}
+
 .chart-section{margin-top:24px;animation:fadeUp .5s ease both;}
 .chart-card{background:var(--s1);border:1px solid var(--b);border-radius:16px;overflow:hidden;}
 .chart-hdr{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 16px 0;flex-wrap:wrap;gap:8px;}
@@ -628,12 +671,14 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .pub-section{order:4;}
   .crypto-tweets-section{order:5;}
   .knowledge-section{order:6;}
-  .airdrops-section{order:7;}
-  .events-section{order:8;}
-  .fng-section{order:9;}
-  .partners-section{order:10;}
-  .community-section{order:11;}
-  .chart-section{order:12;}
+  .explorer-section{order:7;}
+  .airdrops-section{order:8;}
+  .events-section{order:9;}
+  .fng-section{order:10;}
+  .netstats-section{order:11;}
+  .partners-section{order:12;}
+  .community-section{order:13;}
+  .chart-section{order:14;}
   
   .logo-bar{height:88px;padding:0 10px;}
   .search-container{right:10px;}
@@ -836,6 +881,24 @@ img,canvas{max-width:100%;}
     </div>
   </div>
 
+  <!-- EXPLORATEUR D'ADRESSES -->
+  <div class="explorer-section">
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">🔎 Explorateur d'adresses</div>
+        <span class="pill p-purple">BTC &amp; ETH</span>
+      </div>
+      <div class="explorer-body">
+        <p class="explorer-intro">Collez une adresse Bitcoin ou Ethereum pour voir son solde et ses dernières transactions, en clair.</p>
+        <div class="explorer-search-row">
+          <input type="text" class="explorer-input" id="explorerInput" placeholder="Adresse BTC (1.../3.../bc1...) ou ETH (0x...)" autocomplete="off">
+          <button class="explorer-btn" id="explorerBtn">Rechercher</button>
+        </div>
+        <div class="explorer-result" id="explorerResult"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- GRAPHIQUE BTC -->
   <div class="chart-section">
     <div class="chart-card">
@@ -901,6 +964,20 @@ img,canvas{max-width:100%;}
         <div class="fng-history-title">Historique réel · 7 derniers jours (source : alternative.me)</div>
         <canvas class="fng-history-chart" id="fngHistoryChart" role="img" aria-label="Historique de l'indice Fear and Greed sur 7 jours"></canvas>
       </div>
+    </div>
+  </div>
+
+  <!-- SANTÉ DU RÉSEAU -->
+  <div class="netstats-section">
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">🩺 Santé du réseau</div>
+        <span class="pill p-cyan">Temps réel</span>
+      </div>
+      <div class="netstats-body" id="netstatsBody">
+        <div class="loader"><div class="spinner"></div>Chargement…</div>
+      </div>
+      <div class="netstats-foot">Source : mempool.space (Bitcoin) &amp; Blockscout (Ethereum)</div>
     </div>
   </div>
 
@@ -2493,6 +2570,180 @@ function startLogoVapors(){
 }
 
 // ══════════════════════════════
+// SANTÉ DU RÉSEAU — vraies données on-chain (mempool.space pour BTC, sans clé ;
+// Blockscout ancienne API compatible Etherscan pour ETH, sans clé)
+// ══════════════════════════════
+function netStatBlock(label,value){
+  if(value===null||value===undefined||value==='')return'';
+  return `<div class="netstats-stat"><div class="netstats-stat-label">${escapeHTML(label)}</div><div class="netstats-stat-value">${value}</div></div>`;
+}
+
+async function fetchNetworkHealth(){
+  const body=$('netstatsBody');
+  if(!body)return;
+  try{
+    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
+    const results=await Promise.allSettled([
+      fetch('https://mempool.space/api/v1/fees/recommended',{signal:controller.signal}).then(r=>r.json()),
+      fetch('https://mempool.space/api/v1/difficulty-adjustment',{signal:controller.signal}).then(r=>r.json()),
+      fetch('https://mempool.space/api/v1/mining/hashrate/3d',{signal:controller.signal}).then(r=>r.json()),
+      fetch('https://mempool.space/api/mempool',{signal:controller.signal}).then(r=>r.json()),
+      fetch('https://eth.blockscout.com/api/v2/stats',{signal:controller.signal}).then(r=>r.json())
+    ]);
+    clearTimeout(timeout);
+
+    const [feesR,diffR,hashR,mempoolR,ethR]=results;
+    const fees=feesR.status==='fulfilled'?feesR.value:null;
+    const diff=diffR.status==='fulfilled'?diffR.value:null;
+    const hash=hashR.status==='fulfilled'?hashR.value:null;
+    const mempool=mempoolR.status==='fulfilled'?mempoolR.value:null;
+    const eth=ethR.status==='fulfilled'?ethR.value:null;
+
+    if(!fees&&!diff&&!hash&&!mempool&&!eth){
+      body.innerHTML='<div class="loader-error">Données réseau temporairement indisponibles</div>';
+      return;
+    }
+
+    let btcStats='';
+    if(hash&&hash.currentHashrate)btcStats+=netStatBlock('Hashrate',(hash.currentHashrate/1e18).toFixed(0)+' EH/s');
+    if(fees&&fees.fastestFee!=null)btcStats+=netStatBlock('Frais rapide',fees.fastestFee+' sat/vB');
+    if(mempool&&mempool.count!=null)btcStats+=netStatBlock('Mempool',mempool.count.toLocaleString('fr-FR')+' tx');
+    if(diff&&diff.difficultyChange!=null){
+      const chg=diff.difficultyChange;
+      btcStats+=`<div class="netstats-stat"><div class="netstats-stat-label">Prochain ajust.</div><div class="netstats-stat-value" style="color:${chg>=0?'var(--green)':'var(--red)'}">${chg>=0?'+':''}${chg.toFixed(1)}%</div></div>`;
+    }
+    if(!btcStats)btcStats=netStatBlock('Bitcoin','Indisponible');
+
+    let ethStats='';
+    if(eth&&eth.gas_prices){
+      if(eth.gas_prices.fast!=null)ethStats+=netStatBlock('Gas rapide',Math.round(eth.gas_prices.fast)+' gwei');
+      if(eth.gas_prices.slow!=null)ethStats+=netStatBlock('Gas lent',Math.round(eth.gas_prices.slow)+' gwei');
+    }
+    if(eth&&eth.average_block_time)ethStats+=netStatBlock('Temps/bloc',(eth.average_block_time/1000).toFixed(1)+' s');
+    if(eth&&eth.network_utilization_percentage!=null)ethStats+=netStatBlock('Utilisation réseau',Number(eth.network_utilization_percentage).toFixed(0)+'%');
+    if(!ethStats)ethStats=netStatBlock('Ethereum','Indisponible');
+
+    body.innerHTML=`
+      <div class="netstats-chain">
+        <div class="netstats-chain-hdr">🟠 Bitcoin</div>
+        <div class="netstats-grid">${btcStats}</div>
+      </div>
+      <div class="netstats-chain">
+        <div class="netstats-chain-hdr">🔷 Ethereum</div>
+        <div class="netstats-grid">${ethStats}</div>
+      </div>`;
+  }catch(e){
+    console.warn('Network health:',e);
+    body.innerHTML='<div class="loader-error">Données réseau temporairement indisponibles</div>';
+  }
+}
+
+// ══════════════════════════════
+// EXPLORATEUR D'ADRESSES — mempool.space (BTC) et Blockscout (ETH), sans clé
+// ══════════════════════════════
+function detectAddressChain(addr){
+  if(/^0x[a-fA-F0-9]{40}$/.test(addr))return'eth';
+  if(/^(bc1|tb1|[13])[a-km-zA-HJ-NP-Z0-9]{20,60}$/.test(addr))return'btc';
+  return null;
+}
+
+async function searchBtcAddress(addr,result){
+  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
+  const [infoR,txsR]=await Promise.all([
+    fetch(`https://mempool.space/api/address/${encodeURIComponent(addr)}`,{signal:controller.signal}),
+    fetch(`https://mempool.space/api/address/${encodeURIComponent(addr)}/txs`,{signal:controller.signal})
+  ]);
+  clearTimeout(timeout);
+  if(!infoR.ok)throw new Error('BTC address');
+  const info=await infoR.json();
+  const txs=txsR.ok?await txsR.json():[];
+
+  const funded=(info.chain_stats?.funded_txo_sum||0)+(info.mempool_stats?.funded_txo_sum||0);
+  const spent=(info.chain_stats?.spent_txo_sum||0)+(info.mempool_stats?.spent_txo_sum||0);
+  const balanceBtc=(funded-spent)/1e8;
+  const usd=btcUsd?balanceBtc*btcUsd:null;
+  const txCount=(info.chain_stats?.tx_count||0)+(info.mempool_stats?.tx_count||0);
+
+  let txHtml='';
+  txs.slice(0,5).forEach(tx=>{
+    let received=0,sent=0;
+    (tx.vout||[]).forEach(o=>{if(o.scriptpubkey_address===addr)received+=o.value||0;});
+    (tx.vin||[]).forEach(i=>{if(i.prevout&&i.prevout.scriptpubkey_address===addr)sent+=i.prevout.value||0;});
+    const net=(received-sent)/1e8;
+    const isIn=net>=0;
+    const when=(tx.status&&tx.status.block_time)?timeAgo(new Date(tx.status.block_time*1000).toISOString()):'en attente';
+    txHtml+=`<div class="explorer-tx-item"><span class="explorer-tx-amount ${isIn?'in':'out'}">${isIn?'+':''}${net.toFixed(6)} BTC</span><span class="explorer-tx-time">${when}</span></div>`;
+  });
+
+  result.innerHTML=`<div class="explorer-card">
+    <div class="explorer-addr-row"><span class="explorer-addr">${escapeHTML(addr)}</span><span class="explorer-chain-badge btc">BITCOIN</span></div>
+    <div class="explorer-balance-row">
+      <div class="explorer-stat"><div class="explorer-stat-label">Solde</div><div class="explorer-stat-value">${balanceBtc.toFixed(6)} BTC</div></div>
+      <div class="explorer-stat"><div class="explorer-stat-label">≈ USD</div><div class="explorer-stat-value">${usd!=null?fmtBig(usd):'—'}</div></div>
+    </div>
+    <div class="explorer-tx-title">${txCount.toLocaleString('fr-FR')} transactions · 5 dernières</div>
+    ${txHtml||'<div style="font-size:.7rem;color:var(--muted);padding:8px 0;">Aucune transaction</div>'}
+    <a href="https://mempool.space/address/${encodeURIComponent(addr)}" target="_blank" rel="noopener noreferrer" style="display:block;margin-top:10px;font-family:var(--mono);font-size:.62rem;color:var(--purple);text-align:center;">Voir sur mempool.space →</a>
+  </div>`;
+}
+
+async function searchEthAddress(addr,result){
+  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
+  const [balR,txR]=await Promise.all([
+    fetch(`https://eth.blockscout.com/api?module=account&action=balance&address=${addr}`,{signal:controller.signal}),
+    fetch(`https://eth.blockscout.com/api?module=account&action=txlist&address=${addr}&sort=desc&page=1&offset=5`,{signal:controller.signal})
+  ]);
+  clearTimeout(timeout);
+  if(!balR.ok)throw new Error('ETH balance');
+  const balJson=await balR.json();
+  const txJson=txR.ok?await txR.json():{result:[]};
+
+  const balanceEth=parseFloat(balJson.result||'0')/1e18;
+  const ethCoin=Object.values(liveData).find(c=>symOf(c)==='ETH');
+  const usd=ethCoin?balanceEth*ethCoin.current_price:null;
+
+  let txHtml='';
+  (Array.isArray(txJson.result)?txJson.result:[]).slice(0,5).forEach(tx=>{
+    const isIn=tx.to&&tx.to.toLowerCase()===addr.toLowerCase();
+    const val=parseFloat(tx.value||'0')/1e18;
+    const when=tx.timeStamp?timeAgo(new Date(parseInt(tx.timeStamp,10)*1000).toISOString()):'';
+    txHtml+=`<div class="explorer-tx-item"><span class="explorer-tx-amount ${isIn?'in':'out'}">${isIn?'+':'-'}${val.toFixed(5)} ETH</span><span class="explorer-tx-time">${escapeHTML(when)}</span></div>`;
+  });
+
+  result.innerHTML=`<div class="explorer-card">
+    <div class="explorer-addr-row"><span class="explorer-addr">${escapeHTML(addr)}</span><span class="explorer-chain-badge eth">ETHEREUM</span></div>
+    <div class="explorer-balance-row">
+      <div class="explorer-stat"><div class="explorer-stat-label">Solde</div><div class="explorer-stat-value">${balanceEth.toFixed(5)} ETH</div></div>
+      <div class="explorer-stat"><div class="explorer-stat-label">≈ USD</div><div class="explorer-stat-value">${usd!=null?fmtBig(usd):'—'}</div></div>
+    </div>
+    <div class="explorer-tx-title">5 dernières transactions</div>
+    ${txHtml||'<div style="font-size:.7rem;color:var(--muted);padding:8px 0;">Aucune transaction récente</div>'}
+    <a href="https://eth.blockscout.com/address/${encodeURIComponent(addr)}" target="_blank" rel="noopener noreferrer" style="display:block;margin-top:10px;font-family:var(--mono);font-size:.62rem;color:var(--purple);text-align:center;">Voir sur Blockscout →</a>
+  </div>`;
+}
+
+async function searchAddress(){
+  const input=$('explorerInput'),btn=$('explorerBtn'),result=$('explorerResult');
+  if(!input||!result)return;
+  const addr=(input.value||'').trim();
+  if(!addr){result.innerHTML='<div class="explorer-error">Entrez une adresse</div>';return;}
+  const chain=detectAddressChain(addr);
+  if(!chain){result.innerHTML='<div class="explorer-error">Format d\'adresse non reconnu (Bitcoin ou Ethereum uniquement)</div>';return;}
+
+  if(btn){btn.disabled=true;btn.textContent='Recherche…';}
+  result.innerHTML='<div class="loader"><div class="spinner"></div>Chargement…</div>';
+  try{
+    if(chain==='btc')await searchBtcAddress(addr,result);
+    else await searchEthAddress(addr,result);
+  }catch(e){
+    console.warn('Explorer:',e);
+    result.innerHTML='<div class="explorer-error">Impossible de récupérer les données pour cette adresse</div>';
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent='Rechercher';}
+  }
+}
+
+// ══════════════════════════════
 // INIT
 // ══════════════════════════════
 attachRowClickHandler('trendList');
@@ -2505,10 +2756,16 @@ initKnowledgeBase();
 startLogoVapors();
 fetchPrices().then(fetchGlobal);fetchFearGreed();fetchNews();loadChart(null,'1m');
 fetchCryptoTweets().then(renderTweets);
+fetchNetworkHealth();
+const explorerBtnEl=$('explorerBtn');
+if(explorerBtnEl)explorerBtnEl.addEventListener('click',searchAddress);
+const explorerInputEl=$('explorerInput');
+if(explorerInputEl)explorerInputEl.addEventListener('keydown',e=>{if(e.key==='Enter')searchAddress();});
 setInterval(fetchPrices,60000);
 setInterval(fetchGlobal,120000);
 setInterval(fetchFearGreed,300000);
 setInterval(fetchNews,300000);
+setInterval(fetchNetworkHealth,120000);
 </script>
 </body>
 </html>
