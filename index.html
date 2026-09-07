@@ -325,28 +325,6 @@ section{scroll-margin-top:200px;}
 
 /* ─── CARROUSEL ACTUALITÉS ─── */
 .articles-section{margin-top:24px;}
-
-/* ─── CLASSEMENT DEFI (TVL) ─── */
-.defi-section{margin-top:24px;}
-.defi-category-select{
-  font-family:var(--mono);font-size:.62rem;padding:6px 10px;border-radius:8px;
-  background:var(--s2);border:1px solid var(--b2);color:var(--text);cursor:pointer;
-  max-width:150px;
-}
-.defi-list{max-height:520px;overflow-y:auto;}
-.defi-row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--b);transition:background .15s;text-decoration:none;color:inherit;}
-.defi-row:last-child{border-bottom:none;}
-.defi-row:hover{background:var(--s2);}
-.defi-rank{font-family:var(--mono);font-size:.62rem;color:var(--muted);width:20px;flex-shrink:0;text-align:center;}
-.defi-icon{width:28px;height:28px;border-radius:50%;flex-shrink:0;overflow:hidden;background:var(--s2);border:1px solid var(--b);position:relative;}
-.defi-icon img{width:100%;height:100%;object-fit:cover;}
-.defi-info{flex:1;min-width:0;}
-.defi-name{font-size:.78rem;font-weight:700;color:var(--text);}
-.defi-category{font-family:var(--mono);font-size:.56rem;color:var(--muted);margin-top:1px;}
-.defi-right{text-align:right;flex-shrink:0;}
-.defi-tvl{font-family:var(--mono);font-size:.75rem;font-weight:600;color:var(--text);}
-.defi-chg{font-family:var(--mono);font-size:.6rem;margin-top:2px;}
-.defi-foot{padding:8px 16px 14px;font-family:var(--mono);font-size:.55rem;color:var(--muted);text-align:center;border-top:1px solid var(--b);}
 .carousel-wrap{position:relative;overflow:hidden;}
 .carousel-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1);}
 .carousel-slide{min-width:100%;flex-shrink:0;}
@@ -496,17 +474,6 @@ section{scroll-margin-top:200px;}
 .event-info{flex:1;min-width:0;}
 .event-title{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:3px;}
 .event-desc{font-size:.7rem;color:var(--muted2);line-height:1.4;}
-
-/* ─── HORLOGE DES HALVINGS (compacte) ─── */
-.halving-section{margin-top:24px;}
-.halving-body{display:flex;flex-direction:column;}
-.halving-row{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid var(--b);}
-.halving-row:last-child{border-bottom:none;}
-.halving-row-ico{font-size:.9rem;flex-shrink:0;}
-.halving-row-name{font-size:.7rem;font-weight:700;color:var(--text);width:44px;flex-shrink:0;}
-.halving-row-countdown{font-family:var(--mono);font-size:.68rem;font-weight:700;color:var(--gold);flex:1;text-align:right;}
-.halving-row-unavailable{font-family:var(--mono);font-size:.62rem;color:var(--muted);flex:1;text-align:right;}
-.halving-foot{padding:8px 16px 12px;font-family:var(--mono);font-size:.52rem;color:var(--muted);text-align:center;border-top:1px solid var(--b);}
 
 /* ─── AIRDROPS ─── */
 .airdrops-section{margin-top:24px;}
@@ -688,19 +655,17 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .col-right{display:contents;}
   .crypto-sections{order:1;}
   .top100-section{order:2;}
-  .defi-section{order:3;}
-  .articles-section{order:4;}
-  .pub-section{order:5;}
-  .crypto-tweets-section{order:6;}
-  .knowledge-section{order:7;}
-  .explorer-section{order:8;}
-  .airdrops-section{order:9;}
-  .events-section{order:10;}
-  .halving-section{order:11;}
-  .fng-section{order:12;}
-  .partners-section{order:13;}
-  .community-section{order:14;}
-  .chart-section{order:15;}
+  .articles-section{order:3;}
+  .pub-section{order:4;}
+  .crypto-tweets-section{order:5;}
+  .knowledge-section{order:6;}
+  .explorer-section{order:7;}
+  .airdrops-section{order:8;}
+  .events-section{order:9;}
+  .fng-section{order:10;}
+  .partners-section{order:11;}
+  .community-section{order:12;}
+  .chart-section{order:13;}
   
   .logo-bar{height:88px;padding:0 10px;}
   .search-container{right:10px;}
@@ -822,22 +787,6 @@ img,canvas{max-width:100%;}
         <span class="pagination-info" id="top100PageInfo">Page 1 / 10</span>
         <button class="pagination-btn" id="top100Next">›</button>
       </div>
-    </div>
-  </div>
-
-  <!-- CLASSEMENT TVL DEFI -->
-  <div class="defi-section">
-    <div class="card">
-      <div class="card-hdr">
-        <div class="card-title">💧 Classement DeFi (TVL)</div>
-        <select class="defi-category-select" id="defiCategorySelect">
-          <option value="all">Toutes catégories</option>
-        </select>
-      </div>
-      <div class="defi-list" id="defiList">
-        <div class="loader"><div class="spinner"></div>Chargement…</div>
-      </div>
-      <div class="defi-foot">Source : DeFiLlama · TVL = valeur totale verrouillée · actualisé toutes les 5 min</div>
     </div>
   </div>
 
@@ -1024,20 +973,6 @@ img,canvas{max-width:100%;}
       <div class="events-list" id="eventsList">
         <div class="loader"><div class="spinner"></div>Chargement…</div>
       </div>
-    </div>
-  </div>
-
-  <!-- HORLOGE DES HALVINGS -->
-  <div class="halving-section">
-    <div class="card">
-      <div class="card-hdr">
-        <div class="card-title">⏳ Horloge des Halvings</div>
-        <span class="pill p-gold">Live</span>
-      </div>
-      <div class="halving-body" id="halvingBody">
-        <div class="loader"><div class="spinner"></div>Chargement…</div>
-      </div>
-      <div class="halving-foot">Estimation basée sur la hauteur de bloc réelle · mempool.space (BTC) &amp; Blockchair (LTC, BCH, ZEC, BSV)</div>
     </div>
   </div>
 
@@ -2763,166 +2698,6 @@ async function searchAddress(){
 }
 
 // ══════════════════════════════
-// CLASSEMENT DEFI (TVL) — DeFiLlama, gratuit, sans clé
-// ══════════════════════════════
-let defiProtocols=[];
-
-async function fetchDefiProtocols(){
-  const list=$('defiList');
-  try{
-    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
-    const r=await fetch('https://api.llama.fi/protocols',{signal:controller.signal});
-    clearTimeout(timeout);
-    if(!r.ok)throw new Error(r.status);
-    const data=await r.json();
-    if(!Array.isArray(data)||!data.length)throw new Error('empty');
-    defiProtocols=data
-      .filter(p=>typeof p.tvl==='number'&&p.tvl>0)
-      .sort((a,b)=>b.tvl-a.tvl);
-    populateDefiCategories();
-    renderDefiList();
-  }catch(e){
-    console.warn('DeFiLlama:',e);
-    if(list)list.innerHTML='<div class="loader-error">Classement DeFi temporairement indisponible</div>';
-  }
-}
-
-function populateDefiCategories(){
-  const select=$('defiCategorySelect');
-  if(!select||select.dataset.populated)return;
-  const cats=[...new Set(defiProtocols.slice(0,150).map(p=>p.category).filter(Boolean))].sort();
-  select.innerHTML='<option value="all">Toutes catégories</option>'+cats.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
-  select.dataset.populated='1';
-}
-
-function renderDefiList(){
-  const list=$('defiList');if(!list)return;
-  const select=$('defiCategorySelect');
-  const cat=select?select.value:'all';
-  const filtered=(cat==='all'?defiProtocols:defiProtocols.filter(p=>p.category===cat)).slice(0,15);
-  if(!filtered.length){list.innerHTML='<div class="loader-error">Aucun protocole dans cette catégorie</div>';return;}
-  list.innerHTML=filtered.map((p,i)=>{
-    const chg=p.change_1d;
-    const chgTxt=(typeof chg==='number')?(chg>=0?'+':'')+chg.toFixed(1)+'%':'—';
-    const chgColor=(typeof chg==='number')?(chg>=0?'var(--green)':'var(--red)'):'var(--muted)';
-    return `<a href="https://defillama.com/protocol/${escapeHTML(p.slug||'')}" target="_blank" rel="noopener noreferrer" class="defi-row">
-      <span class="defi-rank">#${i+1}</span>
-      <div class="defi-icon"><img src="${escapeHTML(p.logo||'')}" alt="${escapeHTML(p.name||'')}" loading="lazy" data-fallback="${escapeHTML((p.symbol||p.name||'?').slice(0,2))}"></div>
-      <div class="defi-info">
-        <div class="defi-name">${escapeHTML(p.name||'')}</div>
-        <div class="defi-category">${escapeHTML(p.category||'')}</div>
-      </div>
-      <div class="defi-right">
-        <div class="defi-tvl">${fmtBig(p.tvl)}</div>
-        <div class="defi-chg" style="color:${chgColor}">${chgTxt}</div>
-      </div>
-    </a>`;
-  }).join('');
-}
-
-// ══════════════════════════════
-// HORLOGE DES HALVINGS — hauteur de bloc réelle (mempool.space pour BTC,
-// Blockchair pour LTC/BCH/BSV/ZEC), décompte calculé dynamiquement, pas une
-// date figée. Cas particulier : Zcash a changé d'intervalle de blocs lors de
-// la mise à jour Blossom (2019), donc sa formule générique ne s'applique pas ;
-// son prochain halving (bloc 4 406 400) est une valeur vérifiée et fixée.
-// ══════════════════════════════
-const HALVING_COINS=[
-  {id:'btc',name:'BTC',icon:'🟠',interval:210000,initialReward:50,avgBlockMs:600000},
-  {id:'ltc',name:'LTC',icon:'⚪',interval:840000,initialReward:50,avgBlockMs:150000},
-  {id:'bch',name:'BCH',icon:'🟢',interval:210000,initialReward:50,avgBlockMs:600000},
-  {id:'bsv',name:'BSV',icon:'🔶',interval:210000,initialReward:50,avgBlockMs:600000},
-  {id:'zec',name:'ZEC',icon:'🟡',fixedNextHalvingBlock:4406400,currentReward:1.5625,nextReward:0.78125,avgBlockMs:75000}
-];
-let halvingState=[];
-
-async function fetchHalvingData(){
-  const body=$('halvingBody');
-  try{
-    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
-    const [btcR,ltcR,bchR,bsvR,zecR]=await Promise.allSettled([
-      fetch('https://mempool.space/api/blocks/tip/height',{signal:controller.signal}).then(r=>r.text()),
-      fetch('https://api.blockchair.com/litecoin/stats',{signal:controller.signal}).then(r=>r.json()),
-      fetch('https://api.blockchair.com/bitcoin-cash/stats',{signal:controller.signal}).then(r=>r.json()),
-      fetch('https://api.blockchair.com/bitcoin-sv/stats',{signal:controller.signal}).then(r=>r.json()),
-      fetch('https://api.blockchair.com/zcash/stats',{signal:controller.signal}).then(r=>r.json())
-    ]);
-    clearTimeout(timeout);
-
-    const heights={
-      btc:btcR.status==='fulfilled'?parseInt(btcR.value,10):null,
-      ltc:ltcR.status==='fulfilled'?ltcR.value?.data?.blocks:null,
-      bch:bchR.status==='fulfilled'?bchR.value?.data?.blocks:null,
-      bsv:bsvR.status==='fulfilled'?bsvR.value?.data?.blocks:null,
-      zec:zecR.status==='fulfilled'?zecR.value?.data?.blocks:null
-    };
-
-    if(Object.values(heights).every(h=>!h)){
-      if(body)body.innerHTML='<div class="loader-error">Données indisponibles pour le moment</div>';
-      return;
-    }
-
-    halvingState=HALVING_COINS.map(c=>{
-      const h=heights[c.id];
-      if(!h||isNaN(h))return{...c,unavailable:true};
-
-      if(c.fixedNextHalvingBlock){
-        // Cas spécial (ex. Zcash) : intervalle non constant, cible fixe déjà connue
-        const blocksRemaining=c.fixedNextHalvingBlock-h;
-        return{
-          ...c,height:h,nextHalvingBlock:c.fixedNextHalvingBlock,blocksRemaining,
-          estimateTime:Date.now()+Math.max(blocksRemaining,0)*c.avgBlockMs
-        };
-      }
-
-      const halvingNum=Math.floor(h/c.interval);
-      const nextHalvingBlock=(halvingNum+1)*c.interval;
-      const blocksRemaining=nextHalvingBlock-h;
-      const currentReward=c.initialReward/Math.pow(2,halvingNum);
-      const nextReward=currentReward/2;
-      return{
-        ...c,height:h,nextHalvingBlock,blocksRemaining,
-        estimateTime:Date.now()+blocksRemaining*c.avgBlockMs,
-        currentReward,nextReward
-      };
-    });
-
-    renderHalvingClock();
-  }catch(e){
-    console.warn('Halving:',e);
-    if(body)body.innerHTML='<div class="loader-error">Données indisponibles pour le moment</div>';
-  }
-}
-
-function renderHalvingClock(){
-  const body=$('halvingBody');if(!body)return;
-  body.innerHTML=halvingState.map(c=>{
-    if(c.unavailable){
-      return `<div class="halving-row"><span class="halving-row-ico">${c.icon}</span><span class="halving-row-name">${escapeHTML(c.name)}</span><span class="halving-row-unavailable">Indisponible</span></div>`;
-    }
-    return `<div class="halving-row">
-      <span class="halving-row-ico">${c.icon}</span>
-      <span class="halving-row-name">${escapeHTML(c.name)}</span>
-      <span class="halving-row-countdown" id="halvingCountdown-${c.id}">…</span>
-    </div>`;
-  }).join('');
-  tickHalvingCountdowns();
-}
-
-function tickHalvingCountdowns(){
-  halvingState.forEach(c=>{
-    if(c.unavailable)return;
-    const el=$('halvingCountdown-'+c.id);
-    if(!el)return;
-    const diff=c.estimateTime-Date.now();
-    if(diff<=0){el.textContent='Atteint !';return;}
-    const days=Math.floor(diff/86400000);
-    const hours=Math.floor((diff%86400000)/3600000);
-    el.textContent=`${days.toLocaleString('fr-FR')}j ${hours}h`;
-  });
-}
-
-// ══════════════════════════════
 // INIT
 // ══════════════════════════════
 attachRowClickHandler('trendList');
@@ -2935,12 +2710,6 @@ initKnowledgeBase();
 startLogoVapors();
 fetchPrices().then(fetchGlobal);fetchFearGreed();fetchNews();loadChart(null,'1m');
 fetchCryptoTweets().then(renderTweets);
-fetchDefiProtocols();
-fetchHalvingData();
-setInterval(tickHalvingCountdowns,60000);
-setInterval(fetchHalvingData,600000);
-const defiCategorySelectEl=$('defiCategorySelect');
-if(defiCategorySelectEl)defiCategorySelectEl.addEventListener('change',renderDefiList);
 const explorerBtnEl=$('explorerBtn');
 if(explorerBtnEl)explorerBtnEl.addEventListener('click',searchAddress);
 const explorerInputEl=$('explorerInput');
@@ -2948,7 +2717,6 @@ if(explorerInputEl)explorerInputEl.addEventListener('keydown',e=>{if(e.key==='En
 setInterval(fetchPrices,60000);
 setInterval(fetchGlobal,120000);
 setInterval(fetchFearGreed,300000);
-setInterval(fetchDefiProtocols,300000);
 setInterval(fetchNews,300000);
 </script>
 </body>
