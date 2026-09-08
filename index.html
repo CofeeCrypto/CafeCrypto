@@ -371,10 +371,7 @@ section{scroll-margin-top:200px;}
 
 /* ─── PAROLES DE CRYPTO (déclarations vérifiées) ─── */
 .crypto-tweets-section{margin-top:24px;animation:fadeUp .5s ease both;}
-.tweets-list{max-height:600px;overflow-y:auto;}
-.tweet-item{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid var(--b);transition:background .15s;}
-.tweet-item:hover{background:var(--s2);}
-.tweet-item:last-child{border-bottom:none;}
+.tweet-item{display:flex;gap:12px;padding:20px 16px;min-height:180px;}
 .tweet-avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
 .tweet-content{flex:1;min-width:0;}
 .tweet-header{display:flex;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap;}
@@ -395,8 +392,7 @@ section{scroll-margin-top:200px;}
 .kb-category-btn{padding:8px 14px;border-radius:20px;border:1px solid var(--b);background:var(--s2);color:var(--muted2);font-size:.7rem;cursor:pointer;transition:all .2s;}
 .kb-category-btn:hover{border-color:var(--purple);color:var(--purple);}
 .kb-category-btn.active{background:rgba(167,139,250,.15);border-color:var(--purple);color:var(--purple);font-weight:600;}
-.kb-articles{display:grid;gap:12px;}
-.kb-article-card{background:var(--s2);border:1px solid var(--b);border-radius:12px;padding:16px;cursor:pointer;transition:all .2s;}
+.kb-article-card{background:var(--s2);border:1px solid var(--b);border-radius:12px;padding:16px;margin:14px 16px;cursor:pointer;transition:all .2s;min-height:150px;}
 .kb-article-card:hover{border-color:var(--purple);transform:translateY(-2px);}
 .kb-article-title{font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
 .kb-article-excerpt{font-size:.75rem;color:var(--muted);line-height:1.5;margin-bottom:12px;}
@@ -800,7 +796,7 @@ img,canvas{max-width:100%;}
         </div>
         <span class="pill p-cyan" id="newsTime">Live</span>
       </div>
-      <div class="carousel-wrap">
+      <div class="carousel-wrap" data-carousel="news">
         <div class="carousel-track" id="carouselTrack">
           <div class="carousel-slide"><div class="loader"><div class="spinner"></div>Chargement…</div></div>
         </div>
@@ -839,8 +835,18 @@ img,canvas{max-width:100%;}
         </div>
         <span class="pill p-cyan">Vérifié</span>
       </div>
-      <div class="tweets-list" id="cryptoTweetsList">
-        <div class="loader"><div class="spinner"></div>Chargement…</div>
+      <div class="carousel-wrap" data-carousel="tweets">
+        <div class="carousel-track" id="tweetsCarouselTrack">
+          <div class="carousel-slide"><div class="loader"><div class="spinner"></div>Chargement…</div></div>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <div class="carousel-dots" id="tweetsCarouselDots"></div>
+        <span class="carousel-counter" id="tweetsCarouselCounter"></span>
+        <div class="carousel-arrows">
+          <button class="c-arrow" id="tweetsCarouselPrevBtn" title="Précédent" aria-label="Déclaration précédente">‹</button>
+          <button class="c-arrow" id="tweetsCarouselNextBtn" title="Suivant" aria-label="Déclaration suivante">›</button>
+        </div>
       </div>
     </div>
   </div>
@@ -863,7 +869,17 @@ img,canvas{max-width:100%;}
           <input type="text" class="kb-search-input" id="kbSearch" placeholder="🔍 Rechercher un concept...">
         </div>
         <div class="kb-categories" id="kbCategories"></div>
-        <div class="kb-articles" id="kbArticles"></div>
+        <div class="carousel-wrap" data-carousel="kb">
+          <div class="carousel-track" id="kbCarouselTrack"></div>
+        </div>
+        <div class="carousel-controls">
+          <div class="carousel-dots" id="kbCarouselDots"></div>
+          <span class="carousel-counter" id="kbCarouselCounter"></span>
+          <div class="carousel-arrows">
+            <button class="c-arrow" id="kbCarouselPrevBtn" title="Précédent" aria-label="Article précédent">‹</button>
+            <button class="c-arrow" id="kbCarouselNextBtn" title="Suivant" aria-label="Article suivant">›</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2075,10 +2091,27 @@ function carouselNext(){if(!carouselItems.length)return;carouselIdx=(carouselIdx
 function carouselPrev(){if(!carouselItems.length)return;carouselIdx=(carouselIdx-1+carouselItems.length)%carouselItems.length;updateCarousel();}
 function goToSlide(i){carouselIdx=i;updateCarousel();if(carouselTimer)clearInterval(carouselTimer);carouselTimer=setInterval(carouselNext,8000);}
 
+const CAROUSEL_HANDLERS={
+  news:{next:carouselNext,prev:carouselPrev},
+  tweets:{next:tweetsCarouselNext,prev:tweetsCarouselPrev},
+  kb:{next:kbCarouselNext,prev:kbCarouselPrev}
+};
+
 (function initSwipe(){
-  let startX=0;
-  document.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;},{passive:true});
-  document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-startX;const carousel=document.querySelector('.carousel-wrap');if(carousel&&Math.abs(dx)>50){dx<0?carouselNext():carouselPrev();}},{passive:true});
+  let startX=0,startWrap=null;
+  document.addEventListener('touchstart',e=>{
+    startX=e.touches[0].clientX;
+    startWrap=e.target.closest('.carousel-wrap');
+  },{passive:true});
+  document.addEventListener('touchend',e=>{
+    if(!startWrap)return;
+    const dx=e.changedTouches[0].clientX-startX;
+    if(Math.abs(dx)>50){
+      const handler=CAROUSEL_HANDLERS[startWrap.dataset.carousel];
+      if(handler)dx<0?handler.next():handler.prev();
+    }
+    startWrap=null;
+  },{passive:true});
 })();
 
 // ══════════════════════════════
@@ -2155,17 +2188,23 @@ function fetchCryptoTweets(){
   return Promise.resolve(CRYPTO_POSTS.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)));
 }
 
+let tweetsCarouselIdx=0,tweetsCarouselTimer=null,tweetsCarouselPosts=[];
+
 function renderTweets(posts) {
-    const list = document.getElementById('cryptoTweetsList');
-    if (!list) return;
-    
+    const track=$('tweetsCarouselTrack');
+    const dots=$('tweetsCarouselDots');
+    if(!track)return;
+
     if (!posts.length) {
-        list.innerHTML = '<div class="loader-error">Aucune déclaration de moins de 5 jours pour le moment</div>';
+        track.innerHTML = '<div class="carousel-slide"><div class="loader-error">Aucune déclaration de moins de 5 jours pour le moment</div></div>';
+        if(dots)dots.innerHTML='';
         return;
     }
-    
-    list.innerHTML = posts.map(post => `
-        <div class="tweet-item">
+
+    tweetsCarouselPosts=posts;
+    track.innerHTML = posts.map(post => `
+        <div class="carousel-slide">
+          <div class="tweet-item">
             <div class="tweet-avatar">${post.emoji}</div>
             <div class="tweet-content">
                 <div class="tweet-header">
@@ -2177,9 +2216,34 @@ function renderTweets(posts) {
                 <div class="tweet-metrics"><span>📰 Source : ${escapeHTML(post.source)}</span></div>
                 <span class="pill ${post.pill}">${escapeHTML(post.topic)}</span>
             </div>
+          </div>
         </div>
     `).join('');
+
+    if(dots){
+      dots.innerHTML=posts.map((_,i)=>`<button class="c-dot${i===0?' active':''}" data-slide-index="${i}" aria-label="Aller à la déclaration ${i+1}"></button>`).join('');
+      dots.onclick=function(e){
+        const dot=e.target.closest('.c-dot');
+        if(dot&&dot.dataset.slideIndex!==undefined)goToTweetsSlide(parseInt(dot.dataset.slideIndex,10));
+      };
+    }
+    tweetsCarouselIdx=0;
+    updateTweetsCarousel();
+    if(tweetsCarouselTimer)clearInterval(tweetsCarouselTimer);
+    if(posts.length>1)tweetsCarouselTimer=setInterval(tweetsCarouselNext,9000);
 }
+
+function updateTweetsCarousel(){
+  const track=$('tweetsCarouselTrack');
+  const dots=document.querySelectorAll('#tweetsCarouselDots .c-dot');
+  const counter=$('tweetsCarouselCounter');
+  if(track)track.style.transform=`translateX(-${tweetsCarouselIdx*100}%)`;
+  dots.forEach((d,i)=>d.classList.toggle('active',i===tweetsCarouselIdx));
+  if(counter&&tweetsCarouselPosts.length)counter.textContent=`${tweetsCarouselIdx+1} / ${tweetsCarouselPosts.length}`;
+}
+function tweetsCarouselNext(){if(!tweetsCarouselPosts.length)return;tweetsCarouselIdx=(tweetsCarouselIdx+1)%tweetsCarouselPosts.length;updateTweetsCarousel();}
+function tweetsCarouselPrev(){if(!tweetsCarouselPosts.length)return;tweetsCarouselIdx=(tweetsCarouselIdx-1+tweetsCarouselPosts.length)%tweetsCarouselPosts.length;updateTweetsCarousel();}
+function goToTweetsSlide(i){tweetsCarouselIdx=i;updateTweetsCarousel();if(tweetsCarouselTimer)clearInterval(tweetsCarouselTimer);tweetsCarouselTimer=setInterval(tweetsCarouselNext,9000);}
 
 // ══════════════════════════════
 // BASE DE CONNAISSANCES
@@ -2317,9 +2381,12 @@ function renderKbCategories() {
     });
 }
 
+let kbCarouselIdx=0,kbCarouselTimer=null,kbCarouselArticles=[];
+
 function renderKbArticles() {
-    const container = document.getElementById('kbArticles');
-    if (!container) return;
+    const track = document.getElementById('kbCarouselTrack');
+    const dots = document.getElementById('kbCarouselDots');
+    if (!track) return;
     
     let articles = KNOWLEDGE_BASE.articles;
     
@@ -2335,12 +2402,17 @@ function renderKbArticles() {
     }
     
     if (!articles.length) {
-        container.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted2);">Aucun article trouvé</div>';
+        track.innerHTML = '<div class="carousel-slide"><div style="text-align:center;padding:30px;color:var(--muted2);">Aucun article trouvé</div></div>';
+        if(dots)dots.innerHTML='';
+        kbCarouselArticles=[];
+        if(kbCarouselTimer)clearInterval(kbCarouselTimer);
         return;
     }
     
-    container.innerHTML = articles.map(article => `
-        <div class="kb-article-card" data-article-id="${article.id}">
+    kbCarouselArticles=articles;
+    track.innerHTML = articles.map(article => `
+        <div class="carousel-slide">
+          <div class="kb-article-card" data-article-id="${article.id}">
             <div class="kb-article-title">
                 <span class="kb-article-icon">${article.icon}</span>
                 ${article.title}
@@ -2351,10 +2423,11 @@ function renderKbArticles() {
                 <span>📊 ${article.difficulty}</span>
                 <span class="kb-article-read">Lire →</span>
             </div>
+          </div>
         </div>
     `).join('');
     
-    container.querySelectorAll('.kb-article-card').forEach(card => {
+    track.querySelectorAll('.kb-article-card').forEach(card => {
         card.addEventListener('click', function() {
             const articleId = this.dataset.articleId;
             const article = KNOWLEDGE_BASE.articles.find(a => a.id === articleId);
@@ -2363,7 +2436,31 @@ function renderKbArticles() {
             }
         });
     });
+
+    if(dots){
+      dots.innerHTML=articles.map((_,i)=>`<button class="c-dot${i===0?' active':''}" data-slide-index="${i}" aria-label="Aller à l'article ${i+1}"></button>`).join('');
+      dots.onclick=function(e){
+        const dot=e.target.closest('.c-dot');
+        if(dot&&dot.dataset.slideIndex!==undefined)goToKbSlide(parseInt(dot.dataset.slideIndex,10));
+      };
+    }
+    kbCarouselIdx=0;
+    updateKbCarousel();
+    if(kbCarouselTimer)clearInterval(kbCarouselTimer);
+    if(articles.length>1)kbCarouselTimer=setInterval(kbCarouselNext,9000);
 }
+
+function updateKbCarousel(){
+  const track=$('kbCarouselTrack');
+  const dots=document.querySelectorAll('#kbCarouselDots .c-dot');
+  const counter=$('kbCarouselCounter');
+  if(track)track.style.transform=`translateX(-${kbCarouselIdx*100}%)`;
+  dots.forEach((d,i)=>d.classList.toggle('active',i===kbCarouselIdx));
+  if(counter&&kbCarouselArticles.length)counter.textContent=`${kbCarouselIdx+1} / ${kbCarouselArticles.length}`;
+}
+function kbCarouselNext(){if(!kbCarouselArticles.length)return;kbCarouselIdx=(kbCarouselIdx+1)%kbCarouselArticles.length;updateKbCarousel();}
+function kbCarouselPrev(){if(!kbCarouselArticles.length)return;kbCarouselIdx=(kbCarouselIdx-1+kbCarouselArticles.length)%kbCarouselArticles.length;updateKbCarousel();}
+function goToKbSlide(i){kbCarouselIdx=i;updateKbCarousel();if(kbCarouselTimer)clearInterval(kbCarouselTimer);kbCarouselTimer=setInterval(kbCarouselNext,9000);}
 
 function setupKbSearch() {
     const searchInput = document.getElementById('kbSearch');
@@ -2459,6 +2556,12 @@ function initStaticControls(){
   const cPrev=$('carouselPrevBtn'),cNext=$('carouselNextBtn');
   if(cPrev)cPrev.addEventListener('click',carouselPrev);
   if(cNext)cNext.addEventListener('click',carouselNext);
+  const tPrev=$('tweetsCarouselPrevBtn'),tNext=$('tweetsCarouselNextBtn');
+  if(tPrev)tPrev.addEventListener('click',tweetsCarouselPrev);
+  if(tNext)tNext.addEventListener('click',tweetsCarouselNext);
+  const kPrev=$('kbCarouselPrevBtn'),kNext=$('kbCarouselNextBtn');
+  if(kPrev)kPrev.addEventListener('click',kbCarouselPrev);
+  if(kNext)kNext.addEventListener('click',kbCarouselNext);
   const chartInfoBtn=$('chartInfoBtn');
   if(chartInfoBtn)chartInfoBtn.addEventListener('click',toggleChartInfo);
   const ctabs=document.querySelector('.ctabs');
