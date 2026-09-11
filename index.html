@@ -383,21 +383,54 @@ section{scroll-margin-top:200px;}
 
 /* ─── BASE DE CONNAISSANCES ─── */
 .knowledge-section{margin-top:24px;animation:fadeUp .5s ease both;}
+.kb-card{
+  position:relative;overflow:hidden;
+  background:linear-gradient(165deg,rgba(167,139,250,.09),rgba(56,189,248,.03) 55%,var(--s1) 75%);
+  border:1px solid rgba(167,139,250,.22);
+  box-shadow:0 16px 40px -28px rgba(167,139,250,.6);
+}
+.kb-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--purple),var(--cyan),var(--gold),var(--purple));
+  background-size:200% 100%;animation:kbGrad 6s linear infinite;
+}
+@keyframes kbGrad{to{background-position:200% 0;}}
+.kb-hdr{background:linear-gradient(135deg,rgba(167,139,250,.12),rgba(56,189,248,.05));border-bottom-color:rgba(167,139,250,.18);}
+.kb-hdr .card-title{font-weight:700;letter-spacing:.2px;}
+.kb-hdr-icon{
+  display:flex;align-items:center;justify-content:center;
+  width:26px;height:26px;border-radius:8px;flex-shrink:0;
+  background:linear-gradient(135deg,rgba(167,139,250,.25),rgba(56,189,248,.15));
+  color:var(--purple);border:1px solid rgba(167,139,250,.3);
+}
 .kb-content{padding:16px;}
 .kb-search{margin-bottom:16px;}
 .kb-search-input{width:100%;padding:12px 16px;border-radius:8px;border:1px solid var(--b);background:var(--s2);color:var(--text);font-size:.85rem;outline:none;transition:border-color .2s;}
-.kb-search-input:focus{border-color:var(--purple);}
+.kb-search-input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(167,139,250,.15);}
 .kb-search-input::placeholder{color:var(--muted);}
 .kb-categories{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
 .kb-category-btn{padding:8px 14px;border-radius:20px;border:1px solid var(--b);background:var(--s2);color:var(--muted2);font-size:.7rem;cursor:pointer;transition:all .2s;}
-.kb-category-btn:hover{border-color:var(--purple);color:var(--purple);}
-.kb-category-btn.active{background:rgba(167,139,250,.15);border-color:var(--purple);color:var(--purple);font-weight:600;}
-.kb-article-card{background:var(--s2);border:1px solid var(--b);border-radius:12px;padding:16px;margin:14px 16px;cursor:pointer;transition:all .2s;min-height:150px;}
-.kb-article-card:hover{border-color:var(--purple);transform:translateY(-2px);}
-.kb-article-title{font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.kb-category-btn:hover{border-color:var(--cat-c,var(--purple));color:var(--cat-c,var(--purple));background:var(--cat-bg,rgba(167,139,250,.08));}
+.kb-category-btn.active{background:var(--cat-bg,rgba(167,139,250,.15));border-color:var(--cat-c,var(--purple));color:var(--cat-c,var(--purple));font-weight:700;box-shadow:0 0 0 1px var(--cat-c,var(--purple)) inset;}
+.kb-article-card{
+  position:relative;background:linear-gradient(135deg,var(--s2),var(--s1));
+  border:1px solid var(--b);border-left:3px solid var(--cat-c,var(--purple));
+  border-radius:12px;padding:16px 16px 16px 18px;margin:14px 16px;cursor:pointer;
+  transition:all .2s;min-height:150px;
+}
+.kb-article-card:hover{border-color:var(--cat-c,var(--purple));border-left-color:var(--cat-c,var(--purple));transform:translateY(-3px);box-shadow:0 10px 24px -14px var(--cat-c,rgba(167,139,250,.6));}
+.kb-article-title{font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:9px;}
+.kb-article-icon{
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  width:28px;height:28px;border-radius:8px;font-size:.95rem;
+  background:var(--cat-bg,rgba(167,139,250,.15));border:1px solid var(--cat-c,rgba(167,139,250,.3));
+}
 .kb-article-excerpt{font-size:.75rem;color:var(--muted);line-height:1.5;margin-bottom:12px;}
 .kb-article-meta{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.6rem;color:var(--muted);}
-.kb-article-read{color:var(--purple);font-weight:600;}
+.kb-article-read{color:var(--cat-c,var(--purple));font-weight:700;}
+.kb-article-diff{
+  padding:1px 6px;border-radius:6px;background:var(--cat-bg,rgba(167,139,250,.12));color:var(--cat-c,var(--purple));
+}
 .kb-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.9);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;}
 .kb-modal.active{display:flex;}
 .kb-modal-content{background:var(--s1);border:1px solid var(--b2);border-radius:16px;max-width:700px;width:100%;max-height:80vh;overflow-y:auto;position:relative;}
@@ -640,6 +673,22 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .c-arrow:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(56,189,248,.07);}
   .ctab:hover{background:var(--s2);color:var(--cyan);border-color:rgba(56,189,248,.3);}
   .aff-circle:hover{transform:translateY(-4px);}
+
+  /* Sections Partenaires & Événements réduites (colonne droite) */
+  .partners-section .card-hdr,.events-section .card-hdr{padding:10px 14px;}
+  .partners-section .card-title,.events-section .card-title{font-size:.75rem;}
+  .partners-intro{padding:2px 14px 6px;font-size:.65rem;}
+  .affs-circles{gap:4px;padding:4px 8px 10px;}
+  .aff-circle{width:72px;gap:5px;}
+  .aff-circle-logo{width:46px;height:46px;}
+  .aff-circle-img{width:26px;height:26px;}
+  .aff-circle-name{font-size:.68rem;}
+  .aff-circle-bonus{font-size:.5rem;}
+  .aff-disclaimer{padding:0 12px 10px;font-size:.48rem;}
+  .event-item{padding:9px 14px;gap:9px;}
+  .event-date{font-size:.55rem;padding:5px 6px;min-width:54px;}
+  .event-title{font-size:.72rem;margin-bottom:2px;}
+  .event-desc{font-size:.64rem;}
 }
 
 /* ═══════════════════════════════
@@ -823,6 +872,41 @@ img,canvas{max-width:100%;}
     </div>
   </div>
 
+  <!-- BASE DE CONNAISSANCES -->
+  <div class="knowledge-section kb-vivid">
+    <div class="card kb-card">
+      <div class="card-hdr kb-hdr">
+        <div class="card-title">
+          <span class="kb-hdr-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </span>
+          Base de Connaissances
+        </div>
+        <span class="pill p-purple">Interactive</span>
+      </div>
+      <div class="kb-content">
+        <div class="kb-search">
+          <input type="text" class="kb-search-input" id="kbSearch" placeholder="🔍 Rechercher un concept...">
+        </div>
+        <div class="kb-categories" id="kbCategories"></div>
+        <div class="carousel-wrap" data-carousel="kb">
+          <div class="carousel-track" id="kbCarouselTrack"></div>
+        </div>
+        <div class="carousel-controls">
+          <div class="carousel-dots" id="kbCarouselDots"></div>
+          <span class="carousel-counter" id="kbCarouselCounter"></span>
+          <div class="carousel-arrows">
+            <button class="c-arrow" id="kbCarouselPrevBtn" title="Précédent" aria-label="Article précédent">‹</button>
+            <button class="c-arrow" id="kbCarouselNextBtn" title="Suivant" aria-label="Article suivant">›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- GRAPHIQUE BTC -->
   <div class="chart-section">
     <div class="chart-card">
@@ -914,39 +998,6 @@ img,canvas{max-width:100%;}
         <div class="carousel-arrows">
           <button class="c-arrow" id="tweetsCarouselPrevBtn" title="Précédent" aria-label="Déclaration précédente">‹</button>
           <button class="c-arrow" id="tweetsCarouselNextBtn" title="Suivant" aria-label="Déclaration suivante">›</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BASE DE CONNAISSANCES -->
-  <div class="knowledge-section">
-    <div class="card">
-      <div class="card-hdr">
-        <div class="card-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-          </svg>
-          Base de Connaissances
-        </div>
-        <span class="pill p-purple">Interactive</span>
-      </div>
-      <div class="kb-content">
-        <div class="kb-search">
-          <input type="text" class="kb-search-input" id="kbSearch" placeholder="🔍 Rechercher un concept...">
-        </div>
-        <div class="kb-categories" id="kbCategories"></div>
-        <div class="carousel-wrap" data-carousel="kb">
-          <div class="carousel-track" id="kbCarouselTrack"></div>
-        </div>
-        <div class="carousel-controls">
-          <div class="carousel-dots" id="kbCarouselDots"></div>
-          <span class="carousel-counter" id="kbCarouselCounter"></span>
-          <div class="carousel-arrows">
-            <button class="c-arrow" id="kbCarouselPrevBtn" title="Précédent" aria-label="Article précédent">‹</button>
-            <button class="c-arrow" id="kbCarouselNextBtn" title="Suivant" aria-label="Article suivant">›</button>
-          </div>
         </div>
       </div>
     </div>
@@ -2351,6 +2402,22 @@ const KNOWLEDGE_BASE = {
 let currentKbCategory = 'all';
 let currentKbSearch = '';
 
+const KB_CAT_COLORS = {
+    all: '#a78bfa',
+    basics: '#a78bfa',
+    trading: '#22c55e',
+    defi: '#38bdf8',
+    nft: '#fb923c',
+    security: '#ef4444',
+    analysis: '#f0b429'
+};
+function kbCatStyle(catId){
+    const hex = KB_CAT_COLORS[catId] || KB_CAT_COLORS.all;
+    const n = parseInt(hex.slice(1),16);
+    const r=(n>>16)&255, g=(n>>8)&255, b=n&255;
+    return `--cat-c:${hex};--cat-bg:rgba(${r},${g},${b},.15)`;
+}
+
 function initKnowledgeBase() {
     renderKbCategories();
     renderKbArticles();
@@ -2362,11 +2429,11 @@ function renderKbCategories() {
     if (!container) return;
     
     container.innerHTML = `
-        <button class="kb-category-btn ${currentKbCategory === 'all' ? 'active' : ''}" data-category="all">
+        <button class="kb-category-btn ${currentKbCategory === 'all' ? 'active' : ''}" data-category="all" style="${kbCatStyle('all')}">
             Tous les sujets
         </button>
         ${KNOWLEDGE_BASE.categories.map(cat => `
-            <button class="kb-category-btn ${currentKbCategory === cat.id ? 'active' : ''}" data-category="${cat.id}">
+            <button class="kb-category-btn ${currentKbCategory === cat.id ? 'active' : ''}" data-category="${cat.id}" style="${kbCatStyle(cat.id)}">
                 ${cat.name}
             </button>
         `).join('')}
@@ -2412,7 +2479,7 @@ function renderKbArticles() {
     kbCarouselArticles=articles;
     track.innerHTML = articles.map(article => `
         <div class="carousel-slide">
-          <div class="kb-article-card" data-article-id="${article.id}">
+          <div class="kb-article-card" data-article-id="${article.id}" style="${kbCatStyle(article.category)}">
             <div class="kb-article-title">
                 <span class="kb-article-icon">${article.icon}</span>
                 ${article.title}
@@ -2420,7 +2487,7 @@ function renderKbArticles() {
             <div class="kb-article-excerpt">${article.excerpt}</div>
             <div class="kb-article-meta">
                 <span>⏱️ ${article.readTime}</span>
-                <span>📊 ${article.difficulty}</span>
+                <span class="kb-article-diff">📊 ${article.difficulty}</span>
                 <span class="kb-article-read">Lire →</span>
             </div>
           </div>
