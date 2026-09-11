@@ -621,6 +621,79 @@ section{scroll-margin-top:200px;}
 canvas#btcChart{position:absolute;inset:0;width:100%!important;height:100%!important;}
 .chart-foot{padding:6px 16px;font-family:var(--mono);font-size:.55rem;color:var(--muted);text-align:right;border-top:1px solid var(--b);}
 
+/* ─── FICHE CRYPTO PLEIN ÉCRAN (style OKX) ─── */
+.coin-detail-page{position:fixed;inset:0;z-index:2000;background:var(--bg);display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.coin-detail-page.active{display:flex;}
+.cd-header{display:flex;align-items:center;gap:10px;padding:14px 14px;border-bottom:1px solid var(--b);position:sticky;top:0;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);z-index:6;}
+.cd-back{background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer;display:flex;align-items:center;padding:4px;flex-shrink:0;}
+.cd-symbol-row{display:flex;align-items:center;gap:8px;flex:1;min-width:0;}
+.cd-symbol{font-size:1.05rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cd-pill-spot{font-family:var(--mono);font-size:.58rem;padding:3px 8px;border-radius:6px;background:var(--s2);border:1px solid var(--b2);color:var(--muted2);flex-shrink:0;}
+.cd-icons{display:flex;align-items:center;gap:14px;flex-shrink:0;}
+.cd-icon-btn{background:none;border:none;color:var(--muted2);cursor:pointer;display:flex;align-items:center;padding:2px;transition:color .2s;}
+.cd-icon-btn:hover{color:var(--text);}
+.cd-icon-btn.fav-active{color:var(--gold);}
+
+.cd-tabs{display:flex;gap:20px;padding:0 16px;border-bottom:1px solid var(--b);overflow-x:auto;position:sticky;top:52px;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);z-index:6;}
+.cd-tab{font-size:.82rem;font-weight:600;color:var(--muted2);padding:12px 0;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;}
+.cd-tab.active{color:var(--text);border-bottom-color:var(--cyan);}
+
+.cd-panel{display:none;}
+.cd-panel.active{display:block;}
+
+.cd-price-block{padding:16px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.cd-lastp-lbl{color:var(--muted2);font-size:.75rem;margin-bottom:4px;}
+.cd-lastp{font-size:2rem;font-weight:800;line-height:1;margin-bottom:6px;}
+.cd-usdp-row{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.82rem;margin-bottom:4px;color:var(--text);}
+.cd-mark{color:var(--muted2);font-size:.72rem;margin-bottom:8px;}
+.cd-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.7rem;color:var(--muted2);font-family:var(--mono);}
+.cd-badges b{color:var(--gold);font-weight:700;}
+.cd-badges .sep{color:var(--b2);}
+.cd-stats-right{display:flex;flex-direction:column;gap:7px;font-size:.78rem;min-width:150px;}
+.cd-stats-right div{display:flex;justify-content:space-between;gap:16px;color:var(--muted2);}
+.cd-stats-right span.v{color:var(--text);font-family:var(--mono);font-size:.75rem;}
+
+.cd-banner{margin:0 16px 12px;padding:10px 12px;background:var(--s2);border:1px solid var(--b);border-radius:10px;display:flex;align-items:center;gap:8px;font-size:.74rem;color:var(--muted2);text-decoration:none;}
+.cd-banner:hover{border-color:var(--cyan);}
+.cd-banner .txt{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cd-banner .x{color:var(--muted);flex-shrink:0;}
+
+.cd-tf-row{display:flex;align-items:center;gap:2px;padding:4px 12px;overflow-x:auto;border-top:1px solid var(--b);border-bottom:1px solid var(--b);}
+.cd-tf{font-family:var(--mono);font-size:.72rem;padding:8px 11px;border-radius:8px;border:none;background:none;color:var(--muted2);cursor:pointer;white-space:nowrap;}
+.cd-tf.active{background:var(--s2);color:var(--text);font-weight:700;}
+.cd-tf-more{margin-left:auto;}
+
+.cd-chart-wrap{position:relative;height:300px;padding-top:10px;}
+canvas#cdChart{position:absolute;inset:0;width:100%!important;height:100%!important;}
+.cd-vol-wrap{position:relative;height:64px;border-top:1px solid var(--b);}
+canvas#cdVolChart{position:absolute;inset:0;width:100%!important;height:100%!important;}
+
+.cd-ind-tabs{display:flex;gap:2px;padding:8px 10px;overflow-x:auto;border-top:1px solid var(--b);}
+.cd-ind-tab{font-family:var(--mono);font-size:.63rem;padding:6px 9px;border-radius:6px;border:none;background:none;color:var(--muted2);cursor:pointer;white-space:nowrap;}
+.cd-ind-tab.active{color:var(--cyan);background:rgba(56,189,248,.08);}
+
+.cd-info-section{padding:16px;}
+.cd-website-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;border:1px solid var(--b2);background:var(--s2);color:var(--cyan);font-size:.78rem;text-decoration:none;margin-bottom:14px;}
+.cd-desc{font-size:.82rem;color:var(--muted2);line-height:1.7;}
+.cd-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.cd-stat-card{background:var(--s2);border:1px solid var(--b);border-radius:10px;padding:12px;}
+.cd-stat-card .lbl{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px;}
+.cd-stat-card .val{font-size:.88rem;font-weight:700;color:var(--text);}
+
+.cd-feed-item{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--b);text-decoration:none;color:inherit;}
+.cd-feed-item:hover{background:var(--s2);}
+.cd-feed-item img{width:52px;height:52px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--s2);}
+.cd-feed-title{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:4px;line-height:1.4;}
+.cd-feed-src{font-family:var(--mono);font-size:.58rem;color:var(--muted);}
+
+.cd-trading-note{margin:16px;padding:18px;border:1px solid rgba(240,180,41,.25);background:rgba(240,180,41,.06);border-radius:12px;font-size:.8rem;color:var(--muted2);line-height:1.6;text-align:center;}
+
+@media(min-width:768px){
+  .cd-price-block{padding:22px 24px 0;}
+  .cd-chart-wrap{height:400px;}
+  .cd-info-section{max-width:700px;margin:0 auto;}
+}
+
 /* ─── MODALE GRAPHIQUE ─── */
 .modal-overlay{
   position:fixed;top:0;left:0;right:0;bottom:0;
@@ -1196,6 +1269,128 @@ img,canvas{max-width:100%;}
   </div>
 </div>
 
+<!-- ═══ FICHE CRYPTO PLEIN ÉCRAN (façon app d'échange) ═══ -->
+<div class="coin-detail-page" id="coinDetailPage">
+
+  <div class="cd-header">
+    <button class="cd-back" id="cdBackBtn" aria-label="Retour">‹</button>
+    <div class="cd-symbol-row">
+      <span class="cd-symbol" id="cdSymbol">—/USDT</span>
+      <span class="cd-pill-spot">Spot</span>
+    </div>
+    <div class="cd-icons">
+      <button class="cd-icon-btn" id="cdFavBtn" aria-label="Ajouter aux favoris" title="Favoris">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </button>
+      <button class="cd-icon-btn" id="cdShareBtn" aria-label="Partager" title="Partager">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v13"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="cd-tabs">
+    <button class="cd-tab active" data-tab="chart">Graphique</button>
+    <button class="cd-tab" data-tab="info">Informations</button>
+    <button class="cd-tab" data-tab="data">Données</button>
+    <button class="cd-tab" data-tab="feed">Feed</button>
+    <button class="cd-tab" data-tab="trading">Trading</button>
+  </div>
+
+  <!-- PANNEAU GRAPHIQUE -->
+  <div class="cd-panel active" data-panel="chart">
+    <div class="cd-price-block">
+      <div class="cd-price-left">
+        <div class="cd-lastp-lbl">Dernier cours ▾</div>
+        <div class="cd-lastp" id="cdLastP">—</div>
+        <div class="cd-usdp-row">
+          <span id="cdUsdP">$—</span>
+          <span id="cdChgPct">—</span>
+        </div>
+        <div class="cd-mark" id="cdMark">Mark price —</div>
+        <div class="cd-badges">
+          <b id="cdRankBadge">🔥 N° —</b><span class="sep">|</span>
+          <span id="cdMoodBadge">—</span><span class="sep">|</span>
+          <span id="cdCapBadge">Cap. #—</span>
+        </div>
+      </div>
+      <div class="cd-stats-right">
+        <div><span>Sommet sur 24 h</span><span class="v" id="cdStatHigh">—</span></div>
+        <div><span>Creux sur 24 h</span><span class="v" id="cdStatLow">—</span></div>
+        <div><span>Vol. sur 24 h (coin)</span><span class="v" id="cdStatVolCoin">—</span></div>
+        <div><span>Vol. sur 24 h (USDT)</span><span class="v" id="cdStatVolUsdt">—</span></div>
+      </div>
+    </div>
+
+    <a class="cd-banner" id="cdBanner" href="#" target="_blank" rel="noopener noreferrer" style="display:none;">
+      <span>📢</span><span class="txt" id="cdBannerText">—</span><span class="x">›</span>
+    </a>
+
+    <div class="cd-tf-row">
+      <button class="cd-tf" data-tf="15m" onclick="loadCdChart('15m',this)">15 m</button>
+      <button class="cd-tf active" data-tf="1h" onclick="loadCdChart('1h',this)">1 h</button>
+      <button class="cd-tf" data-tf="4h" onclick="loadCdChart('4h',this)">4 h</button>
+      <button class="cd-tf" data-tf="1d" onclick="loadCdChart('1d',this)">1 j</button>
+      <button class="cd-tf" onclick="cdMoreClick()">Plus ▾</button>
+      <button class="cd-tf cd-tf-more" onclick="cdCapBClick()">Cap.B.</button>
+    </div>
+
+    <div class="cd-chart-wrap">
+      <canvas id="cdChart" role="img" aria-label="Graphique en chandeliers"></canvas>
+    </div>
+    <div class="cd-vol-wrap">
+      <canvas id="cdVolChart"></canvas>
+    </div>
+
+    <div class="cd-ind-tabs">
+      <button class="cd-ind-tab active" onclick="cdIndicatorClick('VOL',this)">VOL</button>
+      <button class="cd-ind-tab" onclick="cdIndicatorClick('MA',this)">MA</button>
+      <button class="cd-ind-tab" onclick="cdIndicatorClick('EMA',this)">EMA</button>
+      <button class="cd-ind-tab" onclick="cdIndicatorClick('WMA',this)">WMA</button>
+      <button class="cd-ind-tab" onclick="cdIndicatorClick('VWMA',this)">VWMA</button>
+      <button class="cd-ind-tab" onclick="cdIndicatorClick('BOLL',this)">BOLL</button>
+      <button class="cd-ind-tab" onclick="cdIndicatorClick('SAR',this)">SAR</button>
+      <button class="cd-ind-tab" onclick="cdIndicatorClick('RESIST',this)">RESIST</button>
+    </div>
+  </div>
+
+  <!-- PANNEAU INFORMATIONS -->
+  <div class="cd-panel" data-panel="info">
+    <div class="cd-info-section">
+      <a class="cd-website-btn" id="cdWebsite" href="#" target="_blank" rel="noopener noreferrer">🌐 Site officiel</a>
+      <p class="cd-desc" id="cdDesc">Chargement de la description…</p>
+    </div>
+  </div>
+
+  <!-- PANNEAU DONNÉES -->
+  <div class="cd-panel" data-panel="data">
+    <div class="cd-info-section">
+      <div class="cd-stat-grid">
+        <div class="cd-stat-card"><div class="lbl">Prix</div><div class="val" id="cdDataPrice">—</div></div>
+        <div class="cd-stat-card"><div class="lbl">Var. 24h</div><div class="val" id="cdDataChg">—</div></div>
+        <div class="cd-stat-card"><div class="lbl">Market Cap</div><div class="val" id="cdDataMcap">—</div></div>
+        <div class="cd-stat-card"><div class="lbl">Volume 24h</div><div class="val" id="cdDataVol">—</div></div>
+        <div class="cd-stat-card"><div class="lbl">Circulation</div><div class="val" id="cdDataCirc">—</div></div>
+        <div class="cd-stat-card"><div class="lbl">Rang</div><div class="val" id="cdDataRank">—</div></div>
+        <div class="cd-stat-card"><div class="lbl">Plus haut (ATH)</div><div class="val" id="cdDataAth">—</div></div>
+        <div class="cd-stat-card"><div class="lbl">Plus bas (ATL)</div><div class="val" id="cdDataAtl">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANNEAU FEED -->
+  <div class="cd-panel" data-panel="feed" id="cdFeedPanel">
+    <div style="padding:8px 0;">Chargement des actualités…</div>
+  </div>
+
+  <!-- PANNEAU TRADING -->
+  <div class="cd-panel" data-panel="trading">
+    <div class="cd-trading-note">
+      💡 Café Crypto est un site d'information, pas une plateforme d'échange. L'achat et la vente ne sont pas disponibles ici. Consultez la section <strong>Partenaires</strong> pour découvrir des plateformes d'échange partenaires.
+    </div>
+  </div>
+
+</div>
+
 <script>
 // ══════════════════════════════
 // DONNÉES DE SECOURS (utilisées uniquement si l'API CoinPaprika est réellement injoignable)
@@ -1289,7 +1484,7 @@ function attachRowClickHandler(containerId){
     const row=e.target.closest('[data-coin-id]');
     if(row&&el.contains(row)){
       const id=row.dataset.coinId;
-      if(id)openCryptoModal(id);
+      if(id)openCoinDetail(id);
     }
   });
 }
@@ -1543,7 +1738,7 @@ function setupSearch(){
   results.addEventListener('click',function(e){
     const item=e.target.closest('[data-coin-id]');
     if(!item)return;
-    openCryptoModal(item.dataset.coinId);
+    openCoinDetail(item.dataset.coinId);
     wrapper.classList.remove('active');
     toggle.setAttribute('aria-expanded','false');
     results.classList.remove('active');
@@ -1604,6 +1799,285 @@ async function openCryptoModal(id){
   }
 }
 function closeCryptoModal(){$('cryptoModal').classList.remove('active');}
+
+// ══════════════════════════════
+// FICHE CRYPTO PLEIN ÉCRAN
+// ══════════════════════════════
+let cdCandles=[],cdCurrentTF='1h',cdCurrentCoinId=null,cdMAOn=false;
+
+function fmtAxis(v){if(v>=1000)return v.toFixed(0);if(v>=1)return v.toFixed(2);return v.toFixed(6);}
+
+async function openCoinDetail(id){
+  const d=liveData[id];if(!d)return;
+  cdCurrentCoinId=id;
+  const sym=symOf(d);
+  const up=(d.price_change_percentage_24h||0)>=0;
+
+  $('cdSymbol').textContent=sym+'/USDT';
+  updateCdFavIcon();
+  $('cdLastP').textContent=fmtP(d.current_price);
+  $('cdLastP').style.color=up?'var(--green)':'var(--red)';
+  $('cdUsdP').textContent='$'+(d.current_price!=null?d.current_price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:d.current_price<1?6:2}):'—');
+  const chgEl=$('cdChgPct');chgEl.textContent=fmtPct(d.price_change_percentage_24h||0);chgEl.style.color=up?'var(--green)':'var(--red)';
+  $('cdMark').textContent='Mark price '+fmtP(d.current_price);
+  $('cdRankBadge').textContent='🔥 N° '+(d.market_cap_rank||'—');
+  $('cdMoodBadge').textContent=up?'Haussier':'Baissier';
+  $('cdCapBadge').textContent='Cap. #'+(d.market_cap_rank||'—');
+
+  if(typeof carouselItems!=='undefined'&&carouselItems&&carouselItems.length){
+    $('cdBanner').style.display='flex';
+    $('cdBannerText').textContent=carouselItems[0].title||'';
+    $('cdBanner').href=carouselItems[0].link||'#';
+  }else{
+    $('cdBanner').style.display='none';
+  }
+
+  cdFillDonnees(d,sym,up);
+  $('cdWebsite').href=safeUrl(d.links?.homepage?.[0]||'https://coindesk.com');
+  $('cdDesc').textContent='Chargement de la description…';
+
+  switchCdTab('chart');
+  cdMAOn=false;
+  document.querySelectorAll('.cd-ind-tab').forEach(t=>t.classList.remove('active'));
+  const volTab=document.querySelector('.cd-ind-tab');if(volTab)volTab.classList.add('active');
+
+  $('coinDetailPage').classList.add('active');
+  document.body.style.overflow='hidden';
+
+  loadCd24hStats(sym,d);
+  loadCdChart('1h');
+  cdLoadDescription(id);
+  cdRenderFeed();
+}
+
+function closeCoinDetail(){
+  $('coinDetailPage').classList.remove('active');
+  document.body.style.overflow='';
+}
+
+function updateCdFavIcon(){
+  const btn=$('cdFavBtn');if(!btn||!cdCurrentCoinId)return;
+  btn.classList.toggle('fav-active',favorites.has(cdCurrentCoinId));
+}
+
+function switchCdTab(tab){
+  document.querySelectorAll('.cd-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
+  document.querySelectorAll('.cd-panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===tab));
+}
+
+function cdFillDonnees(d,sym,up){
+  $('cdDataPrice').textContent=fmtP(d.current_price);
+  const chg=$('cdDataChg');chg.textContent=fmtPct(d.price_change_percentage_24h||0);chg.style.color=up?'var(--green)':'var(--red)';
+  $('cdDataMcap').textContent=fmtBig(d.market_cap||0);
+  $('cdDataVol').textContent=fmtBig(d.total_volume||0);
+  $('cdDataCirc').textContent=d.circulating_supply?fmtBig(d.circulating_supply)+' '+sym:'—';
+  $('cdDataRank').textContent='#'+(d.market_cap_rank||'—');
+  $('cdDataAth').textContent=d.ath?fmtP(d.ath):'—';
+  $('cdDataAtl').textContent=d.atl?fmtP(d.atl):'—';
+}
+
+async function cdLoadDescription(id){
+  try{
+    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),10000);
+    const r=await fetch(`https://api.coinpaprika.com/v1/coins/${encodeURIComponent(id)}`,{signal:controller.signal});
+    clearTimeout(timeout);
+    if(!r.ok)throw new Error('CoinPaprika');
+    const coinData=await r.json();
+    const rawDesc=coinData.description||'';
+    if(cdCurrentCoinId!==id)return;
+    $('cdDesc').textContent=(rawDesc.replace(/<[^>]*>/g,'').substring(0,600)||'Description non disponible.')+(rawDesc?' (en anglais)':'');
+    const site=coinData.links?.website?.[0];
+    if(site)$('cdWebsite').href=safeUrl(site);
+  }catch(e){
+    if(cdCurrentCoinId===id)$('cdDesc').textContent='Description non disponible pour le moment.';
+  }
+}
+
+function cdRenderFeed(){
+  const panel=$('cdFeedPanel');if(!panel)return;
+  if(typeof carouselItems==='undefined'||!carouselItems||!carouselItems.length){
+    panel.innerHTML='<div style="padding:16px;text-align:center;color:var(--muted2);font-size:.8rem;">Actualités indisponibles pour le moment.</div>';
+    return;
+  }
+  panel.innerHTML=carouselItems.map(item=>`
+    <a class="cd-feed-item" href="${escapeHTML(safeUrl(item.link||'#'))}" target="_blank" rel="noopener noreferrer">
+      ${item.image?`<img src="${escapeHTML(safeUrl(item.image))}" alt="" loading="lazy">`:''}
+      <div>
+        <div class="cd-feed-title">${escapeHTML(item.title||'')}</div>
+        <div class="cd-feed-src">${escapeHTML(item._src||'Actualité')}</div>
+      </div>
+    </a>
+  `).join('');
+}
+
+async function loadCd24hStats(sym,d){
+  try{
+    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),8000);
+    const r=await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${encodeURIComponent(sym)}USDT`,{signal:controller.signal});
+    clearTimeout(timeout);
+    if(!r.ok)throw new Error('binance24h');
+    const j=await r.json();
+    if(cdCurrentCoinId&&symOf(liveData[cdCurrentCoinId])!==sym)return;
+    $('cdStatHigh').textContent=fmtP(+j.highPrice);
+    $('cdStatLow').textContent=fmtP(+j.lowPrice);
+    $('cdStatVolCoin').textContent=(+j.volume).toLocaleString('en-US',{maximumFractionDigits:2})+' '+sym;
+    $('cdStatVolUsdt').textContent=fmtBig(+j.quoteVolume);
+  }catch(e){
+    $('cdStatHigh').textContent='—';
+    $('cdStatLow').textContent='—';
+    $('cdStatVolCoin').textContent='—';
+    $('cdStatVolUsdt').textContent=d?fmtBig(d.total_volume||0):'—';
+  }
+}
+
+async function loadCdChart(tf,btn){
+  cdCurrentTF=tf;
+  document.querySelectorAll('.cd-tf').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  else{const m=document.querySelector(`.cd-tf[data-tf="${tf}"]`);if(m)m.classList.add('active');}
+  const d=liveData[cdCurrentCoinId];if(!d)return;
+  const sym=symOf(d);
+  try{
+    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),10000);
+    const r=await fetch(`https://api.binance.com/api/v3/klines?symbol=${encodeURIComponent(sym)}USDT&interval=${encodeURIComponent(tf)}&limit=48`,{signal:controller.signal});
+    clearTimeout(timeout);
+    if(!r.ok)throw new Error('binance');
+    cdCandles=(await r.json()).map(k=>({t:+k[0],o:+k[1],h:+k[2],l:+k[3],c:+k[4],v:+k[5]}));
+  }catch(e){
+    cdCandles=[];
+    showNotification('Graphique indisponible',`Impossible de charger les données ${sym}/USDT sur Binance`,'⚠️');
+  }
+  drawCdChart();
+}
+
+function cdMoreClick(){showNotification("Plus d'intervalles",'D\'autres intervalles arrivent bientôt','⏱️',2500);}
+function cdCapBClick(){showNotification('Vue capitalisation','Bientôt disponible','📊',2500);}
+
+function cdIndicatorClick(name,btn){
+  if(name==='VOL'){
+    document.querySelectorAll('.cd-ind-tab').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    return;
+  }
+  if(name==='MA'){
+    cdMAOn=!cdMAOn;
+    btn.classList.toggle('active',cdMAOn);
+    drawCdChart();
+    return;
+  }
+  showNotification(name,'Cet indicateur arrive bientôt','📊',2200);
+}
+
+function drawCdChart(){
+  const cv=$('cdChart');if(!cv)return;
+  const wrap=cv.parentElement,dpr=window.devicePixelRatio||1;
+  cv.width=wrap.clientWidth*dpr;cv.height=wrap.clientHeight*dpr;
+  cv.style.width=wrap.clientWidth+'px';cv.style.height=wrap.clientHeight+'px';
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
+  const W=wrap.clientWidth,H=wrap.clientHeight;
+  ctx.clearRect(0,0,W,H);
+  if(!cdCandles.length){
+    ctx.fillStyle='rgba(122,149,178,.5)';ctx.font=`12px 'JetBrains Mono',monospace`;ctx.textAlign='center';
+    ctx.fillText('Données indisponibles',W/2,H/2);
+    drawCdVolume();
+    return;
+  }
+  const pad={t:16,r:58,b:26,l:6};
+  const cw=W-pad.l-pad.r,ch=H-pad.t-pad.b;
+  const highs=cdCandles.map(d=>d.h),lows=cdCandles.map(d=>d.l);
+  const mxH=Math.max(...highs),mnL=Math.min(...lows);
+  const range=(mxH-mnL)||1;
+  const toY=p=>pad.t+(1-(p-mnL)/range)*ch;
+
+  for(let i=0;i<=4;i++){
+    const y=pad.t+i/4*ch,val=mxH-i/4*range;
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+cw,y);ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;ctx.stroke();
+    ctx.fillStyle='rgba(122,149,178,.6)';ctx.font=`10px 'JetBrains Mono',monospace`;ctx.textAlign='left';
+    ctx.fillText(fmtAxis(val),pad.l+cw+6,y+3);
+  }
+
+  const gap=cw/cdCandles.length,bw=Math.max(3,Math.floor(gap*.7));
+  cdCandles.forEach((d,i)=>{
+    const x=pad.l+i*gap+gap/2,oY=toY(d.o),cY=toY(d.c),hY=toY(d.h),lY=toY(d.l);
+    const up=d.c>=d.o,col=up?'#22c55e':'#ef4444';
+    const bTop=Math.min(oY,cY),bH=Math.max(Math.abs(cY-oY),1.5);
+    ctx.beginPath();ctx.moveTo(x,hY);ctx.lineTo(x,bTop);ctx.strokeStyle=col;ctx.lineWidth=1.3;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x,bTop+bH);ctx.lineTo(x,lY);ctx.strokeStyle=col;ctx.lineWidth=1.3;ctx.stroke();
+    ctx.fillStyle=up?'rgba(34,197,94,.9)':'rgba(239,68,68,.9)';ctx.fillRect(x-bw/2,bTop,bw,bH);
+  });
+
+  const hiIdx=highs.indexOf(mxH),loIdx=lows.indexOf(mnL);
+  cdDrawExtreme(ctx,pad,gap,hiIdx,toY(mxH),mxH);
+  cdDrawExtreme(ctx,pad,gap,loIdx,toY(mnL),mnL);
+
+  if(cdMAOn){
+    const period=7;let started=false;
+    ctx.beginPath();
+    cdCandles.forEach((d,i)=>{
+      if(i<period-1)return;
+      let sum=0;for(let k=0;k<period;k++)sum+=cdCandles[i-k].c;
+      const ma=sum/period,x=pad.l+i*gap+gap/2,y=toY(ma);
+      if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);
+    });
+    ctx.strokeStyle='#f0b429';ctx.lineWidth=1.5;ctx.stroke();
+  }
+
+  const d=liveData[cdCurrentCoinId];
+  if(d&&d.current_price){
+    const clampedP=Math.min(Math.max(d.current_price,mnL),mxH);
+    const py=toY(clampedP),up=(d.price_change_percentage_24h||0)>=0,col=up?'#22c55e':'#ef4444';
+    ctx.beginPath();ctx.moveTo(pad.l,py);ctx.lineTo(pad.l+cw,py);
+    ctx.strokeStyle=up?'rgba(34,197,94,.4)':'rgba(239,68,68,.4)';ctx.lineWidth=1;ctx.setLineDash([5,4]);ctx.stroke();ctx.setLineDash([]);
+    const txt=fmtP(d.current_price);
+    ctx.font=`bold 10px 'JetBrains Mono',monospace`;const tw=ctx.measureText(txt).width+8;
+    ctx.fillStyle=col;ctx.fillRect(pad.l+cw+2,py-8,tw,16);
+    ctx.fillStyle='#07090f';ctx.textAlign='left';ctx.fillText(txt,pad.l+cw+5,py+3);
+  }
+
+  const step=Math.ceil(cdCandles.length/5)||1;
+  cdCandles.forEach((cd_,i)=>{
+    if(i%step!==0&&i!==cdCandles.length-1)return;
+    const x=pad.l+i*gap+gap/2,dt=new Date(cd_.t);
+    const lbl=['15m','1h'].includes(cdCurrentTF)?dt.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):dt.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'});
+    ctx.fillStyle='rgba(122,149,178,.5)';ctx.font=`9px 'JetBrains Mono',monospace`;ctx.textAlign='center';
+    ctx.fillText(lbl,x,H-pad.b+14);
+  });
+
+  drawCdVolume();
+}
+
+function cdDrawExtreme(ctx,pad,gap,idx,y,val){
+  const x=pad.l+idx*gap+gap/2;
+  ctx.beginPath();ctx.moveTo(Math.max(pad.l,x-14),y);ctx.lineTo(x+14,y);
+  ctx.strokeStyle='rgba(226,234,248,.5)';ctx.lineWidth=1;ctx.stroke();
+  ctx.font=`9px 'JetBrains Mono',monospace`;ctx.fillStyle='rgba(226,234,248,.8)';ctx.textAlign='left';
+  ctx.fillText(fmtAxis(val),x+18,y+3);
+}
+
+function drawCdVolume(){
+  const cv=$('cdVolChart');if(!cv)return;
+  const wrap=cv.parentElement,dpr=window.devicePixelRatio||1;
+  cv.width=wrap.clientWidth*dpr;cv.height=wrap.clientHeight*dpr;
+  cv.style.width=wrap.clientWidth+'px';cv.style.height=wrap.clientHeight+'px';
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
+  const W=wrap.clientWidth,H=wrap.clientHeight;
+  ctx.clearRect(0,0,W,H);
+  if(!cdCandles.length)return;
+  const pad={l:6,r:58};
+  const cw=W-pad.l-pad.r;
+  const maxV=Math.max(...cdCandles.map(d=>d.v))||1;
+  const gap=cw/cdCandles.length,bw=Math.max(3,Math.floor(gap*.7));
+  cdCandles.forEach((d,i)=>{
+    const x=pad.l+i*gap+gap/2-bw/2;
+    const h=(d.v/maxV)*(H-4);
+    const up=d.c>=d.o;
+    ctx.fillStyle=up?'rgba(34,197,94,.5)':'rgba(239,68,68,.5)';
+    ctx.fillRect(x,H-h,bw,h);
+  });
+}
+
+const debouncedCdResize=debounce(()=>{if($('coinDetailPage')?.classList.contains('active'))drawCdChart();},150);
+window.addEventListener('resize',debouncedCdResize);
 
 // ══════════════════════════════
 // MODALE GRAPHIQUE
@@ -2679,6 +3153,33 @@ function initStaticControls(){
   if(cryptoCloseBtn)cryptoCloseBtn.addEventListener('click',closeCryptoModal);
   const eventCloseBtn=$('eventModalCloseBtn');
   if(eventCloseBtn)eventCloseBtn.addEventListener('click',closeEventModal);
+  const cdBackBtn=$('cdBackBtn');
+  if(cdBackBtn)cdBackBtn.addEventListener('click',closeCoinDetail);
+  const cdFavBtn=$('cdFavBtn');
+  if(cdFavBtn)cdFavBtn.addEventListener('click',function(){
+    if(!cdCurrentCoinId)return;
+    const d=liveData[cdCurrentCoinId];
+    toggleFavorite(cdCurrentCoinId,d?symOf(d):'');
+    updateCdFavIcon();
+  });
+  const cdShareBtn=$('cdShareBtn');
+  if(cdShareBtn)cdShareBtn.addEventListener('click',async function(){
+    const d=liveData[cdCurrentCoinId];if(!d)return;
+    const sym=symOf(d);
+    const shareData={title:`${d.name} (${sym})`,text:`${d.name} : ${fmtP(d.current_price)} sur Café Crypto`,url:location.href};
+    try{
+      if(navigator.share){await navigator.share(shareData);}
+      else{await navigator.clipboard.writeText(shareData.text+' — '+shareData.url);showNotification('Copié','Lien copié dans le presse-papiers','🔗',3000);}
+    }catch(e){}
+  });
+  const cdTabsEl=document.querySelector('.cd-tabs');
+  if(cdTabsEl)cdTabsEl.addEventListener('click',e=>{
+    const tab=e.target.closest('.cd-tab[data-tab]');
+    if(tab)switchCdTab(tab.dataset.tab);
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&$('coinDetailPage')?.classList.contains('active'))closeCoinDetail();
+  });
   const voiceBtn=$('voiceSummaryBtn');
   if(voiceBtn)voiceBtn.addEventListener('click',speakMarketSummary);
   const cryptoChartBtn=$('cryptoModalChartBtn');
