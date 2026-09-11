@@ -15,9 +15,44 @@
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://cafecrypto.fr"/>
 <meta property="og:image" content="https://cafecrypto.fr/logo.png"/>
+<meta property="og:locale" content="fr_FR"/>
+<meta property="og:site_name" content="Café Crypto"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Café Crypto — Marchés & Actualités Pro"/>
+<meta name="twitter:description" content="Prix crypto temps réel, graphique BTC, tendances, gagnants, perdants du jour."/>
+<meta name="twitter:image" content="https://cafecrypto.fr/logo.png"/>
 
 <!-- Canonical -->
 <link rel="canonical" href="https://cafecrypto.fr/"/>
+
+<!-- Données structurées -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Café Crypto",
+  "url": "https://cafecrypto.fr",
+  "description": "Prix crypto en temps réel, graphiques, tendances, actualités et base de connaissances crypto.",
+  "inLanguage": "fr-FR",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://cafecrypto.fr/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Café Crypto",
+  "url": "https://cafecrypto.fr",
+  "logo": "https://cafecrypto.fr/logo.png",
+  "sameAs": []
+}
+</script>
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0d14'/%3E%3Cpolygon points='4,10 5,26 27,26 28,10' fill='none' stroke='%23f0b429' stroke-width='1.5'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='9' fill='%23f0b429'%3E%E2%82%BF%3C/text%3E%3C/svg%3E"/>
 <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -33,6 +68,7 @@
   --f:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;--hp:'MedievalSharp',serif;
 }
 html{scroll-behavior:smooth;scroll-padding-top:200px;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 body{background:var(--bg);color:var(--text);font-family:var(--f);min-height:100vh;overflow-x:hidden;font-size:15px;width:100%;max-width:100vw;position:relative;padding-top:144px;}
 
 /* ─── ANIMATIONS ─── */
@@ -640,7 +676,7 @@ canvas#btcChart{position:absolute;inset:0;width:100%!important;height:100%!impor
 footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;position:relative;z-index:1;max-width:1380px;margin:0 auto;margin-top:24px;}
 .f-logo{font-family:var(--hp);font-size:.9rem;background:linear-gradient(90deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .f-note{font-family:var(--mono);font-size:.55rem;color:var(--muted);text-align:center;line-height:1.6;}
-.f-links{display:flex;gap:14px;list-style:none;}
+.f-links{display:flex;gap:14px;list-style:none;flex-wrap:wrap;justify-content:center;}
 .f-links a{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);text-decoration:none;transition:color .2s;}
 
 /* ─── THEME TOGGLE ─── */
@@ -757,7 +793,8 @@ img,canvas{max-width:100%;}
 <div class="logo-bar">
   <div class="logo-vapors" id="logoVapors" aria-hidden="true"></div>
   <div class="logo-center">
-    <a href="#" class="logo-text-main" style="text-decoration:none;">CaféCrypto</a>
+    <h1 style="display:contents;"><a href="/" class="logo-text-main" style="text-decoration:none;">CaféCrypto</a></h1>
+    <p class="sr-only">Café Crypto — Prix crypto en temps réel, cours Bitcoin et Ethereum, graphiques, tendances, actualités et base de connaissances crypto.</p>
   </div>
   <div class="search-container">
     <button class="search-toggle" id="searchToggle" aria-label="Rechercher une crypto" aria-expanded="false">
@@ -1073,7 +1110,7 @@ img,canvas{max-width:100%;}
 <footer>
   <span class="f-logo">CafeCrypto</span>
   <div class="f-note">Les informations publiées ne constituent pas des conseils en investissement.<br>Cryptomonnaies = actifs à risque élevé. Investissez responsablement.</div>
-  <ul class="f-links"><li><a href="#">À propos</a></li><li><a href="#">Contact</a></li><li><a href="#">CGU</a></li></ul>
+  <ul class="f-links"><li><a href="/a-propos.html">À propos</a></li><li><a href="/contact.html">Contact</a></li><li><a href="/cgu.html">CGU</a></li><li><a href="/confidentialite.html">Confidentialité</a></li></ul>
 </footer>
 </div><!-- /page -->
 
