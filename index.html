@@ -823,6 +823,74 @@ img,canvas{max-width:100%;}
     </div>
   </div>
 
+  <!-- GRAPHIQUE BTC -->
+  <div class="chart-section">
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <div>
+          <div class="chart-sym">BTC / USDT · BINANCE</div>
+          <div class="chart-price-big" id="chartP" style="color:var(--green)">…</div>
+          <div class="chart-chg-big" id="chartC" style="color:var(--green)">…</div>
+          <button class="chart-info-btn" id="chartInfoBtn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            Voir détails
+          </button>
+        </div>
+        <div class="ctabs" role="tablist">
+          <button class="ctab active" data-tf="1m" role="tab">1m</button>
+          <button class="ctab" data-tf="5m" role="tab">5m</button>
+          <button class="ctab" data-tf="15m" role="tab">15m</button>
+          <button class="ctab" data-tf="1h" role="tab">1h</button>
+          <button class="ctab" data-tf="4h" role="tab">4h</button>
+          <button class="ctab" data-tf="1d" role="tab">1J</button>
+        </div>
+      </div>
+      <div class="chart-ohlcv" id="chartOHLCV">
+        <div class="co"><span class="co-l">Ouv.</span><span class="co-v" id="co-o">—</span></div>
+        <div class="co"><span class="co-l">Haut</span><span class="co-v" id="co-h">—</span></div>
+        <div class="co"><span class="co-l">Bas</span><span class="co-v" id="co-l2">—</span></div>
+        <div class="co"><span class="co-l">Clôt.</span><span class="co-v" id="co-c">—</span></div>
+        <div class="co"><span class="co-l">Volume</span><span class="co-v" id="co-v">—</span></div>
+      </div>
+      <div class="chart-wrap" id="chartWrap">
+        <canvas id="btcChart"></canvas>
+      </div>
+      <div class="chart-foot">Source : Binance API · Temps réel · Auto 15s</div>
+    </div>
+  </div>
+
+</div><!-- /col-left -->
+
+<!-- ── COLONNE DROITE ── -->
+<div class="col-right">
+
+  <!-- FEAR & GREED -->
+  <div class="fng-section">
+    <div class="card">
+      <div class="card-hdr"><div class="card-title">😨 Fear & Greed</div></div>
+      <div class="fng-body">
+        <svg class="fng-arc" viewBox="0 0 120 60" width="80" height="42">
+          <defs><linearGradient id="ag" x1="0%" x2="100%" y1="0%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="30%" stop-color="#f0b429"/><stop offset="65%" stop-color="#22c55e"/><stop offset="100%" stop-color="#38bdf8"/></linearGradient></defs>
+          <path d="M10,58 A50,50 0 0,1 110,58" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M10,58 A50,50 0 0,1 110,58" fill="none" stroke="url(#ag)" stroke-width="8" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="110"/>
+          <line id="fngN" x1="60" y1="58" x2="60" y2="18" stroke="white" stroke-width="2" stroke-linecap="round" transform="rotate(-60 60 58)"/>
+          <circle cx="60" cy="58" r="4" fill="#0d1119" stroke="white" stroke-width="2"/>
+        </svg>
+        <div class="fng-right">
+          <div class="fng-score" id="fngVal" style="color:var(--red)">—</div>
+          <div class="fng-label" id="fngLbl" style="color:var(--red)">…</div>
+          <div class="fng-note" id="fngNote">Chargement…</div>
+        </div>
+      </div>
+      <div class="mood-line" id="moodLine">☕ Analyse de l'ambiance du marché…</div>
+      <button class="voice-btn" id="voiceSummaryBtn">🔊 Écouter le résumé du marché</button>
+      <div class="fng-history">
+        <div class="fng-history-title">Historique réel · 7 derniers jours (source : alternative.me)</div>
+        <canvas class="fng-history-chart" id="fngHistoryChart" role="img" aria-label="Historique de l'indice Fear and Greed sur 7 jours"></canvas>
+      </div>
+    </div>
+  </div>
+
   <!-- PAROLES DE CRYPTO — déclarations récentes vérifiées -->
   <div class="crypto-tweets-section">
     <div class="card">
@@ -898,74 +966,6 @@ img,canvas{max-width:100%;}
           <button class="explorer-btn" id="explorerBtn">Rechercher</button>
         </div>
         <div class="explorer-result" id="explorerResult"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GRAPHIQUE BTC -->
-  <div class="chart-section">
-    <div class="chart-card">
-      <div class="chart-hdr">
-        <div>
-          <div class="chart-sym">BTC / USDT · BINANCE</div>
-          <div class="chart-price-big" id="chartP" style="color:var(--green)">…</div>
-          <div class="chart-chg-big" id="chartC" style="color:var(--green)">…</div>
-          <button class="chart-info-btn" id="chartInfoBtn">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-            Voir détails
-          </button>
-        </div>
-        <div class="ctabs" role="tablist">
-          <button class="ctab active" data-tf="1m" role="tab">1m</button>
-          <button class="ctab" data-tf="5m" role="tab">5m</button>
-          <button class="ctab" data-tf="15m" role="tab">15m</button>
-          <button class="ctab" data-tf="1h" role="tab">1h</button>
-          <button class="ctab" data-tf="4h" role="tab">4h</button>
-          <button class="ctab" data-tf="1d" role="tab">1J</button>
-        </div>
-      </div>
-      <div class="chart-ohlcv" id="chartOHLCV">
-        <div class="co"><span class="co-l">Ouv.</span><span class="co-v" id="co-o">—</span></div>
-        <div class="co"><span class="co-l">Haut</span><span class="co-v" id="co-h">—</span></div>
-        <div class="co"><span class="co-l">Bas</span><span class="co-v" id="co-l2">—</span></div>
-        <div class="co"><span class="co-l">Clôt.</span><span class="co-v" id="co-c">—</span></div>
-        <div class="co"><span class="co-l">Volume</span><span class="co-v" id="co-v">—</span></div>
-      </div>
-      <div class="chart-wrap" id="chartWrap">
-        <canvas id="btcChart"></canvas>
-      </div>
-      <div class="chart-foot">Source : Binance API · Temps réel · Auto 15s</div>
-    </div>
-  </div>
-
-</div><!-- /col-left -->
-
-<!-- ── COLONNE DROITE ── -->
-<div class="col-right">
-
-  <!-- FEAR & GREED -->
-  <div class="fng-section">
-    <div class="card">
-      <div class="card-hdr"><div class="card-title">😨 Fear & Greed</div></div>
-      <div class="fng-body">
-        <svg class="fng-arc" viewBox="0 0 120 60" width="80" height="42">
-          <defs><linearGradient id="ag" x1="0%" x2="100%" y1="0%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="30%" stop-color="#f0b429"/><stop offset="65%" stop-color="#22c55e"/><stop offset="100%" stop-color="#38bdf8"/></linearGradient></defs>
-          <path d="M10,58 A50,50 0 0,1 110,58" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="8" stroke-linecap="round"/>
-          <path d="M10,58 A50,50 0 0,1 110,58" fill="none" stroke="url(#ag)" stroke-width="8" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="110"/>
-          <line id="fngN" x1="60" y1="58" x2="60" y2="18" stroke="white" stroke-width="2" stroke-linecap="round" transform="rotate(-60 60 58)"/>
-          <circle cx="60" cy="58" r="4" fill="#0d1119" stroke="white" stroke-width="2"/>
-        </svg>
-        <div class="fng-right">
-          <div class="fng-score" id="fngVal" style="color:var(--red)">—</div>
-          <div class="fng-label" id="fngLbl" style="color:var(--red)">…</div>
-          <div class="fng-note" id="fngNote">Chargement…</div>
-        </div>
-      </div>
-      <div class="mood-line" id="moodLine">☕ Analyse de l'ambiance du marché…</div>
-      <button class="voice-btn" id="voiceSummaryBtn">🔊 Écouter le résumé du marché</button>
-      <div class="fng-history">
-        <div class="fng-history-title">Historique réel · 7 derniers jours (source : alternative.me)</div>
-        <canvas class="fng-history-chart" id="fngHistoryChart" role="img" aria-label="Historique de l'indice Fear and Greed sur 7 jours"></canvas>
       </div>
     </div>
   </div>
