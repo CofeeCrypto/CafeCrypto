@@ -628,11 +628,6 @@ canvas#btcChart{position:absolute;inset:0;width:100%!important;height:100%!impor
 .cd-back{background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer;display:flex;align-items:center;padding:4px;flex-shrink:0;}
 .cd-symbol-row{display:flex;align-items:center;gap:8px;flex:1;min-width:0;}
 .cd-symbol{font-size:1.05rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.cd-pill-spot{font-family:var(--mono);font-size:.58rem;padding:3px 8px;border-radius:6px;background:var(--s2);border:1px solid var(--b2);color:var(--muted2);flex-shrink:0;}
-.cd-icons{display:flex;align-items:center;gap:14px;flex-shrink:0;}
-.cd-icon-btn{background:none;border:none;color:var(--muted2);cursor:pointer;display:flex;align-items:center;padding:2px;transition:color .2s;}
-.cd-icon-btn:hover{color:var(--text);}
-.cd-icon-btn.fav-active{color:var(--gold);}
 
 .cd-tabs{display:flex;gap:20px;padding:0 16px;border-bottom:1px solid var(--b);overflow-x:auto;position:sticky;top:52px;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);z-index:6;}
 .cd-tab{font-size:.82rem;font-weight:600;color:var(--muted2);padding:12px 0;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;}
@@ -644,29 +639,21 @@ canvas#btcChart{position:absolute;inset:0;width:100%!important;height:100%!impor
 .cd-price-block{padding:16px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;}
 .cd-lastp-lbl{color:var(--muted2);font-size:.75rem;margin-bottom:4px;}
 .cd-lastp{font-size:2rem;font-weight:800;line-height:1;margin-bottom:6px;}
-.cd-usdp-row{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.82rem;margin-bottom:4px;color:var(--text);}
-.cd-mark{color:var(--muted2);font-size:.72rem;margin-bottom:8px;}
+.cd-usdp-row{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.82rem;margin-bottom:8px;color:var(--text);}
 .cd-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.7rem;color:var(--muted2);font-family:var(--mono);}
 .cd-badges b{color:var(--gold);font-weight:700;}
 .cd-badges .sep{color:var(--b2);}
-.cd-stats-right{display:flex;flex-direction:column;gap:7px;font-size:.78rem;min-width:150px;}
+.cd-stats-right{display:flex;flex-direction:column;gap:7px;font-size:.78rem;min-width:160px;}
 .cd-stats-right div{display:flex;justify-content:space-between;gap:16px;color:var(--muted2);}
 .cd-stats-right span.v{color:var(--text);font-family:var(--mono);font-size:.75rem;}
-
-.cd-banner{margin:0 16px 12px;padding:10px 12px;background:var(--s2);border:1px solid var(--b);border-radius:10px;display:flex;align-items:center;gap:8px;font-size:.74rem;color:var(--muted2);text-decoration:none;}
-.cd-banner:hover{border-color:var(--cyan);}
-.cd-banner .txt{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.cd-banner .x{color:var(--muted);flex-shrink:0;}
 
 .cd-tf-row{display:flex;align-items:center;gap:2px;padding:4px 12px;overflow-x:auto;border-top:1px solid var(--b);border-bottom:1px solid var(--b);}
 .cd-tf{font-family:var(--mono);font-size:.72rem;padding:8px 11px;border-radius:8px;border:none;background:none;color:var(--muted2);cursor:pointer;white-space:nowrap;}
 .cd-tf.active{background:var(--s2);color:var(--text);font-weight:700;}
 .cd-tf-more{margin-left:auto;}
 
-.cd-chart-wrap{position:relative;height:300px;padding-top:10px;}
+.cd-chart-wrap{position:relative;height:340px;padding-top:10px;}
 canvas#cdChart{position:absolute;inset:0;width:100%!important;height:100%!important;}
-.cd-vol-wrap{position:relative;height:64px;border-top:1px solid var(--b);}
-canvas#cdVolChart{position:absolute;inset:0;width:100%!important;height:100%!important;}
 
 .cd-ind-tabs{display:flex;gap:2px;padding:8px 10px;overflow-x:auto;border-top:1px solid var(--b);}
 .cd-ind-tab{font-family:var(--mono);font-size:.63rem;padding:6px 9px;border-radius:6px;border:none;background:none;color:var(--muted2);cursor:pointer;white-space:nowrap;}
@@ -674,11 +661,49 @@ canvas#cdVolChart{position:absolute;inset:0;width:100%!important;height:100%!imp
 
 .cd-info-section{padding:16px;}
 .cd-website-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;border:1px solid var(--b2);background:var(--s2);color:var(--cyan);font-size:.78rem;text-decoration:none;margin-bottom:14px;}
-.cd-desc{font-size:.82rem;color:var(--muted2);line-height:1.7;}
-.cd-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.cd-stat-card{background:var(--s2);border:1px solid var(--b);border-radius:10px;padding:12px;}
-.cd-stat-card .lbl{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px;}
-.cd-stat-card .val{font-size:.88rem;font-weight:700;color:var(--text);}
+.cd-desc{font-size:.82rem;color:var(--muted2);line-height:1.7;margin-bottom:12px;}
+
+/* Sous-onglets Informations */
+.cd-subtabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.cd-subtab{font-family:var(--mono);font-size:.68rem;padding:8px 14px;border-radius:20px;border:1px solid var(--b);background:none;color:var(--muted2);cursor:pointer;white-space:nowrap;transition:all .2s;}
+.cd-subtab.active{background:var(--s2);border-color:var(--b2);color:var(--text);font-weight:700;}
+.cd-info-subpanel{display:none;}
+.cd-info-subpanel.active{display:block;}
+.cd-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px;margin-bottom:22px;}
+.cd-info-grid .lbl{font-size:.68rem;color:var(--muted2);margin-bottom:5px;line-height:1.4;}
+.cd-info-grid .val{font-size:.98rem;font-weight:700;color:var(--text);}
+.cd-info-grid .val a,.cd-info-grid .val-link{color:var(--cyan);font-size:.78rem;font-weight:600;text-decoration:none;margin-left:4px;}
+.cd-info-grid .sub{font-size:.68rem;color:var(--muted);margin-top:2px;}
+.cd-info-h3{font-size:1rem;font-weight:800;margin:6px 0 12px;color:var(--text);}
+.cd-more-btn{background:none;border:none;color:var(--cyan);font-size:.78rem;font-weight:600;cursor:pointer;padding:4px 0 16px;display:flex;align-items:center;gap:4px;}
+.cd-link-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.cd-link-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:20px;border:1px solid var(--b);background:var(--s2);color:var(--text);font-size:.75rem;text-decoration:none;}
+.cd-link-btn:hover{border-color:var(--cyan);color:var(--cyan);}
+.cd-info-list{margin:0 0 14px 18px;font-size:.8rem;color:var(--muted2);line-height:1.7;}
+.cd-info-list li{margin-bottom:6px;}
+.cd-note{border:1px solid rgba(240,180,41,.25);background:rgba(240,180,41,.06);border-radius:10px;padding:12px 14px;font-size:.74rem;color:var(--muted2);line-height:1.5;margin-top:14px;}
+
+/* Onglet Données — flux monétaire */
+.cd-mf-card{background:var(--s1);border:1px solid var(--b);border-radius:16px;padding:18px;}
+.cd-mf-title{font-size:1rem;font-weight:800;color:var(--text);display:flex;align-items:center;gap:6px;margin-bottom:16px;}
+.cd-info-ico{color:var(--muted);font-size:.8rem;cursor:help;}
+.cd-mf-tf-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.cd-mf-tf{font-family:var(--mono);font-size:.7rem;padding:7px 13px;border-radius:20px;border:1px solid var(--b);background:none;color:var(--muted2);cursor:pointer;}
+.cd-mf-tf.active{background:var(--s2);border-color:var(--b2);color:var(--text);font-weight:700;}
+.cd-mf-range{font-size:.72rem;color:var(--muted);margin-bottom:8px;}
+.cd-mf-donut-wrap{position:relative;width:100%;max-width:320px;margin:10px auto;}
+.cd-mf-donut-wrap svg{width:100%;height:auto;display:block;}
+.cd-mf-net{text-align:center;font-size:.9rem;color:var(--text);margin:12px 0 16px;}
+.cd-mf-net b{font-weight:800;}
+.cd-mf-totals{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted2);margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+.cd-mf-totals .in{color:var(--green);font-weight:700;}
+.cd-mf-totals .out{color:var(--red);font-weight:700;}
+.cd-mf-table{display:flex;flex-direction:column;gap:10px;}
+.cd-mf-row{display:flex;align-items:center;gap:10px;font-size:.82rem;}
+.cd-mf-row .lbl-col{flex:1;display:flex;align-items:center;gap:8px;color:var(--muted2);min-width:0;}
+.cd-mf-row .dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.cd-mf-row .bar-val{font-family:var(--mono);font-weight:700;padding:4px 10px;border-radius:6px;min-width:52px;text-align:right;}
+.cd-mf-note{font-size:.7rem;color:var(--muted);margin-top:14px;line-height:1.5;text-align:center;}
 
 .cd-feed-item{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--b);text-decoration:none;color:inherit;}
 .cd-feed-item:hover{background:var(--s2);}
@@ -690,7 +715,7 @@ canvas#cdVolChart{position:absolute;inset:0;width:100%!important;height:100%!imp
 
 @media(min-width:768px){
   .cd-price-block{padding:22px 24px 0;}
-  .cd-chart-wrap{height:400px;}
+  .cd-chart-wrap{height:420px;}
   .cd-info-section{max-width:700px;margin:0 auto;}
 }
 
@@ -1276,15 +1301,6 @@ img,canvas{max-width:100%;}
     <button class="cd-back" id="cdBackBtn" aria-label="Retour">‹</button>
     <div class="cd-symbol-row">
       <span class="cd-symbol" id="cdSymbol">—/USDT</span>
-      <span class="cd-pill-spot">Spot</span>
-    </div>
-    <div class="cd-icons">
-      <button class="cd-icon-btn" id="cdFavBtn" aria-label="Ajouter aux favoris" title="Favoris">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      </button>
-      <button class="cd-icon-btn" id="cdShareBtn" aria-label="Partager" title="Partager">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v13"/></svg>
-      </button>
     </div>
   </div>
 
@@ -1302,43 +1318,36 @@ img,canvas{max-width:100%;}
       <div class="cd-price-left">
         <div class="cd-lastp-lbl">Dernier cours ▾</div>
         <div class="cd-lastp" id="cdLastP">—</div>
-        <div class="cd-usdp-row">
-          <span id="cdUsdP">$—</span>
-          <span id="cdChgPct">—</span>
-        </div>
-        <div class="cd-mark" id="cdMark">Mark price —</div>
+        <div class="cd-usdp-row"><span id="cdUsdP">$—</span></div>
         <div class="cd-badges">
           <b id="cdRankBadge">🔥 N° —</b><span class="sep">|</span>
-          <span id="cdMoodBadge">—</span><span class="sep">|</span>
           <span id="cdCapBadge">Cap. #—</span>
         </div>
       </div>
       <div class="cd-stats-right">
-        <div><span>Sommet sur 24 h</span><span class="v" id="cdStatHigh">—</span></div>
-        <div><span>Creux sur 24 h</span><span class="v" id="cdStatLow">—</span></div>
-        <div><span>Vol. sur 24 h (coin)</span><span class="v" id="cdStatVolCoin">—</span></div>
-        <div><span>Vol. sur 24 h (USDT)</span><span class="v" id="cdStatVolUsdt">—</span></div>
+        <div><span>Var. 24 h</span><span class="v" id="cdChgPct">—</span></div>
+        <div><span>Mark price</span><span class="v" id="cdMark">—</span></div>
+        <div><span>Tendance</span><span class="v" id="cdMoodBadge">—</span></div>
+        <div><span>Sommet 24 h</span><span class="v" id="cdStatHigh">—</span></div>
+        <div><span>Creux 24 h</span><span class="v" id="cdStatLow">—</span></div>
+        <div><span>Vol 24 h (coin)</span><span class="v" id="cdStatVolCoin">—</span></div>
+        <div><span>Vol 24 h (USDT)</span><span class="v" id="cdStatVolUsdt">—</span></div>
       </div>
     </div>
 
-    <a class="cd-banner" id="cdBanner" href="#" target="_blank" rel="noopener noreferrer" style="display:none;">
-      <span>📢</span><span class="txt" id="cdBannerText">—</span><span class="x">›</span>
-    </a>
-
     <div class="cd-tf-row">
-      <button class="cd-tf" data-tf="15m" onclick="loadCdChart('15m',this)">15 m</button>
-      <button class="cd-tf active" data-tf="1h" onclick="loadCdChart('1h',this)">1 h</button>
-      <button class="cd-tf" data-tf="4h" onclick="loadCdChart('4h',this)">4 h</button>
-      <button class="cd-tf" data-tf="1d" onclick="loadCdChart('1d',this)">1 j</button>
-      <button class="cd-tf" onclick="cdMoreClick()">Plus ▾</button>
+      <button class="cd-tf" data-tf="15m" onclick="loadCdChart('15m',48,this)">15 m</button>
+      <button class="cd-tf active" data-tf="1h" onclick="loadCdChart('1h',48,this)">1 h</button>
+      <button class="cd-tf" data-tf="4h" onclick="loadCdChart('4h',48,this)">4 h</button>
+      <button class="cd-tf" data-tf="1d" onclick="loadCdChart('1d',48,this)">1 j</button>
+      <button class="cd-tf" data-tf="1mo" onclick="loadCdChart('4h',180,this)">1 mois</button>
+      <button class="cd-tf" data-tf="1y" onclick="loadCdChart('1d',365,this)">1 an</button>
+      <button class="cd-tf" data-tf="all" onclick="loadCdChart('1w',1000,this)">Tout</button>
       <button class="cd-tf cd-tf-more" onclick="cdCapBClick()">Cap.B.</button>
     </div>
 
     <div class="cd-chart-wrap">
       <canvas id="cdChart" role="img" aria-label="Graphique en chandeliers"></canvas>
-    </div>
-    <div class="cd-vol-wrap">
-      <canvas id="cdVolChart"></canvas>
     </div>
 
     <div class="cd-ind-tabs">
@@ -1356,23 +1365,78 @@ img,canvas{max-width:100%;}
   <!-- PANNEAU INFORMATIONS -->
   <div class="cd-panel" data-panel="info">
     <div class="cd-info-section">
-      <a class="cd-website-btn" id="cdWebsite" href="#" target="_blank" rel="noopener noreferrer">🌐 Site officiel</a>
-      <p class="cd-desc" id="cdDesc">Chargement de la description…</p>
+      <div class="cd-subtabs">
+        <button class="cd-subtab active" data-subtab="crypto" onclick="switchCdInfoSubtab('crypto',this)">Infos sur la crypto</button>
+        <button class="cd-subtab" data-subtab="rules" onclick="switchCdInfoSubtab('rules',this)">Règles de trading</button>
+        <button class="cd-subtab" data-subtab="index" onclick="switchCdInfoSubtab('index',this)">Exemple d'indice</button>
+      </div>
+
+      <div class="cd-info-subpanel active" data-subpanel="crypto">
+        <div class="cd-info-grid">
+          <div><div class="lbl">Classement de l'indice de popularité</div><div class="val" id="cdInfoPopRank">—</div></div>
+          <div><div class="lbl">Classement de cap. boursière</div><div class="val" id="cdInfoCapRank">—</div></div>
+          <div><div class="lbl">Capitalisation boursière</div><div class="val" id="cdInfoMcap">—</div></div>
+          <div><div class="lbl">Jetons actuellement en circulation</div><div class="val" id="cdInfoCircSupply">—</div></div>
+          <div><div class="lbl">Ajouté aux favoris</div><div class="val" id="cdInfoFavPct">—</div></div>
+          <div><div class="lbl">Taux de circulation</div><div class="val" id="cdInfoCircRate">—</div></div>
+          <div><div class="lbl">Sommet historique</div><div class="val" id="cdInfoAth">—</div><div class="sub" id="cdInfoAthDate"></div></div>
+          <div><div class="lbl">Bas niveau historique</div><div class="val" id="cdInfoAtl">—</div><div class="sub" id="cdInfoAtlDate"></div></div>
+          <div><div class="lbl">Date de lancement</div><div class="val" id="cdInfoLaunch">—</div></div>
+          <div><div class="lbl">Volume de trading/cap. boursière</div><div class="val" id="cdInfoVolRatio">—</div></div>
+          <div><div class="lbl">Jetons max</div><div class="val" id="cdInfoMaxSupply">—</div></div>
+          <div><div class="lbl">Capitalisation boursière avec jetons max.</div><div class="val" id="cdInfoFdv">—</div></div>
+        </div>
+
+        <h3 class="cd-info-h3" id="cdAboutTitle">À propos de —</h3>
+        <p class="cd-desc" id="cdDesc">Chargement de la description…</p>
+        <button class="cd-more-btn" id="cdDescToggle" onclick="cdToggleDesc()" style="display:none;">Afficher plus ⌄</button>
+
+        <div class="cd-link-row" id="cdLinkRow"></div>
+      </div>
+
+      <div class="cd-info-subpanel" data-subpanel="rules">
+        <p class="cd-desc">Café Crypto est un site d'information : aucun ordre n'est exécuté sur cette page. À titre pédagogique, voici les notions qui composent généralement les règles de trading sur une plateforme d'échange :</p>
+        <ul class="cd-info-list">
+          <li><strong>Taille minimale d'ordre</strong> — quantité minimale autorisée par transaction, propre à chaque paire.</li>
+          <li><strong>Pas de prix (tick size)</strong> — plus petit incrément de prix accepté pour un ordre.</li>
+          <li><strong>Effet de levier</strong> — sur les produits dérivés, multiplie l'exposition (et le risque) par rapport au capital engagé.</li>
+          <li><strong>Frais maker/taker</strong> — commission différente selon que l'ordre apporte ou consomme de la liquidité.</li>
+          <li><strong>Prix de liquidation</strong> — seuil à partir duquel une position à effet de levier est automatiquement clôturée.</li>
+        </ul>
+        <div class="cd-note">Pour trader réellement cette paire, rendez-vous sur une plateforme d'échange partenaire (voir la section Partenaires de l'accueil).</div>
+      </div>
+
+      <div class="cd-info-subpanel" data-subpanel="index">
+        <p class="cd-desc">Le <strong>prix indexé (mark price)</strong> sert de référence pour valoriser une position et déclencher d'éventuelles liquidations, plutôt que d'utiliser directement le dernier prix échangé — plus volatil et manipulable à court terme.</p>
+        <p class="cd-desc">Sur la plupart des plateformes, il est calculé comme une moyenne pondérée entre le prix au comptant (spot) observé sur plusieurs grandes places de marché et le prix des contrats à terme associés, ce qui lisse les écarts ponctuels de liquidité.</p>
+        <div class="cd-note">Café Crypto n'exécute aucun ordre : le "Mark price" affiché dans l'onglet Graphique correspond simplement au dernier prix spot connu, à titre indicatif.</div>
+      </div>
     </div>
   </div>
 
   <!-- PANNEAU DONNÉES -->
   <div class="cd-panel" data-panel="data">
     <div class="cd-info-section">
-      <div class="cd-stat-grid">
-        <div class="cd-stat-card"><div class="lbl">Prix</div><div class="val" id="cdDataPrice">—</div></div>
-        <div class="cd-stat-card"><div class="lbl">Var. 24h</div><div class="val" id="cdDataChg">—</div></div>
-        <div class="cd-stat-card"><div class="lbl">Market Cap</div><div class="val" id="cdDataMcap">—</div></div>
-        <div class="cd-stat-card"><div class="lbl">Volume 24h</div><div class="val" id="cdDataVol">—</div></div>
-        <div class="cd-stat-card"><div class="lbl">Circulation</div><div class="val" id="cdDataCirc">—</div></div>
-        <div class="cd-stat-card"><div class="lbl">Rang</div><div class="val" id="cdDataRank">—</div></div>
-        <div class="cd-stat-card"><div class="lbl">Plus haut (ATH)</div><div class="val" id="cdDataAth">—</div></div>
-        <div class="cd-stat-card"><div class="lbl">Plus bas (ATL)</div><div class="val" id="cdDataAtl">—</div></div>
+      <div class="cd-mf-card">
+        <div class="cd-mf-title">Répartition du flux monétaire <span class="cd-info-ico" title="Estimé à partir des transactions publiques Binance (achats/ventes agressifs)">ⓘ</span></div>
+        <div class="cd-mf-tf-row">
+          <button class="cd-mf-tf active" onclick="loadCdMoneyFlow('5m',this)">5 m</button>
+          <button class="cd-mf-tf" onclick="loadCdMoneyFlow('15m',this)">15 m</button>
+          <button class="cd-mf-tf" onclick="loadCdMoneyFlow('1h',this)">1 h</button>
+          <button class="cd-mf-tf" onclick="loadCdMoneyFlow('4h',this)">4 h</button>
+          <button class="cd-mf-tf" onclick="loadCdMoneyFlow('1d',this)">1 jour</button>
+        </div>
+        <div class="cd-mf-range" id="cdMfRange">—</div>
+        <div class="cd-mf-donut-wrap">
+          <svg id="cdMfSvg" viewBox="0 0 300 260"></svg>
+        </div>
+        <div class="cd-mf-net" id="cdMfNet">Flux entrant net —</div>
+        <div class="cd-mf-totals">
+          <div>Flux entrant : <span class="in" id="cdMfIn">—</span></div>
+          <div>Flux sortant : <span class="out" id="cdMfOut">—</span></div>
+        </div>
+        <div class="cd-mf-table" id="cdMfTable"></div>
+        <div class="cd-mf-note" id="cdMfNote"></div>
       </div>
     </div>
   </div>
@@ -1804,39 +1868,35 @@ function closeCryptoModal(){$('cryptoModal').classList.remove('active');}
 // FICHE CRYPTO PLEIN ÉCRAN
 // ══════════════════════════════
 let cdCandles=[],cdCurrentTF='1h',cdCurrentCoinId=null,cdMAOn=false;
+let cdFullDesc='',cdDescExpanded=false;
+let cdMfLastCoin=null,cdMfLoading=false;
 
 function fmtAxis(v){if(v>=1000)return v.toFixed(0);if(v>=1)return v.toFixed(2);return v.toFixed(6);}
 
 async function openCoinDetail(id){
   const d=liveData[id];if(!d)return;
   cdCurrentCoinId=id;
+  cdMfLastCoin=null;
   const sym=symOf(d);
   const up=(d.price_change_percentage_24h||0)>=0;
 
   $('cdSymbol').textContent=sym+'/USDT';
-  updateCdFavIcon();
   $('cdLastP').textContent=fmtP(d.current_price);
   $('cdLastP').style.color=up?'var(--green)':'var(--red)';
   $('cdUsdP').textContent='$'+(d.current_price!=null?d.current_price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:d.current_price<1?6:2}):'—');
   const chgEl=$('cdChgPct');chgEl.textContent=fmtPct(d.price_change_percentage_24h||0);chgEl.style.color=up?'var(--green)':'var(--red)';
-  $('cdMark').textContent='Mark price '+fmtP(d.current_price);
+  $('cdMark').textContent=fmtP(d.current_price);
+  const moodEl=$('cdMoodBadge');moodEl.textContent=up?'Haussier ↑':'Baissier ↓';moodEl.style.color=up?'var(--green)':'var(--red)';
   $('cdRankBadge').textContent='🔥 N° '+(d.market_cap_rank||'—');
-  $('cdMoodBadge').textContent=up?'Haussier':'Baissier';
   $('cdCapBadge').textContent='Cap. #'+(d.market_cap_rank||'—');
 
-  if(typeof carouselItems!=='undefined'&&carouselItems&&carouselItems.length){
-    $('cdBanner').style.display='flex';
-    $('cdBannerText').textContent=carouselItems[0].title||'';
-    $('cdBanner').href=carouselItems[0].link||'#';
-  }else{
-    $('cdBanner').style.display='none';
-  }
-
-  cdFillDonnees(d,sym,up);
-  $('cdWebsite').href=safeUrl(d.links?.homepage?.[0]||'https://coindesk.com');
+  cdFillInformations(d,sym);
   $('cdDesc').textContent='Chargement de la description…';
+  $('cdDescToggle').style.display='none';
+  cdFullDesc='';cdDescExpanded=false;
 
   switchCdTab('chart');
+  switchCdInfoSubtab('crypto');
   cdMAOn=false;
   document.querySelectorAll('.cd-ind-tab').forEach(t=>t.classList.remove('active'));
   const volTab=document.querySelector('.cd-ind-tab');if(volTab)volTab.classList.add('active');
@@ -1845,7 +1905,8 @@ async function openCoinDetail(id){
   document.body.style.overflow='hidden';
 
   loadCd24hStats(sym,d);
-  loadCdChart('1h');
+  const defaultTfBtn=document.querySelector('.cd-tf[data-tf="1h"]');
+  loadCdChart('1h',48,defaultTfBtn);
   cdLoadDescription(id);
   cdRenderFeed();
 }
@@ -1855,25 +1916,48 @@ function closeCoinDetail(){
   document.body.style.overflow='';
 }
 
-function updateCdFavIcon(){
-  const btn=$('cdFavBtn');if(!btn||!cdCurrentCoinId)return;
-  btn.classList.toggle('fav-active',favorites.has(cdCurrentCoinId));
-}
-
 function switchCdTab(tab){
   document.querySelectorAll('.cd-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
   document.querySelectorAll('.cd-panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===tab));
+  if(tab==='data'&&cdCurrentCoinId&&cdMfLastCoin!==cdCurrentCoinId&&!cdMfLoading){
+    loadCdMoneyFlow('5m',document.querySelector('.cd-mf-tf'));
+  }
 }
 
-function cdFillDonnees(d,sym,up){
-  $('cdDataPrice').textContent=fmtP(d.current_price);
-  const chg=$('cdDataChg');chg.textContent=fmtPct(d.price_change_percentage_24h||0);chg.style.color=up?'var(--green)':'var(--red)';
-  $('cdDataMcap').textContent=fmtBig(d.market_cap||0);
-  $('cdDataVol').textContent=fmtBig(d.total_volume||0);
-  $('cdDataCirc').textContent=d.circulating_supply?fmtBig(d.circulating_supply)+' '+sym:'—';
-  $('cdDataRank').textContent='#'+(d.market_cap_rank||'—');
-  $('cdDataAth').textContent=d.ath?fmtP(d.ath):'—';
-  $('cdDataAtl').textContent=d.atl?fmtP(d.atl):'—';
+function switchCdInfoSubtab(name,btn){
+  document.querySelectorAll('.cd-subtab').forEach(t=>t.classList.remove('active'));
+  if(btn)btn.classList.add('active');else{const m=document.querySelector(`.cd-subtab[data-subtab="${name}"]`);if(m)m.classList.add('active');}
+  document.querySelectorAll('.cd-info-subpanel').forEach(p=>p.classList.toggle('active',p.dataset.subpanel===name));
+}
+
+function cdToggleDesc(){
+  cdDescExpanded=!cdDescExpanded;
+  const el=$('cdDesc'),btn=$('cdDescToggle');
+  el.textContent=cdDescExpanded?cdFullDesc:cdFullDesc.substring(0,280)+'…';
+  btn.innerHTML=cdDescExpanded?'Afficher moins ⌃':'Afficher plus ⌄';
+}
+
+// Remplit les champs calculables immédiatement à partir des données déjà chargées
+function cdFillInformations(d,sym){
+  $('cdAboutTitle').textContent='À propos de '+sym;
+  $('cdInfoPopRank').textContent=d.market_cap_rank?('N° '+d.market_cap_rank):'N/D';
+  $('cdInfoCapRank').textContent=d.market_cap_rank?('N° '+d.market_cap_rank):'N/D';
+  $('cdInfoMcap').textContent=d.market_cap?fmtBig(d.market_cap):'—';
+  $('cdInfoCircSupply').textContent=d.circulating_supply?(Math.round(d.circulating_supply).toLocaleString('fr-FR')+' '+sym):'—';
+  $('cdInfoFavPct').textContent='N/D';
+  const circRate=(d.circulating_supply&&d.total_supply)?(d.circulating_supply/d.total_supply*100):null;
+  $('cdInfoCircRate').textContent=circRate!=null?circRate.toFixed(2)+' %':'—';
+  $('cdInfoAth').textContent=d.ath?fmtP(d.ath):'—';
+  $('cdInfoAtl').textContent=d.atl?fmtP(d.atl):'—';
+  $('cdInfoAthDate').textContent='';
+  $('cdInfoAtlDate').textContent='';
+  $('cdInfoLaunch').textContent='—';
+  const volRatio=(d.total_volume&&d.market_cap)?(d.total_volume/d.market_cap):null;
+  $('cdInfoVolRatio').textContent=volRatio!=null?volRatio.toFixed(4):'—';
+  $('cdInfoMaxSupply').textContent=d.total_supply?(Math.round(d.total_supply).toLocaleString('fr-FR')+' '+sym):'—';
+  const fdv=(d.current_price&&d.total_supply)?(d.current_price*d.total_supply):null;
+  $('cdInfoFdv').textContent=fdv!=null?fmtBig(fdv):'—';
+  $('cdLinkRow').innerHTML='';
 }
 
 async function cdLoadDescription(id){
@@ -1883,13 +1967,34 @@ async function cdLoadDescription(id){
     clearTimeout(timeout);
     if(!r.ok)throw new Error('CoinPaprika');
     const coinData=await r.json();
-    const rawDesc=coinData.description||'';
     if(cdCurrentCoinId!==id)return;
-    $('cdDesc').textContent=(rawDesc.replace(/<[^>]*>/g,'').substring(0,600)||'Description non disponible.')+(rawDesc?' (en anglais)':'');
-    const site=coinData.links?.website?.[0];
-    if(site)$('cdWebsite').href=safeUrl(site);
+    const rawDesc=(coinData.description||'').replace(/<[^>]*>/g,'').trim();
+    cdFullDesc=(rawDesc||'Description non disponible.')+(rawDesc?' (en anglais)':'');
+    cdDescExpanded=false;
+    if(cdFullDesc.length>280){
+      $('cdDesc').textContent=cdFullDesc.substring(0,280)+'…';
+      $('cdDescToggle').style.display='flex';
+    }else{
+      $('cdDesc').textContent=cdFullDesc;
+      $('cdDescToggle').style.display='none';
+    }
+    if(coinData.started_at){
+      try{$('cdInfoLaunch').textContent=new Date(coinData.started_at).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'});}catch(e){}
+    }
+    const links=[];
+    const site=coinData.links?.website?.[0];if(site)links.push({label:'Site Web officiel',icon:'🌐',url:site});
+    const explorer=coinData.links?.explorer?.[0];if(explorer)links.push({label:'Explorateur de blocs',icon:'🔎',url:explorer});
+    const github=coinData.links?.source_code?.[0];if(github)links.push({label:'GitHub',icon:'💻',url:github});
+    const whitepaper=coinData.whitepaper?.link;if(whitepaper)links.push({label:'Livre blanc',icon:'📄',url:whitepaper});
+    const twitterExt=(coinData.links_extended||[]).find(l=>l.type==='twitter'&&l.url);
+    if(twitterExt)links.push({label:'X',icon:'🐦',url:twitterExt.url});
+    $('cdLinkRow').innerHTML=links.map(l=>`<a class="cd-link-btn" href="${escapeHTML(safeUrl(l.url))}" target="_blank" rel="noopener noreferrer">${l.icon} ${escapeHTML(l.label)}</a>`).join('');
   }catch(e){
-    if(cdCurrentCoinId===id)$('cdDesc').textContent='Description non disponible pour le moment.';
+    if(cdCurrentCoinId===id){
+      cdFullDesc='Description non disponible pour le moment.';
+      $('cdDesc').textContent=cdFullDesc;
+      $('cdDescToggle').style.display='none';
+    }
   }
 }
 
@@ -1930,16 +2035,15 @@ async function loadCd24hStats(sym,d){
   }
 }
 
-async function loadCdChart(tf,btn){
-  cdCurrentTF=tf;
+async function loadCdChart(interval,limit,btn){
+  cdCurrentTF=interval;
   document.querySelectorAll('.cd-tf').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
-  else{const m=document.querySelector(`.cd-tf[data-tf="${tf}"]`);if(m)m.classList.add('active');}
   const d=liveData[cdCurrentCoinId];if(!d)return;
   const sym=symOf(d);
   try{
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),10000);
-    const r=await fetch(`https://api.binance.com/api/v3/klines?symbol=${encodeURIComponent(sym)}USDT&interval=${encodeURIComponent(tf)}&limit=48`,{signal:controller.signal});
+    const r=await fetch(`https://api.binance.com/api/v3/klines?symbol=${encodeURIComponent(sym)}USDT&interval=${encodeURIComponent(interval)}&limit=${limit}`,{signal:controller.signal});
     clearTimeout(timeout);
     if(!r.ok)throw new Error('binance');
     cdCandles=(await r.json()).map(k=>({t:+k[0],o:+k[1],h:+k[2],l:+k[3],c:+k[4],v:+k[5]}));
@@ -1950,7 +2054,6 @@ async function loadCdChart(tf,btn){
   drawCdChart();
 }
 
-function cdMoreClick(){showNotification("Plus d'intervalles",'D\'autres intervalles arrivent bientôt','⏱️',2500);}
 function cdCapBClick(){showNotification('Vue capitalisation','Bientôt disponible','📊',2500);}
 
 function cdIndicatorClick(name,btn){
@@ -1979,7 +2082,6 @@ function drawCdChart(){
   if(!cdCandles.length){
     ctx.fillStyle='rgba(122,149,178,.5)';ctx.font=`12px 'JetBrains Mono',monospace`;ctx.textAlign='center';
     ctx.fillText('Données indisponibles',W/2,H/2);
-    drawCdVolume();
     return;
   }
   const pad={t:16,r:58,b:26,l:6};
@@ -1996,7 +2098,7 @@ function drawCdChart(){
     ctx.fillText(fmtAxis(val),pad.l+cw+6,y+3);
   }
 
-  const gap=cw/cdCandles.length,bw=Math.max(3,Math.floor(gap*.7));
+  const gap=cw/cdCandles.length,bw=Math.max(2,Math.floor(gap*.7));
   cdCandles.forEach((d,i)=>{
     const x=pad.l+i*gap+gap/2,oY=toY(d.o),cY=toY(d.c),hY=toY(d.h),lY=toY(d.l);
     const up=d.c>=d.o,col=up?'#22c55e':'#ef4444';
@@ -2038,12 +2140,10 @@ function drawCdChart(){
   cdCandles.forEach((cd_,i)=>{
     if(i%step!==0&&i!==cdCandles.length-1)return;
     const x=pad.l+i*gap+gap/2,dt=new Date(cd_.t);
-    const lbl=['15m','1h'].includes(cdCurrentTF)?dt.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):dt.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'});
+    const lbl=['15m','1h'].includes(cdCurrentTF)?dt.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):dt.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:['1d','1w'].includes(cdCurrentTF)?'2-digit':undefined});
     ctx.fillStyle='rgba(122,149,178,.5)';ctx.font=`9px 'JetBrains Mono',monospace`;ctx.textAlign='center';
     ctx.fillText(lbl,x,H-pad.b+14);
   });
-
-  drawCdVolume();
 }
 
 function cdDrawExtreme(ctx,pad,gap,idx,y,val){
@@ -2054,30 +2154,151 @@ function cdDrawExtreme(ctx,pad,gap,idx,y,val){
   ctx.fillText(fmtAxis(val),x+18,y+3);
 }
 
-function drawCdVolume(){
-  const cv=$('cdVolChart');if(!cv)return;
-  const wrap=cv.parentElement,dpr=window.devicePixelRatio||1;
-  cv.width=wrap.clientWidth*dpr;cv.height=wrap.clientHeight*dpr;
-  cv.style.width=wrap.clientWidth+'px';cv.style.height=wrap.clientHeight+'px';
-  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
-  const W=wrap.clientWidth,H=wrap.clientHeight;
-  ctx.clearRect(0,0,W,H);
-  if(!cdCandles.length)return;
-  const pad={l:6,r:58};
-  const cw=W-pad.l-pad.r;
-  const maxV=Math.max(...cdCandles.map(d=>d.v))||1;
-  const gap=cw/cdCandles.length,bw=Math.max(3,Math.floor(gap*.7));
-  cdCandles.forEach((d,i)=>{
-    const x=pad.l+i*gap+gap/2-bw/2;
-    const h=(d.v/maxV)*(H-4);
-    const up=d.c>=d.o;
-    ctx.fillStyle=up?'rgba(34,197,94,.5)':'rgba(239,68,68,.5)';
-    ctx.fillRect(x,H-h,bw,h);
-  });
-}
-
 const debouncedCdResize=debounce(()=>{if($('coinDetailPage')?.classList.contains('active'))drawCdChart();},150);
 window.addEventListener('resize',debouncedCdResize);
+
+// ══════════════════════════════
+// FICHE CRYPTO — RÉPARTITION DU FLUX MONÉTAIRE (onglet Données)
+// Basé sur des données réelles Binance : volume d'achat "taker" des klines
+// (toujours réel), et détail par taille de transaction via aggTrades
+// (réel, disponible uniquement sur les fenêtres 5 m / 15 m).
+// ══════════════════════════════
+const CD_MF_LABELS={'5m':'5 minutes','15m':'15 minutes','1h':'1 heure','4h':'4 heures','1d':'1 jour'};
+const CD_MF_WINDOW_MS={'5m':5*60000,'15m':15*60000,'1h':60*60000,'4h':4*60*60000,'1d':24*60*60000};
+const CD_MF_KLINE={'5m':{interval:'1m',limit:5},'15m':{interval:'1m',limit:15},'1h':{interval:'5m',limit:12},'4h':{interval:'15m',limit:16},'1d':{interval:'1h',limit:24}};
+
+async function loadCdMoneyFlow(period,btn){
+  if(!cdCurrentCoinId)return;
+  const d=liveData[cdCurrentCoinId];if(!d)return;
+  const sym=symOf(d),pair=sym+'USDT';
+  cdMfLoading=true;
+  cdMfLastCoin=cdCurrentCoinId;
+  document.querySelectorAll('.cd-mf-tf').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  const now=new Date();
+  const startD=new Date(now.getTime()-CD_MF_WINDOW_MS[period]);
+  const fmtT=t=>t.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'})+' '+t.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  $('cdMfRange').textContent=`${fmtT(startD)} – ${now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`;
+  $('cdMfSvg').innerHTML='';
+  $('cdMfNet').textContent='Chargement…';
+  $('cdMfTable').innerHTML='';
+  $('cdMfNote').textContent='';
+
+  let buyVol=0,sellVol=0,totalVol=0;
+  try{
+    const {interval,limit}=CD_MF_KLINE[period];
+    const kr=await fetch(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=${interval}&limit=${limit}`);
+    if(!kr.ok)throw new Error('klines');
+    const kdata=await kr.json();
+    kdata.forEach(k=>{totalVol+=parseFloat(k[5]);buyVol+=parseFloat(k[9]);});
+    sellVol=Math.max(totalVol-buyVol,0);
+  }catch(e){
+    cdMfLoading=false;
+    $('cdMfNet').textContent='Données indisponibles pour le moment.';
+    $('cdMfRange').textContent='—';
+    return;
+  }
+
+  const netFlow=buyVol-sellVol;
+  $('cdMfNet').innerHTML=`Flux entrant net <b style="color:${netFlow>=0?'var(--green)':'var(--red)'}">${netFlow>=0?'+':''}${netFlow.toFixed(2)} ${sym}</b>`;
+  $('cdMfIn').textContent=buyVol.toFixed(2)+' '+sym;
+  $('cdMfOut').textContent=sellVol.toFixed(2)+' '+sym;
+
+  // Détail par taille de transaction — réel, uniquement pour fenêtres courtes (limite API 1h par requête)
+  if(period==='5m'||period==='15m'){
+    try{
+      const tr=await fetch(`https://api.binance.com/api/v3/aggTrades?symbol=${pair}&startTime=${startD.getTime()}&endTime=${now.getTime()}&limit=1000`);
+      if(!tr.ok)throw new Error('aggTrades');
+      const trades=await tr.json();
+      const buckets={in:{mega:0,large:0,moyen:0,petit:0},out:{mega:0,large:0,moyen:0,petit:0}};
+      trades.forEach(t=>{
+        const price=parseFloat(t.p),qty=parseFloat(t.q),notional=price*qty;
+        const dir=t.m?'out':'in'; // m=true → acheteur "maker" → trade initié par un vendeur agressif (sortant)
+        let tier;
+        if(notional>=100000)tier='mega';else if(notional>=10000)tier='large';else if(notional>=1000)tier='moyen';else tier='petit';
+        buckets[dir][tier]+=qty;
+      });
+      cdRenderMoneyFlowDonut(buckets,sym);
+      cdRenderMoneyFlowTable(buckets,sym);
+      if(!trades.length)$('cdMfNote').textContent="Aucune transaction publique trouvée sur cette fenêtre.";
+    }catch(e){
+      $('cdMfNote').textContent="Détail par taille de transaction indisponible pour le moment.";
+      cdRenderMoneyFlowDonutSimple(buyVol,sellVol);
+    }
+  }else{
+    cdRenderMoneyFlowDonutSimple(buyVol,sellVol);
+    $('cdMfNote').textContent="Détail par taille de transaction (Méga/Large/Moyen/Petit) disponible uniquement sur 5 m et 15 m — au-delà, seuls les totaux réels sont affichés.";
+    $('cdMfTable').innerHTML='';
+  }
+  cdMfLoading=false;
+}
+
+function cdRenderMoneyFlowDonutSimple(buyVol,sellVol){
+  const total=buyVol+sellVol;
+  if(total<=0){$('cdMfSvg').innerHTML='';return;}
+  cdDrawDonut([
+    {pct:sellVol/total*100,color:'#c2437a',label:(sellVol/total*100).toFixed(2)+' %'},
+    {pct:buyVol/total*100,color:'#3fbf6f',label:(buyVol/total*100).toFixed(2)+' %'}
+  ]);
+}
+
+function cdRenderMoneyFlowDonut(buckets,sym){
+  const vals=[
+    {v:buckets.out.mega,color:'#e05f8f'},
+    {v:buckets.out.large,color:'#c2437a'},
+    {v:buckets.out.moyen,color:'#8f3159'},
+    {v:buckets.out.petit,color:'#5c2039'},
+    {v:buckets.in.petit,color:'#1f4a30'},
+    {v:buckets.in.moyen,color:'#2c6b3f'},
+    {v:buckets.in.large,color:'#3fbf6f'},
+    {v:buckets.in.mega,color:'#6bd98f'}
+  ];
+  const total=vals.reduce((a,x)=>a+x.v,0);
+  if(total<=0){$('cdMfSvg').innerHTML='';return;}
+  cdDrawDonut(vals.map(x=>({pct:x.v/total*100,color:x.color,label:(x.v/total*100).toFixed(2)+' %'})).filter(x=>x.pct>0.005));
+}
+
+function cdDrawDonut(segments){
+  const svg=$('cdMfSvg');if(!svg)return;
+  const cx=150,cy=120,R=78,SW=34;
+  const C=2*Math.PI*R;
+  let acc=0,paths='',labels='';
+  segments.forEach(seg=>{
+    const startA=acc/100*360-90,sweep=seg.pct/100*360;
+    acc+=seg.pct;
+    const dash=(seg.pct/100*C).toFixed(2);
+    const gapDash=(C-parseFloat(dash)).toFixed(2);
+    const offset=(-((startA+90)/360*C)).toFixed(2);
+    paths+=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${seg.color}" stroke-width="${SW}" stroke-dasharray="${dash} ${gapDash}" stroke-dashoffset="${offset}"/>`;
+    const midA=(startA+sweep/2)*Math.PI/180;
+    const lx1=cx+(R)*Math.cos(midA),ly1=cy+(R)*Math.sin(midA);
+    const lx2=cx+(R+16)*Math.cos(midA),ly2=cy+(R+16)*Math.sin(midA);
+    const rightSide=Math.cos(midA)>=0;
+    const lx3=lx2+(rightSide?26:-26),ly3=ly2;
+    labels+=`<line x1="${lx1.toFixed(1)}" y1="${ly1.toFixed(1)}" x2="${lx2.toFixed(1)}" y2="${ly2.toFixed(1)}" stroke="rgba(226,234,248,.35)" stroke-width="1"/>`;
+    labels+=`<line x1="${lx2.toFixed(1)}" y1="${ly2.toFixed(1)}" x2="${lx3.toFixed(1)}" y2="${ly3.toFixed(1)}" stroke="rgba(226,234,248,.35)" stroke-width="1"/>`;
+    labels+=`<text x="${(lx3+(rightSide?4:-4)).toFixed(1)}" y="${(ly3+3).toFixed(1)}" font-size="11" font-family="'JetBrains Mono',monospace" fill="#e2eaf8" text-anchor="${rightSide?'start':'end'}">${seg.label}</text>`;
+  });
+  svg.innerHTML=paths+labels;
+}
+
+function cdRenderMoneyFlowTable(buckets,sym){
+  const rows=[
+    {label:'Méga',inV:buckets.in.mega,outV:buckets.out.mega,inC:'#6bd98f',outC:'#e05f8f'},
+    {label:'Large',inV:buckets.in.large,outV:buckets.out.large,inC:'#3fbf6f',outC:'#c2437a'},
+    {label:'Moyen',inV:buckets.in.moyen,outV:buckets.out.moyen,inC:'#2c6b3f',outC:'#8f3159'},
+    {label:'Petit',inV:buckets.in.petit,outV:buckets.out.petit,inC:'#1f4a30',outC:'#5c2039'}
+  ];
+  $('cdMfTable').innerHTML=`
+    <div style="display:flex;gap:10px;">
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+        ${rows.map(r=>`<div class="cd-mf-row"><span class="lbl-col"><span class="dot" style="background:${r.inC}"></span>${r.label}</span><span class="bar-val" style="background:${r.inC}22;color:var(--green)">${r.inV.toFixed(2)}</span></div>`).join('')}
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+        ${rows.map(r=>`<div class="cd-mf-row"><span class="lbl-col"><span class="dot" style="background:${r.outC}"></span>${r.label}</span><span class="bar-val" style="background:${r.outC}22;color:var(--red)">${r.outV.toFixed(2)}</span></div>`).join('')}
+      </div>
+    </div>`;
+}
 
 // ══════════════════════════════
 // MODALE GRAPHIQUE
@@ -3155,23 +3376,6 @@ function initStaticControls(){
   if(eventCloseBtn)eventCloseBtn.addEventListener('click',closeEventModal);
   const cdBackBtn=$('cdBackBtn');
   if(cdBackBtn)cdBackBtn.addEventListener('click',closeCoinDetail);
-  const cdFavBtn=$('cdFavBtn');
-  if(cdFavBtn)cdFavBtn.addEventListener('click',function(){
-    if(!cdCurrentCoinId)return;
-    const d=liveData[cdCurrentCoinId];
-    toggleFavorite(cdCurrentCoinId,d?symOf(d):'');
-    updateCdFavIcon();
-  });
-  const cdShareBtn=$('cdShareBtn');
-  if(cdShareBtn)cdShareBtn.addEventListener('click',async function(){
-    const d=liveData[cdCurrentCoinId];if(!d)return;
-    const sym=symOf(d);
-    const shareData={title:`${d.name} (${sym})`,text:`${d.name} : ${fmtP(d.current_price)} sur Café Crypto`,url:location.href};
-    try{
-      if(navigator.share){await navigator.share(shareData);}
-      else{await navigator.clipboard.writeText(shareData.text+' — '+shareData.url);showNotification('Copié','Lien copié dans le presse-papiers','🔗',3000);}
-    }catch(e){}
-  });
   const cdTabsEl=document.querySelector('.cd-tabs');
   if(cdTabsEl)cdTabsEl.addEventListener('click',e=>{
     const tab=e.target.closest('.cd-tab[data-tab]');
