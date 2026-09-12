@@ -653,7 +653,7 @@ canvas#btcChart{position:absolute;inset:0;width:100%!important;height:100%!impor
 .cd-tf-more{margin-left:auto;}
 
 .cd-chart-wrap{position:relative;height:340px;padding-top:10px;}
-canvas#cdChart{position:absolute;inset:0;width:100%!important;height:100%!important;}
+canvas#cdChart{position:absolute;inset:0;width:100%!important;height:100%!important;touch-action:none;cursor:ew-resize;}
 
 .cd-ind-tabs{display:flex;gap:2px;padding:8px 10px;overflow-x:auto;border-top:1px solid var(--b);}
 .cd-ind-tab{font-family:var(--mono);font-size:.63rem;padding:6px 9px;border-radius:6px;border:none;background:none;color:var(--muted2);cursor:pointer;white-space:nowrap;}
@@ -1294,6 +1294,29 @@ img,canvas{max-width:100%;}
   </div>
 </div>
 
+<!-- Modale lecture d'article (résumé FR + lien vers l'original) -->
+<div class="modal-overlay" id="articleModal">
+  <div class="modal-content" style="max-width:520px;">
+    <div class="modal-header">
+      <div class="modal-title">
+        <span id="articleModalSrc" style="color:var(--muted);font-family:var(--mono);font-size:.65rem;">—</span>
+      </div>
+      <button class="modal-close" id="articleModalCloseBtn" aria-label="Fermer">×</button>
+    </div>
+    <div style="padding:16px;display:flex;flex-direction:column;gap:12px;max-height:70vh;overflow-y:auto;">
+      <img id="articleModalImg" src="" alt="" style="width:100%;border-radius:10px;object-fit:cover;max-height:180px;background:var(--s2);">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <span class="pill p-cyan" id="articleModalSrc2">—</span>
+        <span style="font-family:var(--mono);font-size:.62rem;color:var(--muted);" id="articleModalDate">—</span>
+      </div>
+      <div style="font-size:1rem;font-weight:700;color:var(--text);line-height:1.4;" id="articleModalTitle">—</div>
+      <div style="font-size:.82rem;color:var(--muted2);line-height:1.7;" id="articleModalBody">—</div>
+      <div style="font-size:.65rem;color:var(--muted);font-style:italic;">Résumé traduit automatiquement en français à partir de la source — pas l'article intégral.</div>
+      <a class="modal-info-btn" id="articleModalLink" href="#" target="_blank" rel="noopener noreferrer" style="text-align:center;">Lire l'article complet sur la source →</a>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ FICHE CRYPTO PLEIN ÉCRAN (façon app d'échange) ═══ -->
 <div class="coin-detail-page" id="coinDetailPage">
 
@@ -1309,7 +1332,6 @@ img,canvas{max-width:100%;}
     <button class="cd-tab" data-tab="info">Informations</button>
     <button class="cd-tab" data-tab="data">Données</button>
     <button class="cd-tab" data-tab="feed">Feed</button>
-    <button class="cd-tab" data-tab="trading">Trading</button>
   </div>
 
   <!-- PANNEAU GRAPHIQUE -->
@@ -1330,8 +1352,6 @@ img,canvas{max-width:100%;}
         <div><span>Tendance</span><span class="v" id="cdMoodBadge">—</span></div>
         <div><span>Sommet 24 h</span><span class="v" id="cdStatHigh">—</span></div>
         <div><span>Creux 24 h</span><span class="v" id="cdStatLow">—</span></div>
-        <div><span>Vol 24 h (coin)</span><span class="v" id="cdStatVolCoin">—</span></div>
-        <div><span>Vol 24 h (USDT)</span><span class="v" id="cdStatVolUsdt">—</span></div>
       </div>
     </div>
 
@@ -1343,7 +1363,6 @@ img,canvas{max-width:100%;}
       <button class="cd-tf" data-tf="1mo" onclick="loadCdChart('4h',180,this)">1 mois</button>
       <button class="cd-tf" data-tf="1y" onclick="loadCdChart('1d',365,this)">1 an</button>
       <button class="cd-tf" data-tf="all" onclick="loadCdChart('1w',1000,this)">Tout</button>
-      <button class="cd-tf cd-tf-more" onclick="cdCapBClick()">Cap.B.</button>
     </div>
 
     <div class="cd-chart-wrap">
@@ -1444,13 +1463,6 @@ img,canvas{max-width:100%;}
   <!-- PANNEAU FEED -->
   <div class="cd-panel" data-panel="feed" id="cdFeedPanel">
     <div style="padding:8px 0;">Chargement des actualités…</div>
-  </div>
-
-  <!-- PANNEAU TRADING -->
-  <div class="cd-panel" data-panel="trading">
-    <div class="cd-trading-note">
-      💡 Café Crypto est un site d'information, pas une plateforme d'échange. L'achat et la vente ne sont pas disponibles ici. Consultez la section <strong>Partenaires</strong> pour découvrir des plateformes d'échange partenaires.
-    </div>
   </div>
 
 </div>
@@ -1868,8 +1880,10 @@ function closeCryptoModal(){$('cryptoModal').classList.remove('active');}
 // FICHE CRYPTO PLEIN ÉCRAN
 // ══════════════════════════════
 let cdCandles=[],cdCurrentTF='1h',cdCurrentCoinId=null,cdMAOn=false;
+let cdViewStart=0,cdViewEnd=0,cdChartReqId=0,cdTouchState=null;
+const CD_MIN_VISIBLE=8;
 let cdFullDesc='',cdDescExpanded=false;
-let cdMfLastCoin=null,cdMfLoading=false;
+let cdMfLastCoin=null,cdMfLoading=false,cdMfReqId=0;
 
 function fmtAxis(v){if(v>=1000)return v.toFixed(0);if(v>=1)return v.toFixed(2);return v.toFixed(6);}
 
@@ -1903,6 +1917,7 @@ async function openCoinDetail(id){
 
   $('coinDetailPage').classList.add('active');
   document.body.style.overflow='hidden';
+  cdInitZoomHandlers();
 
   loadCd24hStats(sym,d);
   const defaultTfBtn=document.querySelector('.cd-tf[data-tf="1h"]');
@@ -1919,6 +1934,7 @@ function closeCoinDetail(){
 function switchCdTab(tab){
   document.querySelectorAll('.cd-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
   document.querySelectorAll('.cd-panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===tab));
+  if(tab==='chart')requestAnimationFrame(()=>drawCdChart());
   if(tab==='data'&&cdCurrentCoinId&&cdMfLastCoin!==cdCurrentCoinId&&!cdMfLoading){
     loadCdMoneyFlow('5m',document.querySelector('.cd-mf-tf'));
   }
@@ -2004,8 +2020,8 @@ function cdRenderFeed(){
     panel.innerHTML='<div style="padding:16px;text-align:center;color:var(--muted2);font-size:.8rem;">Actualités indisponibles pour le moment.</div>';
     return;
   }
-  panel.innerHTML=carouselItems.map(item=>`
-    <a class="cd-feed-item" href="${escapeHTML(safeUrl(item.link||'#'))}" target="_blank" rel="noopener noreferrer">
+  panel.innerHTML=carouselItems.map((item,idx)=>`
+    <a class="cd-feed-item" href="javascript:void(0)" onclick="openArticleModal(${idx})">
       ${item.image?`<img src="${escapeHTML(safeUrl(item.image))}" alt="" loading="lazy">`:''}
       <div>
         <div class="cd-feed-title">${escapeHTML(item.title||'')}</div>
@@ -2025,13 +2041,9 @@ async function loadCd24hStats(sym,d){
     if(cdCurrentCoinId&&symOf(liveData[cdCurrentCoinId])!==sym)return;
     $('cdStatHigh').textContent=fmtP(+j.highPrice);
     $('cdStatLow').textContent=fmtP(+j.lowPrice);
-    $('cdStatVolCoin').textContent=(+j.volume).toLocaleString('en-US',{maximumFractionDigits:2})+' '+sym;
-    $('cdStatVolUsdt').textContent=fmtBig(+j.quoteVolume);
   }catch(e){
     $('cdStatHigh').textContent='—';
     $('cdStatLow').textContent='—';
-    $('cdStatVolCoin').textContent='—';
-    $('cdStatVolUsdt').textContent=d?fmtBig(d.total_volume||0):'—';
   }
 }
 
@@ -2041,20 +2053,24 @@ async function loadCdChart(interval,limit,btn){
   if(btn)btn.classList.add('active');
   const d=liveData[cdCurrentCoinId];if(!d)return;
   const sym=symOf(d);
+  const reqId=++cdChartReqId;
+  const coinAtRequest=cdCurrentCoinId;
   try{
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),10000);
     const r=await fetch(`https://api.binance.com/api/v3/klines?symbol=${encodeURIComponent(sym)}USDT&interval=${encodeURIComponent(interval)}&limit=${limit}`,{signal:controller.signal});
     clearTimeout(timeout);
     if(!r.ok)throw new Error('binance');
-    cdCandles=(await r.json()).map(k=>({t:+k[0],o:+k[1],h:+k[2],l:+k[3],c:+k[4],v:+k[5]}));
+    const parsed=(await r.json()).map(k=>({t:+k[0],o:+k[1],h:+k[2],l:+k[3],c:+k[4],v:+k[5]}));
+    if(reqId!==cdChartReqId||coinAtRequest!==cdCurrentCoinId)return; // réponse obsolète, on l'ignore
+    cdCandles=parsed;
   }catch(e){
+    if(reqId!==cdChartReqId||coinAtRequest!==cdCurrentCoinId)return;
     cdCandles=[];
     showNotification('Graphique indisponible',`Impossible de charger les données ${sym}/USDT sur Binance`,'⚠️');
   }
+  cdViewStart=0;cdViewEnd=cdCandles.length;
   drawCdChart();
 }
-
-function cdCapBClick(){showNotification('Vue capitalisation','Bientôt disponible','📊',2500);}
 
 function cdIndicatorClick(name,btn){
   if(name==='VOL'){
@@ -2073,7 +2089,9 @@ function cdIndicatorClick(name,btn){
 
 function drawCdChart(){
   const cv=$('cdChart');if(!cv)return;
-  const wrap=cv.parentElement,dpr=window.devicePixelRatio||1;
+  const wrap=cv.parentElement;
+  if(!wrap||wrap.clientWidth===0||wrap.clientHeight===0)return;
+  const dpr=window.devicePixelRatio||1;
   cv.width=wrap.clientWidth*dpr;cv.height=wrap.clientHeight*dpr;
   cv.style.width=wrap.clientWidth+'px';cv.style.height=wrap.clientHeight+'px';
   const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
@@ -2084,9 +2102,12 @@ function drawCdChart(){
     ctx.fillText('Données indisponibles',W/2,H/2);
     return;
   }
+  if(!cdViewEnd||cdViewEnd>cdCandles.length||cdViewStart>=cdViewEnd){cdViewStart=0;cdViewEnd=cdCandles.length;}
+  const visible=cdCandles.slice(cdViewStart,cdViewEnd);
+  if(!visible.length)return;
   const pad={t:16,r:58,b:26,l:6};
   const cw=W-pad.l-pad.r,ch=H-pad.t-pad.b;
-  const highs=cdCandles.map(d=>d.h),lows=cdCandles.map(d=>d.l);
+  const highs=visible.map(d=>d.h),lows=visible.map(d=>d.l);
   const mxH=Math.max(...highs),mnL=Math.min(...lows);
   const range=(mxH-mnL)||1;
   const toY=p=>pad.t+(1-(p-mnL)/range)*ch;
@@ -2098,8 +2119,8 @@ function drawCdChart(){
     ctx.fillText(fmtAxis(val),pad.l+cw+6,y+3);
   }
 
-  const gap=cw/cdCandles.length,bw=Math.max(2,Math.floor(gap*.7));
-  cdCandles.forEach((d,i)=>{
+  const gap=cw/visible.length,bw=Math.max(2,Math.floor(gap*.7));
+  visible.forEach((d,i)=>{
     const x=pad.l+i*gap+gap/2,oY=toY(d.o),cY=toY(d.c),hY=toY(d.h),lY=toY(d.l);
     const up=d.c>=d.o,col=up?'#22c55e':'#ef4444';
     const bTop=Math.min(oY,cY),bH=Math.max(Math.abs(cY-oY),1.5);
@@ -2115,17 +2136,17 @@ function drawCdChart(){
   if(cdMAOn){
     const period=7;let started=false;
     ctx.beginPath();
-    cdCandles.forEach((d,i)=>{
-      if(i<period-1)return;
+    for(let i=cdViewStart;i<cdViewEnd;i++){
+      if(i<period-1)continue;
       let sum=0;for(let k=0;k<period;k++)sum+=cdCandles[i-k].c;
-      const ma=sum/period,x=pad.l+i*gap+gap/2,y=toY(ma);
+      const ma=sum/period,x=pad.l+(i-cdViewStart)*gap+gap/2,y=toY(ma);
       if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);
-    });
+    }
     ctx.strokeStyle='#f0b429';ctx.lineWidth=1.5;ctx.stroke();
   }
 
   const d=liveData[cdCurrentCoinId];
-  if(d&&d.current_price){
+  if(d&&d.current_price&&cdViewEnd===cdCandles.length){
     const clampedP=Math.min(Math.max(d.current_price,mnL),mxH);
     const py=toY(clampedP),up=(d.price_change_percentage_24h||0)>=0,col=up?'#22c55e':'#ef4444';
     ctx.beginPath();ctx.moveTo(pad.l,py);ctx.lineTo(pad.l+cw,py);
@@ -2136,14 +2157,19 @@ function drawCdChart(){
     ctx.fillStyle='#07090f';ctx.textAlign='left';ctx.fillText(txt,pad.l+cw+5,py+3);
   }
 
-  const step=Math.ceil(cdCandles.length/5)||1;
-  cdCandles.forEach((cd_,i)=>{
-    if(i%step!==0&&i!==cdCandles.length-1)return;
+  const step=Math.ceil(visible.length/5)||1;
+  visible.forEach((cd_,i)=>{
+    if(i%step!==0&&i!==visible.length-1)return;
     const x=pad.l+i*gap+gap/2,dt=new Date(cd_.t);
     const lbl=['15m','1h'].includes(cdCurrentTF)?dt.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):dt.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:['1d','1w'].includes(cdCurrentTF)?'2-digit':undefined});
     ctx.fillStyle='rgba(122,149,178,.5)';ctx.font=`9px 'JetBrains Mono',monospace`;ctx.textAlign='center';
     ctx.fillText(lbl,x,H-pad.b+14);
   });
+
+  if(cdViewEnd-cdViewStart<cdCandles.length){
+    ctx.fillStyle='rgba(122,149,178,.55)';ctx.font=`9px 'JetBrains Mono',monospace`;ctx.textAlign='left';
+    ctx.fillText('🔍 zoomé — double-tap pour réinitialiser',pad.l,pad.t-4);
+  }
 }
 
 function cdDrawExtreme(ctx,pad,gap,idx,y,val){
@@ -2152,6 +2178,77 @@ function cdDrawExtreme(ctx,pad,gap,idx,y,val){
   ctx.strokeStyle='rgba(226,234,248,.5)';ctx.lineWidth=1;ctx.stroke();
   ctx.font=`9px 'JetBrains Mono',monospace`;ctx.fillStyle='rgba(226,234,248,.8)';ctx.textAlign='left';
   ctx.fillText(fmtAxis(val),x+18,y+3);
+}
+
+// ─── Zoom / pan sur le graphique (molette + pincement tactile) ───
+function cdResetView(){cdViewStart=0;cdViewEnd=cdCandles.length;drawCdChart();}
+
+function cdZoomBy(factor,centerRatio){
+  const total=cdCandles.length;if(total<=CD_MIN_VISIBLE)return;
+  const curLen=cdViewEnd-cdViewStart;
+  let newLen=Math.round(curLen/factor);
+  newLen=Math.max(CD_MIN_VISIBLE,Math.min(total,newLen));
+  const centerIdx=cdViewStart+curLen*centerRatio;
+  let newStart=Math.round(centerIdx-newLen*centerRatio);
+  let newEnd=newStart+newLen;
+  if(newStart<0){newStart=0;newEnd=newLen;}
+  if(newEnd>total){newEnd=total;newStart=total-newLen;}
+  cdViewStart=newStart;cdViewEnd=newEnd;
+  drawCdChart();
+}
+
+function cdSetView(newStart,newEnd){
+  const total=cdCandles.length,len=newEnd-newStart;
+  newStart=Math.max(0,Math.min(total-len,newStart));
+  cdViewStart=newStart;cdViewEnd=newStart+len;
+  drawCdChart();
+}
+
+function cdInitZoomHandlers(){
+  const cv=$('cdChart');if(!cv||cv.dataset.zoomBound)return;
+  cv.dataset.zoomBound='1';
+  cv.addEventListener('wheel',e=>{
+    if(!cdCandles.length)return;
+    e.preventDefault();
+    const rect=cv.getBoundingClientRect();
+    const ratio=Math.min(1,Math.max(0,(e.clientX-rect.left)/rect.width));
+    cdZoomBy(e.deltaY<0?1.15:1/1.15,ratio);
+  },{passive:false});
+  cv.addEventListener('dblclick',()=>cdResetView());
+  cv.addEventListener('touchstart',e=>{
+    if(!cdCandles.length)return;
+    if(e.touches.length===2){
+      const [t1,t2]=e.touches;
+      cdTouchState={mode:'pinch',dist:Math.hypot(t2.clientX-t1.clientX,t2.clientY-t1.clientY),viewStart:cdViewStart,viewEnd:cdViewEnd};
+    }else if(e.touches.length===1){
+      cdTouchState={mode:'pan',x:e.touches[0].clientX,viewStart:cdViewStart,viewEnd:cdViewEnd};
+    }
+  },{passive:true});
+  cv.addEventListener('touchmove',e=>{
+    if(!cdTouchState||!cdCandles.length)return;
+    e.preventDefault();
+    if(cdTouchState.mode==='pinch'&&e.touches.length===2){
+      const [t1,t2]=e.touches;
+      const dist=Math.hypot(t2.clientX-t1.clientX,t2.clientY-t1.clientY);
+      const factor=dist/(cdTouchState.dist||1);
+      const len=cdTouchState.viewEnd-cdTouchState.viewStart;
+      let newLen=Math.round(len/factor);
+      newLen=Math.max(CD_MIN_VISIBLE,Math.min(cdCandles.length,newLen));
+      const centerIdx=(cdTouchState.viewStart+cdTouchState.viewEnd)/2;
+      cdSetView(Math.round(centerIdx-newLen/2),Math.round(centerIdx-newLen/2)+newLen);
+    }else if(cdTouchState.mode==='pan'&&e.touches.length===1){
+      const dx=e.touches[0].clientX-cdTouchState.x;
+      const w=cv.parentElement.clientWidth||1;
+      const len=cdTouchState.viewEnd-cdTouchState.viewStart;
+      const shift=Math.round(-dx/w*len);
+      cdSetView(cdTouchState.viewStart+shift,cdTouchState.viewStart+shift+len);
+    }
+  },{passive:false});
+  cv.addEventListener('touchend',e=>{
+    if(e.touches.length===0)cdTouchState=null;
+    else if(e.touches.length===1)cdTouchState={mode:'pan',x:e.touches[0].clientX,viewStart:cdViewStart,viewEnd:cdViewEnd};
+  });
+  cv.addEventListener('touchcancel',()=>{cdTouchState=null;});
 }
 
 const debouncedCdResize=debounce(()=>{if($('coinDetailPage')?.classList.contains('active'))drawCdChart();},150);
@@ -2171,6 +2268,8 @@ async function loadCdMoneyFlow(period,btn){
   if(!cdCurrentCoinId)return;
   const d=liveData[cdCurrentCoinId];if(!d)return;
   const sym=symOf(d),pair=sym+'USDT';
+  const reqId=++cdMfReqId;
+  const coinAtRequest=cdCurrentCoinId;
   cdMfLoading=true;
   cdMfLastCoin=cdCurrentCoinId;
   document.querySelectorAll('.cd-mf-tf').forEach(b=>b.classList.remove('active'));
@@ -2188,11 +2287,14 @@ async function loadCdMoneyFlow(period,btn){
   try{
     const {interval,limit}=CD_MF_KLINE[period];
     const kr=await fetch(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=${interval}&limit=${limit}`);
+    if(reqId!==cdMfReqId||coinAtRequest!==cdCurrentCoinId)return;
     if(!kr.ok)throw new Error('klines');
     const kdata=await kr.json();
+    if(reqId!==cdMfReqId||coinAtRequest!==cdCurrentCoinId)return;
     kdata.forEach(k=>{totalVol+=parseFloat(k[5]);buyVol+=parseFloat(k[9]);});
     sellVol=Math.max(totalVol-buyVol,0);
   }catch(e){
+    if(reqId!==cdMfReqId||coinAtRequest!==cdCurrentCoinId)return;
     cdMfLoading=false;
     $('cdMfNet').textContent='Données indisponibles pour le moment.';
     $('cdMfRange').textContent='—';
@@ -2208,8 +2310,10 @@ async function loadCdMoneyFlow(period,btn){
   if(period==='5m'||period==='15m'){
     try{
       const tr=await fetch(`https://api.binance.com/api/v3/aggTrades?symbol=${pair}&startTime=${startD.getTime()}&endTime=${now.getTime()}&limit=1000`);
+      if(reqId!==cdMfReqId||coinAtRequest!==cdCurrentCoinId)return;
       if(!tr.ok)throw new Error('aggTrades');
       const trades=await tr.json();
+      if(reqId!==cdMfReqId||coinAtRequest!==cdCurrentCoinId)return;
       const buckets={in:{mega:0,large:0,moyen:0,petit:0},out:{mega:0,large:0,moyen:0,petit:0}};
       trades.forEach(t=>{
         const price=parseFloat(t.p),qty=parseFloat(t.q),notional=price*qty;
@@ -2222,6 +2326,7 @@ async function loadCdMoneyFlow(period,btn){
       cdRenderMoneyFlowTable(buckets,sym);
       if(!trades.length)$('cdMfNote').textContent="Aucune transaction publique trouvée sur cette fenêtre.";
     }catch(e){
+      if(reqId!==cdMfReqId||coinAtRequest!==cdCurrentCoinId)return;
       $('cdMfNote').textContent="Détail par taille de transaction indisponible pour le moment.";
       cdRenderMoneyFlowDonutSimple(buyVol,sellVol);
     }
@@ -2761,6 +2866,23 @@ async function translateItems(items){
   }));
 }
 
+// ══════════════════════════════
+// LECTURE D'ARTICLE SUR LE SITE (résumé FR + lien vers l'original)
+// ══════════════════════════════
+function openArticleModal(idx){
+  const item=carouselItems[idx];if(!item)return;
+  const img=$('articleModalImg');
+  if(item.image){img.src=safeUrl(item.image);img.style.display='block';}else{img.style.display='none';}
+  $('articleModalSrc').textContent=item._src||'Actualité';
+  $('articleModalSrc2').textContent=item._src||'Actualité';
+  $('articleModalDate').textContent=timeAgo(item.pubDate||'');
+  $('articleModalTitle').textContent=item.title||'';
+  $('articleModalBody').textContent=item.description||'Résumé non disponible.';
+  $('articleModalLink').href=safeUrl(item.link||'#');
+  $('articleModal').classList.add('active');
+}
+function closeArticleModal(){$('articleModal').classList.remove('active');}
+
 async function fetchNews(){
   try{
     const controller=new AbortController();
@@ -2835,7 +2957,7 @@ function buildCarousel(){
     const excerpt=escapeHTML((item.description||'').substring(0,150));
     const imgSrc=safeUrl(item.image);
     return`<div class="carousel-slide">
-      <a href="${safeUrl(item.link)}" target="_blank" rel="noopener noreferrer" class="news-featured">
+      <a href="javascript:void(0)" class="news-featured" onclick="openArticleModal(${idx})">
         <img class="news-featured-img" src="${imgSrc}" alt="${title}" loading="lazy" data-fallback-src="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=800">
         <div class="news-featured-content">
           <div class="news-featured-badge">
@@ -3374,6 +3496,8 @@ function initStaticControls(){
   if(cryptoCloseBtn)cryptoCloseBtn.addEventListener('click',closeCryptoModal);
   const eventCloseBtn=$('eventModalCloseBtn');
   if(eventCloseBtn)eventCloseBtn.addEventListener('click',closeEventModal);
+  const articleCloseBtn=$('articleModalCloseBtn');
+  if(articleCloseBtn)articleCloseBtn.addEventListener('click',closeArticleModal);
   const cdBackBtn=$('cdBackBtn');
   if(cdBackBtn)cdBackBtn.addEventListener('click',closeCoinDetail);
   const cdTabsEl=document.querySelector('.cd-tabs');
