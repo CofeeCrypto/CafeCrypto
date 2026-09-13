@@ -624,32 +624,37 @@ canvas#btcChart{position:absolute;inset:0;width:100%!important;height:100%!impor
 /* ─── FICHE CRYPTO PLEIN ÉCRAN (style OKX) ─── */
 .coin-detail-page{position:fixed;inset:0;z-index:2000;background:var(--bg);display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .coin-detail-page.active{display:flex;}
-.cd-header{display:flex;align-items:center;gap:10px;padding:14px 14px;border-bottom:1px solid var(--b);position:sticky;top:0;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);z-index:6;}
-.cd-back{background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer;display:flex;align-items:center;padding:4px;flex-shrink:0;}
-.cd-symbol-row{display:flex;align-items:center;gap:8px;flex:1;min-width:0;}
+.cd-header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--b);position:sticky;top:0;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);z-index:6;}
+.cd-back{background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer;display:flex;align-items:center;padding:4px;flex-shrink:0;border-radius:8px;transition:background .15s;}
+.cd-back:hover{background:var(--s2);}
+.cd-header-icon{width:26px;height:26px;border-radius:50%;flex-shrink:0;background:var(--s2);object-fit:cover;}
+.cd-symbol-row{display:flex;align-items:baseline;gap:8px;flex:1;min-width:0;}
 .cd-symbol{font-size:1.05rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cd-header-name{font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-.cd-tabs{display:flex;gap:20px;padding:0 16px;border-bottom:1px solid var(--b);overflow-x:auto;position:sticky;top:52px;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);z-index:6;}
-.cd-tab{font-size:.82rem;font-weight:600;color:var(--muted2);padding:12px 0;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;}
+.cd-tabs{display:flex;gap:20px;padding:0 16px;border-bottom:1px solid var(--b);overflow-x:auto;position:sticky;top:50px;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);z-index:6;}
+.cd-tab{font-size:.82rem;font-weight:600;color:var(--muted2);padding:12px 0;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;}
 .cd-tab.active{color:var(--text);border-bottom-color:var(--cyan);}
+.cd-tab:hover{color:var(--text);}
 
-.cd-panel{display:none;}
+.cd-panel{display:none;animation:fadeUp .35s ease both;}
 .cd-panel.active{display:block;}
 
-.cd-price-block{padding:16px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.cd-price-block{padding:18px 16px 16px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;}
 .cd-lastp-lbl{color:var(--muted2);font-size:.75rem;margin-bottom:4px;}
-.cd-lastp{font-size:2rem;font-weight:800;line-height:1;margin-bottom:6px;}
-.cd-usdp-row{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.82rem;margin-bottom:8px;color:var(--text);}
+.cd-lastp{font-size:2.1rem;font-weight:800;line-height:1;margin-bottom:6px;letter-spacing:-.5px;}
+.cd-usdp-row{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.82rem;margin-bottom:10px;color:var(--muted2);}
 .cd-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.7rem;color:var(--muted2);font-family:var(--mono);}
-.cd-badges b{color:var(--gold);font-weight:700;}
-.cd-badges .sep{color:var(--b2);}
-.cd-stats-right{display:flex;flex-direction:column;gap:7px;font-size:.78rem;min-width:160px;}
-.cd-stats-right div{display:flex;justify-content:space-between;gap:16px;color:var(--muted2);}
-.cd-stats-right span.v{color:var(--text);font-family:var(--mono);font-size:.75rem;}
+.cd-badges b{color:var(--gold);font-weight:700;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.25);border-radius:6px;padding:3px 8px;}
+.cd-stats-right{display:grid;grid-template-columns:1fr 1fr;gap:8px;min-width:190px;}
+.cd-stat-tile{background:var(--s1);border:1px solid var(--b);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:3px;}
+.cd-stat-tile .k{font-size:.62rem;color:var(--muted);}
+.cd-stat-tile .v{color:var(--text);font-family:var(--mono);font-size:.78rem;font-weight:700;}
 
 .cd-tf-row{display:flex;align-items:center;gap:2px;padding:4px 12px;overflow-x:auto;border-top:1px solid var(--b);border-bottom:1px solid var(--b);}
-.cd-tf{font-family:var(--mono);font-size:.72rem;padding:8px 11px;border-radius:8px;border:none;background:none;color:var(--muted2);cursor:pointer;white-space:nowrap;}
+.cd-tf{font-family:var(--mono);font-size:.72rem;padding:8px 11px;border-radius:8px;border:none;background:none;color:var(--muted2);cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;}
 .cd-tf.active{background:var(--s2);color:var(--text);font-weight:700;}
+.cd-tf:hover{color:var(--text);}
 .cd-tf-more{margin-left:auto;}
 
 .cd-chart-wrap{position:relative;height:340px;padding-top:10px;}
@@ -664,11 +669,6 @@ canvas#cdChart{position:absolute;inset:0;width:100%!important;height:100%!import
 .cd-desc{font-size:.82rem;color:var(--muted2);line-height:1.7;margin-bottom:12px;}
 
 /* Sous-onglets Informations */
-.cd-subtabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
-.cd-subtab{font-family:var(--mono);font-size:.68rem;padding:8px 14px;border-radius:20px;border:1px solid var(--b);background:none;color:var(--muted2);cursor:pointer;white-space:nowrap;transition:all .2s;}
-.cd-subtab.active{background:var(--s2);border-color:var(--b2);color:var(--text);font-weight:700;}
-.cd-info-subpanel{display:none;}
-.cd-info-subpanel.active{display:block;}
 .cd-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px;margin-bottom:22px;}
 .cd-info-grid .lbl{font-size:.68rem;color:var(--muted2);margin-bottom:5px;line-height:1.4;}
 .cd-info-grid .val{font-size:.98rem;font-weight:700;color:var(--text);}
@@ -679,9 +679,46 @@ canvas#cdChart{position:absolute;inset:0;width:100%!important;height:100%!import
 .cd-link-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
 .cd-link-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:20px;border:1px solid var(--b);background:var(--s2);color:var(--text);font-size:.75rem;text-decoration:none;}
 .cd-link-btn:hover{border-color:var(--cyan);color:var(--cyan);}
-.cd-info-list{margin:0 0 14px 18px;font-size:.8rem;color:var(--muted2);line-height:1.7;}
-.cd-info-list li{margin-bottom:6px;}
 .cd-note{border:1px solid rgba(240,180,41,.25);background:rgba(240,180,41,.06);border-radius:10px;padding:12px 14px;font-size:.74rem;color:var(--muted2);line-height:1.5;margin-top:14px;}
+
+/* ─── PAGES INFO (À propos / Contact / CGU / Confidentialité) ─── */
+.info-page{position:fixed;inset:0;z-index:2000;background:var(--bg);display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.info-page.active{display:flex;}
+.info-page-header{display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--b);position:sticky;top:0;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);z-index:6;}
+.info-page-title{font-size:1rem;font-weight:800;}
+.info-page-body{padding:22px 18px 60px;max-width:640px;margin:0 auto;width:100%;}
+.info-page-body h1{font-size:1.4rem;font-weight:800;margin-bottom:8px;line-height:1.3;}
+.info-page-body h2{font-size:1rem;font-weight:800;margin:26px 0 10px;color:var(--text);}
+.info-page-body h2:first-of-type{margin-top:0;}
+.info-page-body p{font-size:.85rem;color:var(--muted2);line-height:1.75;margin-bottom:14px;}
+.info-page-body ul{margin:0 0 14px 20px;font-size:.85rem;color:var(--muted2);line-height:1.8;}
+.info-page-body li{margin-bottom:6px;}
+.info-page-body a{color:var(--cyan);text-decoration:none;}
+.info-page-body strong{color:var(--text);}
+.info-page-eyebrow{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:8px;}
+.info-page-lead{font-size:.85rem;color:var(--muted2);margin-bottom:22px;}
+.info-page-updated{font-family:var(--mono);font-size:.62rem;color:var(--muted);margin-bottom:22px;}
+.info-contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0;}
+@media(max-width:480px){.info-contact-grid{grid-template-columns:1fr;}}
+.info-contact-item{background:var(--s1);border:1px solid var(--b);border-radius:12px;padding:14px;}
+.info-contact-item .lbl{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.info-contact-item .val{font-size:.85rem;color:var(--text);font-weight:600;}
+
+/* ─── PAGE LECTURE D'ARTICLE ─── */
+.article-page{position:fixed;inset:0;z-index:2000;background:var(--bg);display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.article-page.active{display:flex;}
+.article-page-body{padding:0 0 60px;max-width:640px;margin:0 auto;width:100%;}
+.article-hero{width:100%;max-height:260px;object-fit:cover;background:var(--s2);display:block;}
+.article-badges{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:18px 18px 0;}
+.article-date{font-family:var(--mono);font-size:.65rem;color:var(--muted);}
+.article-title{font-size:1.3rem;font-weight:800;line-height:1.35;color:var(--text);padding:12px 18px 0;}
+.article-summary{font-size:.9rem;color:var(--muted2);line-height:1.85;padding:16px 18px 0;}
+.article-source-box{margin:24px 18px 0;padding:16px;background:var(--s1);border:1px solid var(--b);border-radius:14px;}
+.article-source-box .lbl{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px;}
+.article-source-box .val{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:14px;}
+.article-source-box .cd-website-btn{width:100%;justify-content:center;margin-bottom:0;box-sizing:border-box;}
+.article-page-body .cd-note{margin:16px 18px 0;}
+@media(min-width:768px){.article-hero{max-height:320px;}}
 
 /* Onglet Données — flux monétaire */
 .cd-mf-card{background:var(--s1);border:1px solid var(--b);border-radius:16px;padding:18px;}
@@ -752,21 +789,8 @@ canvas#cdChart{position:absolute;inset:0;width:100%!important;height:100%!import
   display:flex;align-items:center;justify-content:center;transition:all .2s;
 }
 .modal-close:active{border-color:var(--red);color:var(--red);}
-.modal-chart{padding:16px;height:300px;}
 
-/* ─── MODALE FICHE DÉTAILLÉE CRYPTO ─── */
-.modal-info{padding:16px;display:flex;flex-direction:column;gap:16px;}
-.modal-info-header{display:flex;align-items:center;gap:12px;}
-.modal-info-icon{width:56px;height:56px;border-radius:50%;overflow:hidden;background:var(--s2);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;}
-.modal-info-icon img{width:100%;height:100%;object-fit:cover;}
-.modal-info-title{font-size:1.1rem;font-weight:700;}
-.modal-info-subtitle{font-size:.75rem;color:var(--muted2);margin-top:2px;}
-.modal-info-description{font-size:.75rem;color:var(--muted);line-height:1.6;}
-.modal-info-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
-.modal-info-stat{background:var(--s2);border:1px solid var(--b);border-radius:8px;padding:10px;}
-.modal-info-stat-label{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
-.modal-info-stat-value{font-family:var(--mono);font-size:.85rem;font-weight:600;color:var(--text);}
-.modal-info-actions{display:flex;gap:10px;flex-wrap:wrap;}
+/* ─── MODALES ─── */
 .modal-info-btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;border-radius:8px;background:var(--s2);border:1px solid var(--b2);color:var(--cyan);text-decoration:none;font-family:var(--mono);font-size:.7rem;cursor:pointer;transition:all .2s;min-width:140px;}
 .modal-info-btn:hover{border-color:var(--cyan);background:rgba(56,189,248,.07);}
 
@@ -1208,71 +1232,13 @@ img,canvas{max-width:100%;}
 <footer>
   <span class="f-logo">CafeCrypto</span>
   <div class="f-note">Les informations publiées ne constituent pas des conseils en investissement.<br>Cryptomonnaies = actifs à risque élevé. Investissez responsablement.</div>
-  <ul class="f-links"><li><a href="/a-propos.html">À propos</a></li><li><a href="/contact.html">Contact</a></li><li><a href="/cgu.html">CGU</a></li><li><a href="/confidentialite.html">Confidentialité</a></li></ul>
+  <ul class="f-links"><li><a href="javascript:void(0)" onclick="openInfoPage('about')">À propos</a></li><li><a href="javascript:void(0)" onclick="openInfoPage('contact')">Contact</a></li><li><a href="javascript:void(0)" onclick="openInfoPage('cgu')">CGU</a></li><li><a href="javascript:void(0)" onclick="openInfoPage('privacy')">Confidentialité</a></li></ul>
 </footer>
 </div><!-- /page -->
 
 <button class="theme-btn" id="themeBtn" aria-label="Changer de thème">☀️</button>
 
 <div id="notificationContainer" style="position:fixed;top:146px;right:20px;z-index:1000;display:flex;flex-direction:column;gap:10px;"></div>
-
-<!-- Modale fiche détaillée crypto -->
-<div class="modal-overlay" id="cryptoModal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <div class="modal-title">
-        <img id="cryptoModalIcon" src="" alt="" width="28" height="28" style="border-radius:50%;">
-        <span id="cryptoModalName">—</span>
-        <span id="cryptoModalSymbol" style="color:var(--muted);font-family:var(--mono);font-size:.65rem;">—</span>
-      </div>
-      <button class="modal-close" id="cryptoModalCloseBtn" aria-label="Fermer">×</button>
-    </div>
-    <div class="modal-info">
-      <div class="modal-info-header">
-        <div class="modal-info-icon"><img id="cryptoModalIconLarge" src="" alt=""></div>
-        <div>
-          <div class="modal-info-title" id="cryptoModalTitle">—</div>
-          <div class="modal-info-subtitle" id="cryptoModalSubtitle">—</div>
-        </div>
-      </div>
-      <div class="modal-info-description" id="cryptoModalDescription">Chargement…</div>
-      <div class="modal-info-stats">
-        <div class="modal-info-stat"><div class="modal-info-stat-label">Prix</div><div class="modal-info-stat-value" id="cryptoModalPrice">—</div></div>
-        <div class="modal-info-stat"><div class="modal-info-stat-label">Market Cap</div><div class="modal-info-stat-value" id="cryptoModalMcap">—</div></div>
-        <div class="modal-info-stat"><div class="modal-info-stat-label">Volume 24h</div><div class="modal-info-stat-value" id="cryptoModalVolume">—</div></div>
-        <div class="modal-info-stat"><div class="modal-info-stat-label">Circulation</div><div class="modal-info-stat-value" id="cryptoModalCirculating">—</div></div>
-        <div class="modal-info-stat"><div class="modal-info-stat-label">Haut (ATH)</div><div class="modal-info-stat-value" id="cryptoModalAth">—</div></div>
-        <div class="modal-info-stat"><div class="modal-info-stat-label">Bas (ATL)</div><div class="modal-info-stat-value" id="cryptoModalAtl">—</div></div>
-        <div class="modal-info-stat"><div class="modal-info-stat-label">Rang</div><div class="modal-info-stat-value" id="cryptoModalRank">—</div></div>
-        <div class="modal-info-stat"><div class="modal-info-stat-label">Var. 24h</div><div class="modal-info-stat-value" id="cryptoModalChg">—</div></div>
-      </div>
-      <div class="modal-info-actions">
-        <button class="modal-info-btn" id="cryptoModalChartBtn">📈 Voir le graphique</button>
-        <a class="modal-info-btn" id="cryptoModalWebsite" href="#" target="_blank" rel="noopener noreferrer">🌐 Site officiel</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modale graphique crypto -->
-<div class="modal-overlay" id="chartModal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <div class="modal-title">
-        <img id="modalIcon" src="" alt="" width="28" height="28" style="border-radius:50%;">
-        <span id="modalName">—</span>
-        <span id="modalSymbol" style="color:var(--muted);font-family:var(--mono);font-size:.65rem;">—</span>
-      </div>
-      <button class="modal-close" id="chartModalCloseBtn" aria-label="Fermer">×</button>
-    </div>
-    <div class="modal-chart">
-      <div id="modalPrice" style="font-size:1.3rem;font-weight:700;margin-bottom:8px;">—</div>
-      <div id="modalChange" style="font-family:var(--mono);font-size:.75rem;margin-bottom:12px;">—</div>
-      <div id="modalChartContainer"><canvas id="modalChart" style="width:100%;height:230px;"></canvas></div>
-      <div id="modalError" style="display:none;text-align:center;padding:20px;color:var(--red);font-family:var(--mono);font-size:.7rem;">Données indisponibles</div>
-    </div>
-  </div>
-</div>
 
 <!-- Modale détail événement -->
 <div class="modal-overlay" id="eventModal">
@@ -1294,36 +1260,47 @@ img,canvas{max-width:100%;}
   </div>
 </div>
 
-<!-- Modale lecture d'article (résumé FR + lien vers l'original) -->
-<div class="modal-overlay" id="articleModal">
-  <div class="modal-content" style="max-width:520px;">
-    <div class="modal-header">
-      <div class="modal-title">
-        <span id="articleModalSrc" style="color:var(--muted);font-family:var(--mono);font-size:.65rem;">—</span>
-      </div>
-      <button class="modal-close" id="articleModalCloseBtn" aria-label="Fermer">×</button>
+<!-- ═══ PAGE LECTURE D'ARTICLE (résumé FR + source) ═══ -->
+<div class="article-page" id="articlePage">
+  <div class="cd-header">
+    <button class="cd-back" id="articlePageBackBtn" aria-label="Retour">‹</button>
+    <div class="cd-symbol-row"><span class="cd-symbol">Actualité</span></div>
+  </div>
+  <div class="article-page-body">
+    <img id="articleModalImg" src="" alt="" class="article-hero">
+    <div class="article-badges">
+      <span class="pill p-cyan" id="articleModalSrc2">—</span>
+      <span class="article-date" id="articleModalDate">—</span>
     </div>
-    <div style="padding:16px;display:flex;flex-direction:column;gap:12px;max-height:70vh;overflow-y:auto;">
-      <img id="articleModalImg" src="" alt="" style="width:100%;border-radius:10px;object-fit:cover;max-height:180px;background:var(--s2);">
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span class="pill p-cyan" id="articleModalSrc2">—</span>
-        <span style="font-family:var(--mono);font-size:.62rem;color:var(--muted);" id="articleModalDate">—</span>
-      </div>
-      <div style="font-size:1rem;font-weight:700;color:var(--text);line-height:1.4;" id="articleModalTitle">—</div>
-      <div style="font-size:.82rem;color:var(--muted2);line-height:1.7;" id="articleModalBody">—</div>
-      <div style="font-size:.65rem;color:var(--muted);font-style:italic;">Résumé traduit automatiquement en français à partir de la source — pas l'article intégral.</div>
-      <a class="modal-info-btn" id="articleModalLink" href="#" target="_blank" rel="noopener noreferrer" style="text-align:center;">Lire l'article complet sur la source →</a>
+    <h1 class="article-title" id="articleModalTitle">—</h1>
+    <p class="article-summary" id="articleModalBody">—</p>
+    <div class="article-source-box">
+      <div class="lbl">Source de cet article</div>
+      <div class="val" id="articleModalSrc">—</div>
+      <a class="cd-website-btn" id="articleModalLink" href="#" target="_blank" rel="noopener noreferrer">📄 Lire l'article complet sur la source →</a>
     </div>
+    <div class="cd-note">Ce texte est un extrait traduit et raccourci à partir de la source, à titre d'aperçu — pas l'article intégral. Les droits appartiennent à l'éditeur d'origine ; utilisez le bouton ci-dessus pour le lire en entier.</div>
   </div>
 </div>
 
 <!-- ═══ FICHE CRYPTO PLEIN ÉCRAN (façon app d'échange) ═══ -->
+<!-- ═══ PAGE INFO (À propos / Contact / CGU / Confidentialité) ═══ -->
+<div class="info-page" id="infoPage">
+  <div class="info-page-header">
+    <button class="cd-back" id="infoPageBackBtn" aria-label="Retour">‹</button>
+    <span class="info-page-title" id="infoPageTitle">—</span>
+  </div>
+  <div class="info-page-body" id="infoPageBody"></div>
+</div>
+
 <div class="coin-detail-page" id="coinDetailPage">
 
   <div class="cd-header">
     <button class="cd-back" id="cdBackBtn" aria-label="Retour">‹</button>
+    <img class="cd-header-icon" id="cdHeaderIcon" src="" alt="" onerror="this.style.display='none'">
     <div class="cd-symbol-row">
       <span class="cd-symbol" id="cdSymbol">—/USDT</span>
+      <span class="cd-header-name" id="cdHeaderName">—</span>
     </div>
   </div>
 
@@ -1342,16 +1319,15 @@ img,canvas{max-width:100%;}
         <div class="cd-lastp" id="cdLastP">—</div>
         <div class="cd-usdp-row"><span id="cdUsdP">$—</span></div>
         <div class="cd-badges">
-          <b id="cdRankBadge">🔥 N° —</b><span class="sep">|</span>
-          <span id="cdCapBadge">Cap. #—</span>
+          <b id="cdRankBadge">🔥 N° —</b>
         </div>
       </div>
       <div class="cd-stats-right">
-        <div><span>Var. 24 h</span><span class="v" id="cdChgPct">—</span></div>
-        <div><span>Mark price</span><span class="v" id="cdMark">—</span></div>
-        <div><span>Tendance</span><span class="v" id="cdMoodBadge">—</span></div>
-        <div><span>Sommet 24 h</span><span class="v" id="cdStatHigh">—</span></div>
-        <div><span>Creux 24 h</span><span class="v" id="cdStatLow">—</span></div>
+        <div class="cd-stat-tile"><span class="k">Var. 24 h</span><span class="v" id="cdChgPct">—</span></div>
+        <div class="cd-stat-tile"><span class="k">Tendance</span><span class="v" id="cdMoodBadge">—</span></div>
+        <div class="cd-stat-tile"><span class="k">Mark price</span><span class="v" id="cdMark">—</span></div>
+        <div class="cd-stat-tile"><span class="k">Sommet 24 h</span><span class="v" id="cdStatHigh">—</span></div>
+        <div class="cd-stat-tile"><span class="k">Creux 24 h</span><span class="v" id="cdStatLow">—</span></div>
       </div>
     </div>
 
@@ -1384,52 +1360,26 @@ img,canvas{max-width:100%;}
   <!-- PANNEAU INFORMATIONS -->
   <div class="cd-panel" data-panel="info">
     <div class="cd-info-section">
-      <div class="cd-subtabs">
-        <button class="cd-subtab active" data-subtab="crypto" onclick="switchCdInfoSubtab('crypto',this)">Infos sur la crypto</button>
-        <button class="cd-subtab" data-subtab="rules" onclick="switchCdInfoSubtab('rules',this)">Règles de trading</button>
-        <button class="cd-subtab" data-subtab="index" onclick="switchCdInfoSubtab('index',this)">Exemple d'indice</button>
+      <div class="cd-info-grid">
+        <div><div class="lbl">Classement de l'indice de popularité</div><div class="val" id="cdInfoPopRank">—</div></div>
+        <div><div class="lbl">Classement de cap. boursière</div><div class="val" id="cdInfoCapRank">—</div></div>
+        <div><div class="lbl">Capitalisation boursière</div><div class="val" id="cdInfoMcap">—</div></div>
+        <div><div class="lbl">Jetons actuellement en circulation</div><div class="val" id="cdInfoCircSupply">—</div></div>
+        <div><div class="lbl">Ajouté aux favoris</div><div class="val" id="cdInfoFavPct">—</div></div>
+        <div><div class="lbl">Taux de circulation</div><div class="val" id="cdInfoCircRate">—</div></div>
+        <div><div class="lbl">Sommet historique</div><div class="val" id="cdInfoAth">—</div><div class="sub" id="cdInfoAthDate"></div></div>
+        <div><div class="lbl">Bas niveau historique</div><div class="val" id="cdInfoAtl">—</div><div class="sub" id="cdInfoAtlDate"></div></div>
+        <div><div class="lbl">Date de lancement</div><div class="val" id="cdInfoLaunch">—</div></div>
+        <div><div class="lbl">Volume de trading/cap. boursière</div><div class="val" id="cdInfoVolRatio">—</div></div>
+        <div><div class="lbl">Jetons max</div><div class="val" id="cdInfoMaxSupply">—</div></div>
+        <div><div class="lbl">Capitalisation boursière avec jetons max.</div><div class="val" id="cdInfoFdv">—</div></div>
       </div>
 
-      <div class="cd-info-subpanel active" data-subpanel="crypto">
-        <div class="cd-info-grid">
-          <div><div class="lbl">Classement de l'indice de popularité</div><div class="val" id="cdInfoPopRank">—</div></div>
-          <div><div class="lbl">Classement de cap. boursière</div><div class="val" id="cdInfoCapRank">—</div></div>
-          <div><div class="lbl">Capitalisation boursière</div><div class="val" id="cdInfoMcap">—</div></div>
-          <div><div class="lbl">Jetons actuellement en circulation</div><div class="val" id="cdInfoCircSupply">—</div></div>
-          <div><div class="lbl">Ajouté aux favoris</div><div class="val" id="cdInfoFavPct">—</div></div>
-          <div><div class="lbl">Taux de circulation</div><div class="val" id="cdInfoCircRate">—</div></div>
-          <div><div class="lbl">Sommet historique</div><div class="val" id="cdInfoAth">—</div><div class="sub" id="cdInfoAthDate"></div></div>
-          <div><div class="lbl">Bas niveau historique</div><div class="val" id="cdInfoAtl">—</div><div class="sub" id="cdInfoAtlDate"></div></div>
-          <div><div class="lbl">Date de lancement</div><div class="val" id="cdInfoLaunch">—</div></div>
-          <div><div class="lbl">Volume de trading/cap. boursière</div><div class="val" id="cdInfoVolRatio">—</div></div>
-          <div><div class="lbl">Jetons max</div><div class="val" id="cdInfoMaxSupply">—</div></div>
-          <div><div class="lbl">Capitalisation boursière avec jetons max.</div><div class="val" id="cdInfoFdv">—</div></div>
-        </div>
+      <h3 class="cd-info-h3" id="cdAboutTitle">À propos de —</h3>
+      <p class="cd-desc" id="cdDesc">Chargement de la description…</p>
+      <button class="cd-more-btn" id="cdDescToggle" onclick="cdToggleDesc()" style="display:none;">Afficher plus ⌄</button>
 
-        <h3 class="cd-info-h3" id="cdAboutTitle">À propos de —</h3>
-        <p class="cd-desc" id="cdDesc">Chargement de la description…</p>
-        <button class="cd-more-btn" id="cdDescToggle" onclick="cdToggleDesc()" style="display:none;">Afficher plus ⌄</button>
-
-        <div class="cd-link-row" id="cdLinkRow"></div>
-      </div>
-
-      <div class="cd-info-subpanel" data-subpanel="rules">
-        <p class="cd-desc">Café Crypto est un site d'information : aucun ordre n'est exécuté sur cette page. À titre pédagogique, voici les notions qui composent généralement les règles de trading sur une plateforme d'échange :</p>
-        <ul class="cd-info-list">
-          <li><strong>Taille minimale d'ordre</strong> — quantité minimale autorisée par transaction, propre à chaque paire.</li>
-          <li><strong>Pas de prix (tick size)</strong> — plus petit incrément de prix accepté pour un ordre.</li>
-          <li><strong>Effet de levier</strong> — sur les produits dérivés, multiplie l'exposition (et le risque) par rapport au capital engagé.</li>
-          <li><strong>Frais maker/taker</strong> — commission différente selon que l'ordre apporte ou consomme de la liquidité.</li>
-          <li><strong>Prix de liquidation</strong> — seuil à partir duquel une position à effet de levier est automatiquement clôturée.</li>
-        </ul>
-        <div class="cd-note">Pour trader réellement cette paire, rendez-vous sur une plateforme d'échange partenaire (voir la section Partenaires de l'accueil).</div>
-      </div>
-
-      <div class="cd-info-subpanel" data-subpanel="index">
-        <p class="cd-desc">Le <strong>prix indexé (mark price)</strong> sert de référence pour valoriser une position et déclencher d'éventuelles liquidations, plutôt que d'utiliser directement le dernier prix échangé — plus volatil et manipulable à court terme.</p>
-        <p class="cd-desc">Sur la plupart des plateformes, il est calculé comme une moyenne pondérée entre le prix au comptant (spot) observé sur plusieurs grandes places de marché et le prix des contrats à terme associés, ce qui lisse les écarts ponctuels de liquidité.</p>
-        <div class="cd-note">Café Crypto n'exécute aucun ordre : le "Mark price" affiché dans l'onglet Graphique correspond simplement au dernier prix spot connu, à titre indicatif.</div>
-      </div>
+      <div class="cd-link-row" id="cdLinkRow"></div>
     </div>
   </div>
 
@@ -1832,51 +1782,6 @@ function setupSearch(){
 function toggleFavorite(id,sym){if(favorites.has(id)){favorites.delete(id);showNotification(`${sym} retiré des favoris`,'','⭐',3000);}else{favorites.add(id);showNotification(`${sym} ajouté aux favoris`,'','⭐',3000);}try{localStorage.setItem('cafeCryptoFavorites',JSON.stringify([...favorites]));}catch(e){}renderTop100();buildTriSections(allCoins);}
 
 // ══════════════════════════════
-// MODALE FICHE DÉTAILLÉE CRYPTO
-// ══════════════════════════════
-let currentInfoModalCoinId=null;
-
-async function openCryptoModal(id){
-  const d=liveData[id];if(!d)return;
-  currentInfoModalCoinId=id;
-  const sym=symOf(d);
-  const up=(d.price_change_percentage_24h||0)>=0;
-
-  $('cryptoModalIcon').src=safeUrl(d.image||'');
-  $('cryptoModalIconLarge').src=safeUrl(d.image||'');
-  $('cryptoModalName').textContent=d.name||'';
-  $('cryptoModalSymbol').textContent=sym;
-  $('cryptoModalTitle').textContent=d.name||'';
-  $('cryptoModalSubtitle').textContent=sym+' · Classé #'+(d.market_cap_rank||'—');
-  $('cryptoModalPrice').textContent=fmtP(d.current_price);
-  $('cryptoModalMcap').textContent=fmtBig(d.market_cap||0);
-  $('cryptoModalVolume').textContent=fmtBig(d.total_volume||0);
-  $('cryptoModalCirculating').textContent=d.circulating_supply?fmtBig(d.circulating_supply):'—';
-  $('cryptoModalAth').textContent=d.ath?fmtP(d.ath):'—';
-  $('cryptoModalAtl').textContent=d.atl?fmtP(d.atl):'—';
-  $('cryptoModalRank').textContent='#'+(d.market_cap_rank||'—');
-  const chgEl=$('cryptoModalChg');chgEl.textContent=fmtPct(d.price_change_percentage_24h||0);chgEl.style.color=up?'var(--green)':'var(--red)';
-  $('cryptoModalWebsite').href=safeUrl(d.links?.homepage?.[0]||'https://coindesk.com');
-  $('cryptoModalDescription').textContent='Chargement de la description…';
-  $('cryptoModal').classList.add('active');
-
-  try{
-    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),10000);
-    const r=await fetch(`https://api.coinpaprika.com/v1/coins/${encodeURIComponent(id)}`,{signal:controller.signal});
-    clearTimeout(timeout);
-    if(!r.ok)throw new Error('CoinPaprika');
-    const coinData=await r.json();
-    const rawDesc=coinData.description||'';
-    $('cryptoModalDescription').textContent=(rawDesc.replace(/<[^>]*>/g,'').substring(0,500)||'Description non disponible.')+(rawDesc?' (en anglais)':'');
-    const site=coinData.links?.website?.[0];
-    if(site)$('cryptoModalWebsite').href=safeUrl(site);
-  }catch(e){
-    $('cryptoModalDescription').textContent='Description non disponible pour le moment.';
-  }
-}
-function closeCryptoModal(){$('cryptoModal').classList.remove('active');}
-
-// ══════════════════════════════
 // FICHE CRYPTO PLEIN ÉCRAN
 // ══════════════════════════════
 let cdCandles=[],cdCurrentTF='1h',cdCurrentCoinId=null,cdMAOn=false;
@@ -1895,6 +1800,9 @@ async function openCoinDetail(id){
   const up=(d.price_change_percentage_24h||0)>=0;
 
   $('cdSymbol').textContent=sym+'/USDT';
+  $('cdHeaderName').textContent=d.name||'';
+  const hIcon=$('cdHeaderIcon');
+  if(d.image){hIcon.src=safeUrl(d.image);hIcon.style.display='block';}else{hIcon.style.display='none';}
   $('cdLastP').textContent=fmtP(d.current_price);
   $('cdLastP').style.color=up?'var(--green)':'var(--red)';
   $('cdUsdP').textContent='$'+(d.current_price!=null?d.current_price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:d.current_price<1?6:2}):'—');
@@ -1902,7 +1810,6 @@ async function openCoinDetail(id){
   $('cdMark').textContent=fmtP(d.current_price);
   const moodEl=$('cdMoodBadge');moodEl.textContent=up?'Haussier ↑':'Baissier ↓';moodEl.style.color=up?'var(--green)':'var(--red)';
   $('cdRankBadge').textContent='🔥 N° '+(d.market_cap_rank||'—');
-  $('cdCapBadge').textContent='Cap. #'+(d.market_cap_rank||'—');
 
   cdFillInformations(d,sym);
   $('cdDesc').textContent='Chargement de la description…';
@@ -1910,7 +1817,6 @@ async function openCoinDetail(id){
   cdFullDesc='';cdDescExpanded=false;
 
   switchCdTab('chart');
-  switchCdInfoSubtab('crypto');
   cdMAOn=false;
   document.querySelectorAll('.cd-ind-tab').forEach(t=>t.classList.remove('active'));
   const volTab=document.querySelector('.cd-ind-tab');if(volTab)volTab.classList.add('active');
@@ -1940,11 +1846,6 @@ function switchCdTab(tab){
   }
 }
 
-function switchCdInfoSubtab(name,btn){
-  document.querySelectorAll('.cd-subtab').forEach(t=>t.classList.remove('active'));
-  if(btn)btn.classList.add('active');else{const m=document.querySelector(`.cd-subtab[data-subtab="${name}"]`);if(m)m.classList.add('active');}
-  document.querySelectorAll('.cd-info-subpanel').forEach(p=>p.classList.toggle('active',p.dataset.subpanel===name));
-}
 
 function cdToggleDesc(){
   cdDescExpanded=!cdDescExpanded;
@@ -2406,72 +2307,6 @@ function cdRenderMoneyFlowTable(buckets,sym){
 }
 
 // ══════════════════════════════
-// MODALE GRAPHIQUE
-// ══════════════════════════════
-let modalCandles=[];
-
-async function openChartModal(id){
-  const d=liveData[id];if(!d)return;
-  const sym=symOf(d);
-  $('modalName').textContent=d.name||'';
-  $('modalSymbol').textContent=sym;
-  $('modalIcon').src=d.image||'';
-  const up=(d.price_change_percentage_24h||0)>=0;
-  $('modalPrice').textContent=fmtP(d.current_price);
-  $('modalPrice').style.color=up?'var(--green)':'var(--red)';
-  $('modalChange').textContent=fmtPct(d.price_change_percentage_24h||0)+' (24h)';
-  $('modalChange').style.color=up?'var(--green)':'var(--red)';
-  $('modalChartContainer').style.display='block';
-  $('modalError').style.display='none';
-  try{
-    const binanceSymbol=sym+'USDT';
-    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),8000);
-    const r=await fetch(`https://api.binance.com/api/v3/klines?symbol=${encodeURIComponent(binanceSymbol)}&interval=1h&limit=60`,{signal:controller.signal});
-    clearTimeout(timeout);
-    if(!r.ok)throw new Error('Binance');
-    modalCandles=(await r.json()).map(k=>({o:+k[1],h:+k[2],l:+k[3],c:+k[4],v:+k[5]}));
-    $('chartModal').classList.add('active');setTimeout(()=>drawModalChart(),50);
-  }catch(e){
-    $('modalChartContainer').style.display='none';
-    $('modalError').style.display='block';
-    $('modalError').textContent='⚠️ Données indisponibles pour '+sym+' sur Binance';
-    $('chartModal').classList.add('active');
-  }
-}
-function closeChartModal(){$('chartModal').classList.remove('active');}
-
-function drawModalChart(){
-  const cv=$('modalChart');if(!cv||!modalCandles.length)return;
-  const wrap=cv.parentElement,dpr=window.devicePixelRatio||1;
-  cv.width=wrap.clientWidth*dpr;cv.height=wrap.clientHeight*dpr;
-  cv.style.width=wrap.clientWidth+'px';cv.style.height=wrap.clientHeight+'px';
-  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
-  const W=wrap.clientWidth,H=wrap.clientHeight;
-  const pad={t:10,r:10,b:20,l:50};
-  const cw=W-pad.l-pad.r,ch=H-pad.t-pad.b;
-  const mxH=Math.max(...modalCandles.map(d=>d.h)),mnL=Math.min(...modalCandles.map(d=>d.l));
-  const range=mxH-mnL||1;
-  const toY=p=>pad.t+(1-(p-mnL)/range)*ch;
-  ctx.clearRect(0,0,W,H);
-  for(let i=0;i<=5;i++){
-    const y=pad.t+i/5*ch,val=mxH-i/5*range;
-    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+cw,y);ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=1;ctx.stroke();
-    ctx.fillStyle='rgba(122,149,178,.7)';ctx.font=`10px 'JetBrains Mono',monospace`;ctx.textAlign='right';
-    ctx.fillText(val>=1000?'$'+Math.round(val/1000)+'k':'$'+val.toFixed(1),pad.l-5,y+3);
-  }
-  const gap=cw/modalCandles.length,bw=Math.max(4,Math.floor(gap*.75));
-  modalCandles.forEach((d,i)=>{
-    const x=pad.l+i*gap+gap/2,oY=toY(d.o),cY=toY(d.c),hY=toY(d.h),lY=toY(d.l);
-    const up=d.c>=d.o,col=up?'#22c55e':'#ef4444';
-    const bTop=Math.min(oY,cY),bH=Math.max(Math.abs(cY-oY),2);
-    ctx.beginPath();ctx.moveTo(x,hY);ctx.lineTo(x,bTop);ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.stroke();
-    ctx.beginPath();ctx.moveTo(x,bTop+bH);ctx.lineTo(x,lY);ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.stroke();
-    ctx.fillStyle=up?'rgba(34,197,94,.85)':'rgba(239,68,68,.85)';ctx.fillRect(x-bw/2,bTop,bw,bH);
-    ctx.strokeStyle=col;ctx.lineWidth=1;ctx.strokeRect(x-bw/2,bTop,bw,bH);
-  });
-}
-
-// ══════════════════════════════
 // GRAPHIQUE BTC
 // ══════════════════════════════
 function toggleChartInfo(){const ohlcv=$('chartOHLCV');if(ohlcv)ohlcv.classList.toggle('visible');}
@@ -2743,6 +2578,105 @@ function openEventModal(id){
 }
 function closeEventModal(){$('eventModal').classList.remove('active');}
 
+// ══════════════════════════════
+// PAGES INFO (À propos / Contact / CGU / Confidentialité)
+// Intégrées directement dans l'app pour ne jamais dépendre de fichiers
+// externes séparés (évite tout risque de lien mort / 404).
+// ══════════════════════════════
+const INFO_PAGES={
+  about:{title:"À propos",html:`
+    <div class="info-page-eyebrow">À propos</div>
+    <h1>Café Crypto, l'info crypto sans le bruit</h1>
+    <p class="info-page-lead">Un tableau de bord clair pour suivre les marchés crypto, comprendre ce qui s'y passe, et apprendre — sans jargon inutile.</p>
+    <h2>Notre mission</h2>
+    <p>Café Crypto est né d'un constat simple : suivre les marchés crypto demande de jongler entre dix onglets différents — un pour les prix, un pour les actus, un pour le sentiment de marché. Notre objectif est de réunir l'essentiel sur une seule page, claire et mise à jour en continu.</p>
+    <h2>Ce que vous trouverez sur le site</h2>
+    <ul>
+      <li><strong>Des prix en temps réel</strong> pour les principales cryptomonnaies, avec variations 24h.</li>
+      <li><strong>Un graphique BTC/USDT</strong> zoomable, alimenté par les données de marché de Binance.</li>
+      <li><strong>Les tendances du jour</strong> : top gagnants, top perdants, cryptos les plus recherchées.</li>
+      <li><strong>Un indice Fear & Greed</strong> pour visualiser le sentiment général du marché.</li>
+      <li><strong>Une revue de presse crypto</strong> agrégée et traduite en français.</li>
+      <li><strong>Une base de connaissances</strong> pour comprendre les concepts clés (DeFi, NFT, sécurité, analyse technique...).</li>
+      <li><strong>Un explorateur d'adresses</strong> pour consulter le solde d'une adresse Bitcoin, Ethereum ou Solana.</li>
+    </ul>
+    <h2>D'où viennent nos données</h2>
+    <p>Les prix, graphiques et données de marché proviennent d'API publiques tierces (notamment Binance et CoinPaprika). Les actualités sont agrégées depuis des flux reconnus (CryptoCompare, CoinDesk, Cointelegraph) puis traduites. Nous ne produisons pas ces données brutes nous-mêmes : notre valeur ajoutée est de les rassembler et de les rendre lisibles au même endroit.</p>
+    <div class="cd-note">⚠️ Les contenus de Café Crypto sont fournis à titre informatif et pédagogique uniquement. Ils ne constituent en aucun cas un conseil en investissement. Les cryptomonnaies sont des actifs volatils et à risque élevé de perte en capital. Faites toujours vos propres recherches avant toute décision financière.</div>
+    <h2>Une question, une suggestion ?</h2>
+    <p>N'hésitez pas à nous <a href="javascript:void(0)" onclick="openInfoPage('contact')">contacter</a> — chaque retour compte.</p>
+  `},
+  contact:{title:"Contact",html:`
+    <div class="info-page-eyebrow">Contact</div>
+    <h1>Parlons-en</h1>
+    <p class="info-page-lead">Une question, un bug repéré, une idée de fonctionnalité ? On lit tout, on répond dès qu'on peut.</p>
+    <div class="info-contact-grid">
+      <div class="info-contact-item"><div class="lbl">Email</div><div class="val"><a href="mailto:contact@cafecrypto.fr">contact@cafecrypto.fr</a></div></div>
+      <div class="info-contact-item"><div class="lbl">Délai de réponse</div><div class="val">2 à 5 jours ouvrés</div></div>
+    </div>
+    <h2>Ce qu'on peut vous aider à faire</h2>
+    <ul>
+      <li>Signaler une erreur ou un bug sur le site</li>
+      <li>Proposer une fonctionnalité</li>
+      <li>Une demande de partenariat ou presse</li>
+    </ul>
+    <div class="cd-note">💡 Pour toute question liée à un investissement personnel, nous ne sommes pas en mesure de fournir de conseil individualisé. Consultez un conseiller financier agréé pour ce type de demande.</div>
+  `},
+  cgu:{title:"CGU",html:`
+    <div class="info-page-eyebrow">Conditions générales</div>
+    <h1>Conditions Générales d'Utilisation</h1>
+    <div class="info-page-updated">Dernière mise à jour : à compléter par l'éditeur</div>
+    <h2>1. Objet</h2>
+    <p>Les présentes CGU régissent l'accès et l'utilisation du site Café Crypto. En consultant le Site, l'utilisateur accepte sans réserve les présentes CGU.</p>
+    <h2>2. Description du service</h2>
+    <p>Café Crypto propose, à titre gratuit : cours de cryptomonnaies, graphiques de marché, revue de presse agrégée, indice Fear & Greed, base de connaissances pédagogique, ainsi qu'un outil de consultation d'adresses blockchain publiques. Les données proviennent de fournisseurs tiers et sont fournies « en l'état », sans garantie d'exactitude ou de disponibilité continue.</p>
+    <h2>3. Absence de conseil en investissement</h2>
+    <div class="cd-note">Le contenu du Site est fourni exclusivement à titre informatif et pédagogique. Il ne constitue en aucun cas un conseil en investissement. Café Crypto n'est pas un conseiller en investissement financier (CIF). Toute décision d'investissement relève de la seule responsabilité de l'utilisateur.</div>
+    <h2>4. Propriété intellectuelle</h2>
+    <p>La structure, le design et les éléments graphiques propres au Site sont protégés par le droit de la propriété intellectuelle. Les logos et marques de cryptomonnaies affichés appartiennent à leurs propriétaires respectifs et sont utilisés à des fins purement informatives.</p>
+    <h2>5. Liens affiliés et partenariats</h2>
+    <p>Certaines sections (« Airdrops », « Partenaires ») peuvent contenir des liens affiliés. Leur utilisation peut générer une rémunération pour l'éditeur, sans coût supplémentaire pour l'utilisateur. Ces partenariats n'influencent pas notre traitement éditorial des informations de marché.</p>
+    <h2>6. Articles et actualités tiers</h2>
+    <p>Les résumés d'actualités affichés sur le Site sont de courts extraits traduits, accompagnés d'un lien vers l'article complet chez l'éditeur d'origine. Le Site ne republie pas d'articles dans leur intégralité et respecte les droits des médias sources.</p>
+    <h2>7. Limitation de responsabilité</h2>
+    <p>L'éditeur ne saurait être tenu responsable des dommages résultant de l'utilisation du Site, y compris des pertes financières liées à des décisions prises sur la base des informations affichées, ou d'une indisponibilité temporaire du Site.</p>
+    <h2>8. Modification des CGU</h2>
+    <p>L'éditeur se réserve le droit de modifier les présentes CGU à tout moment. La version en vigueur est celle publiée sur cette page à la date de consultation.</p>
+    <h2>9. Droit applicable</h2>
+    <p>Les présentes CGU sont soumises au droit français. Tout litige relève de la compétence des tribunaux français, sous réserve des règles impératives de protection des consommateurs.</p>
+    <div class="cd-note">📌 Note pour l'éditeur : en droit français, un site doit également publier des <strong>mentions légales</strong> complètes (identité de l'éditeur, hébergeur, SIRET le cas échéant). Pensez à les compléter avec vos informations réelles.</div>
+  `},
+  privacy:{title:"Confidentialité",html:`
+    <div class="info-page-eyebrow">Confidentialité</div>
+    <h1>Politique de confidentialité</h1>
+    <div class="info-page-updated">Dernière mise à jour : à compléter par l'éditeur</div>
+    <p>Cette page explique quelles données sont traitées lorsque vous utilisez Café Crypto. Nous limitons au maximum la collecte : l'essentiel du site fonctionne sans compte utilisateur.</p>
+    <h2>1. Données que nous ne collectons pas</h2>
+    <p>Café Crypto ne demande pas de compte. Nous ne collectons ni nom, ni email, ni donnée financière ou d'identité dans le cadre d'une utilisation normale.</p>
+    <h2>2. Stockage local dans votre navigateur</h2>
+    <p>Vos favoris ou préférences d'affichage peuvent être enregistrés directement dans votre navigateur (« localStorage »). Ces informations restent sur votre appareil, ne sont jamais transmises à nos serveurs, et peuvent être supprimées à tout moment en effaçant les données de navigation de ce site.</p>
+    <h2>3. Services tiers</h2>
+    <p>Pour afficher prix, graphiques et actualités, le Site interroge des API tierces (Binance, CoinPaprika, CryptoCompare). Ces requêtes sont techniques et ne transmettent aucune donnée personnelle vous concernant.</p>
+    <h2>4. Vos droits</h2>
+    <p>Conformément au RGPD, si des données personnelles venaient à être traitées (formulaire de contact par exemple), vous disposez d'un droit d'accès, de rectification et d'effacement. Contactez-nous via la page Contact pour exercer ces droits.</p>
+    <h2>5. Modifications</h2>
+    <p>Cette politique peut être mise à jour pour refléter l'évolution du Site ou de la réglementation. La version applicable est celle publiée sur cette page.</p>
+  `}
+};
+
+function openInfoPage(key){
+  const p=INFO_PAGES[key];if(!p)return;
+  $('infoPageTitle').textContent=p.title;
+  $('infoPageBody').innerHTML=p.html;
+  $('infoPage').classList.add('active');
+  $('infoPage').scrollTop=0;
+  document.body.style.overflow='hidden';
+}
+function closeInfoPage(){
+  $('infoPage').classList.remove('active');
+  document.body.style.overflow='';
+}
+
 document.getElementById('eventsList').addEventListener('click',function(e){
   const item=e.target.closest('[data-event-id]');
   if(item)openEventModal(item.dataset.eventId);
@@ -2879,9 +2813,14 @@ function openArticleModal(idx){
   $('articleModalTitle').textContent=item.title||'';
   $('articleModalBody').textContent=item.description||'Résumé non disponible.';
   $('articleModalLink').href=safeUrl(item.link||'#');
-  $('articleModal').classList.add('active');
+  $('articlePage').classList.add('active');
+  $('articlePage').scrollTop=0;
+  document.body.style.overflow='hidden';
 }
-function closeArticleModal(){$('articleModal').classList.remove('active');}
+function closeArticleModal(){
+  $('articlePage').classList.remove('active');
+  document.body.style.overflow='';
+}
 
 async function fetchNews(){
   try{
@@ -2896,7 +2835,7 @@ async function fetchNews(){
     if(data.Data&&data.Data.length>0){
       const picked = data.Data.slice(0, 5).map(item => ({
         title:item.title||'',
-        description:(item.body||'').substring(0,200),
+        description:(item.body||'').substring(0,320),
         image:safeUrl(item.imageurl),
         link:safeUrl(item.url),
         pubDate:new Date(item.published_on*1000).toISOString(),
@@ -3490,16 +3429,14 @@ function initStaticControls(){
     const tab=e.target.closest('.ctab[data-tf]');
     if(tab)loadChart(tab,tab.dataset.tf);
   });
-  const chartCloseBtn=$('chartModalCloseBtn');
-  if(chartCloseBtn)chartCloseBtn.addEventListener('click',closeChartModal);
-  const cryptoCloseBtn=$('cryptoModalCloseBtn');
-  if(cryptoCloseBtn)cryptoCloseBtn.addEventListener('click',closeCryptoModal);
   const eventCloseBtn=$('eventModalCloseBtn');
   if(eventCloseBtn)eventCloseBtn.addEventListener('click',closeEventModal);
-  const articleCloseBtn=$('articleModalCloseBtn');
+  const articleCloseBtn=$('articlePageBackBtn');
   if(articleCloseBtn)articleCloseBtn.addEventListener('click',closeArticleModal);
   const cdBackBtn=$('cdBackBtn');
   if(cdBackBtn)cdBackBtn.addEventListener('click',closeCoinDetail);
+  const infoPageBackBtn=$('infoPageBackBtn');
+  if(infoPageBackBtn)infoPageBackBtn.addEventListener('click',closeInfoPage);
   const cdTabsEl=document.querySelector('.cd-tabs');
   if(cdTabsEl)cdTabsEl.addEventListener('click',e=>{
     const tab=e.target.closest('.cd-tab[data-tab]');
@@ -3507,13 +3444,11 @@ function initStaticControls(){
   });
   document.addEventListener('keydown',e=>{
     if(e.key==='Escape'&&$('coinDetailPage')?.classList.contains('active'))closeCoinDetail();
+    if(e.key==='Escape'&&$('infoPage')?.classList.contains('active'))closeInfoPage();
+    if(e.key==='Escape'&&$('articlePage')?.classList.contains('active'))closeArticleModal();
   });
   const voiceBtn=$('voiceSummaryBtn');
   if(voiceBtn)voiceBtn.addEventListener('click',speakMarketSummary);
-  const cryptoChartBtn=$('cryptoModalChartBtn');
-  if(cryptoChartBtn)cryptoChartBtn.addEventListener('click',function(){
-    if(currentInfoModalCoinId){closeCryptoModal();openChartModal(currentInfoModalCoinId);}
-  });
   document.querySelectorAll('.tab-group').forEach(group=>{
     group.addEventListener('click',handleTabClick);
   });
