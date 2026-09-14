@@ -632,7 +632,7 @@ canvas#btcChart{position:absolute;inset:0;width:100%!important;height:100%!impor
 .cd-symbol{font-size:1.05rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .cd-header-name{font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-.cd-tabs{display:flex;gap:20px;padding:0 16px;border-bottom:1px solid var(--b);overflow-x:auto;position:sticky;top:50px;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);z-index:6;}
+.cd-tabs{display:flex;gap:20px;padding:0 16px;border-bottom:1px solid var(--b);overflow-x:auto;background:var(--bg);}
 .cd-tab{font-size:.82rem;font-weight:600;color:var(--muted2);padding:12px 0;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;}
 .cd-tab.active{color:var(--text);border-bottom-color:var(--cyan);}
 .cd-tab:hover{color:var(--text);}
@@ -644,12 +644,12 @@ canvas#btcChart{position:absolute;inset:0;width:100%!important;height:100%!impor
 .cd-lastp-lbl{color:var(--muted2);font-size:.75rem;margin-bottom:4px;}
 .cd-lastp{font-size:2.1rem;font-weight:800;line-height:1;margin-bottom:6px;letter-spacing:-.5px;}
 .cd-usdp-row{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.82rem;margin-bottom:10px;color:var(--muted2);}
-.cd-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.7rem;color:var(--muted2);font-family:var(--mono);}
-.cd-badges b{color:var(--gold);font-weight:700;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.25);border-radius:6px;padding:3px 8px;}
-.cd-stats-right{display:grid;grid-template-columns:1fr 1fr;gap:8px;min-width:190px;}
-.cd-stat-tile{background:var(--s1);border:1px solid var(--b);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:3px;}
-.cd-stat-tile .k{font-size:.62rem;color:var(--muted);}
-.cd-stat-tile .v{color:var(--text);font-family:var(--mono);font-size:.78rem;font-weight:700;}
+.cd-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.68rem;color:var(--muted2);font-family:var(--mono);}
+.cd-badges b{color:var(--gold);font-weight:700;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.25);border-radius:6px;padding:2px 7px;}
+.cd-stats-right{display:grid;grid-template-columns:1fr 1fr;gap:6px;min-width:170px;}
+.cd-stat-tile{background:var(--s1);border:1px solid var(--b);border-radius:8px;padding:6px 9px;display:flex;flex-direction:column;gap:1px;}
+.cd-stat-tile .k{font-size:.56rem;color:var(--muted);}
+.cd-stat-tile .v{color:var(--text);font-family:var(--mono);font-size:.7rem;font-weight:700;}
 
 .cd-tf-row{display:flex;align-items:center;gap:2px;padding:4px 12px;overflow-x:auto;border-top:1px solid var(--b);border-bottom:1px solid var(--b);}
 .cd-tf{font-family:var(--mono);font-size:.72rem;padding:8px 11px;border-radius:8px;border:none;background:none;color:var(--muted2);cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;}
@@ -915,7 +915,7 @@ img,canvas{max-width:100%;}
 <div class="logo-bar">
   <div class="logo-vapors" id="logoVapors" aria-hidden="true"></div>
   <div class="logo-center">
-    <h1 style="display:contents;"><a href="/" class="logo-text-main" style="text-decoration:none;">CaféCrypto</a></h1>
+    <h1 style="display:contents;"><a href="javascript:void(0)" onclick="goHome()" class="logo-text-main" style="text-decoration:none;">CaféCrypto</a></h1>
     <p class="sr-only">Café Crypto — Prix crypto en temps réel, cours Bitcoin et Ethereum, graphiques, tendances, actualités et base de connaissances crypto.</p>
   </div>
   <div class="search-container">
@@ -2020,13 +2020,13 @@ function drawCdChart(){
     ctx.fillText(fmtAxis(val),pad.l+cw+6,y+3);
   }
 
-  const gap=cw/visible.length,bw=Math.max(2,Math.floor(gap*.7));
+  const gap=cw/visible.length,bw=Math.max(3,Math.floor(gap*.82));
   visible.forEach((d,i)=>{
     const x=pad.l+i*gap+gap/2,oY=toY(d.o),cY=toY(d.c),hY=toY(d.h),lY=toY(d.l);
     const up=d.c>=d.o,col=up?'#22c55e':'#ef4444';
     const bTop=Math.min(oY,cY),bH=Math.max(Math.abs(cY-oY),1.5);
-    ctx.beginPath();ctx.moveTo(x,hY);ctx.lineTo(x,bTop);ctx.strokeStyle=col;ctx.lineWidth=1.3;ctx.stroke();
-    ctx.beginPath();ctx.moveTo(x,bTop+bH);ctx.lineTo(x,lY);ctx.strokeStyle=col;ctx.lineWidth=1.3;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x,hY);ctx.lineTo(x,bTop);ctx.strokeStyle=col;ctx.lineWidth=1.6;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x,bTop+bH);ctx.lineTo(x,lY);ctx.strokeStyle=col;ctx.lineWidth=1.6;ctx.stroke();
     ctx.fillStyle=up?'rgba(34,197,94,.9)':'rgba(239,68,68,.9)';ctx.fillRect(x-bw/2,bTop,bw,bH);
   });
 
@@ -2677,6 +2677,13 @@ function closeInfoPage(){
   document.body.style.overflow='';
 }
 
+function goHome(){
+  if($('coinDetailPage')?.classList.contains('active'))closeCoinDetail();
+  if($('infoPage')?.classList.contains('active'))closeInfoPage();
+  if($('articlePage')?.classList.contains('active'))closeArticleModal();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
 document.getElementById('eventsList').addEventListener('click',function(e){
   const item=e.target.closest('[data-event-id]');
   if(item)openEventModal(item.dataset.eventId);
@@ -2780,9 +2787,22 @@ let carouselItems=[],carouselIdx=0,carouselTimer=null;
 // le texte original est conservé plutôt que de bloquer l'affichage.
 async function translateToFR(text){
   if(!text)return text;
+  const snippet=text.substring(0,480);
+  // 1) Google Translate (endpoint public non-officiel, sans clé) — plus fiable et sans quota strict
   try{
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),6000);
-    const r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.substring(0,480))}&langpair=en|fr`,{signal:controller.signal});
+    const r=await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&q=${encodeURIComponent(snippet)}`,{signal:controller.signal});
+    clearTimeout(timeout);
+    if(r.ok){
+      const j=await r.json();
+      const translated=(j?.[0]||[]).map(seg=>seg[0]).join('');
+      if(translated&&translated.trim())return translated;
+    }
+  }catch(e){/* on tente le repli ci-dessous */}
+  // 2) Repli : MyMemory
+  try{
+    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),6000);
+    const r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(snippet)}&langpair=en|fr`,{signal:controller.signal});
     clearTimeout(timeout);
     if(!r.ok)throw new Error('translate');
     const j=await r.json();
