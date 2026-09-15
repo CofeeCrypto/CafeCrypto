@@ -190,40 +190,96 @@ section{scroll-margin-top:200px;}
 .spinner{width:12px;height:12px;border:2px solid var(--b2);border-top-color:var(--cyan);border-radius:50%;animation:spin .65s linear infinite;flex-shrink:0;}
 .loader-error{padding:20px 16px;color:var(--muted2);font-family:var(--mono);font-size:.7rem;text-align:center;}
 
-/* ─── SECTIONS CRYPTO ─── */
+/* ─── SECTIONS CRYPTO (Tendances / Gagnants / Perdants) ─── */
 .tri-grid{display:grid;grid-template-columns:1fr;gap:20px;animation:fadeUp .4s ease both;}
-.crypto-section-card{background:var(--s1);border:1px solid var(--b);border-radius:16px;overflow:hidden;}
-.crypto-section-hdr{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--b);}
+.crypto-section-card{
+  background:linear-gradient(180deg,var(--s1) 0%,rgba(13,17,25,.95) 100%);
+  border:1px solid var(--b);border-radius:16px;overflow:hidden;
+  box-shadow:0 16px 40px -28px rgba(0,0,0,.7);
+}
+.crypto-section-hdr{
+  display:flex;align-items:center;gap:10px;padding:14px 16px;
+  border-bottom:1px solid var(--b);
+  background:linear-gradient(90deg,rgba(56,189,248,.04),transparent 60%);
+}
+.crypto-section-hdr .card-title{
+  font-weight:700;letter-spacing:.2px;
+}
 
-.tab-group{display:flex;gap:4px;background:var(--s2);border-radius:8px;padding:3px;}
-.tab{font-family:var(--mono);font-size:.6rem;padding:4px 10px;border-radius:6px;border:none;background:none;color:var(--muted2);cursor:pointer;transition:all .2s;}
-.tab.active{background:var(--cyan);color:#000;font-weight:700;}
+.tab-group{display:flex;gap:3px;background:var(--s2);border-radius:8px;padding:3px;}
+.tab{font-family:var(--mono);font-size:.6rem;padding:5px 10px;border-radius:6px;border:none;background:none;color:var(--muted2);cursor:pointer;transition:all .2s;font-weight:600;}
+.tab.active{background:linear-gradient(135deg,var(--cyan),#0ea5e9);color:#000;font-weight:800;box-shadow:0 0 12px rgba(56,189,248,.35);}
+.tab:hover:not(.active){color:var(--text);}
 
 .crypto-row{
-  display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--b);
-  text-decoration:none;color:inherit;cursor:pointer;transition:background .15s;min-height:60px;
+  display:flex;align-items:center;gap:10px;
+  padding:11px 14px;margin:2px 8px;
+  border-radius:12px;
+  text-decoration:none;color:inherit;cursor:pointer;
+  transition:all .22s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
 }
-.crypto-row:last-child{border-bottom:none;}
-.crypto-row:active{background:var(--s2);}
-.cr-rank{font-family:var(--mono);font-size:.62rem;color:var(--muted);width:20px;flex-shrink:0;text-align:center;}
-.cr-icon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.55rem;font-weight:700;flex-shrink:0;border:1px solid var(--b);overflow:hidden;background:var(--s2);position:relative;}
+.crypto-row::before{
+  content:'';position:absolute;left:0;top:20%;bottom:20%;width:2px;
+  border-radius:2px;background:var(--cyan);
+  opacity:0;transform:scaleY(.4);transition:all .22s;
+}
+.crypto-row:hover{
+  background:linear-gradient(90deg,rgba(56,189,248,.07),rgba(56,189,248,.01));
+  transform:translateX(2px);
+}
+.crypto-row:hover::before{opacity:1;transform:scaleY(1);}
+.crypto-row:active{transform:scale(.995);}
+
+.cr-rank{
+  font-family:var(--mono);font-size:.66rem;font-weight:700;
+  width:28px;height:28px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted2);background:var(--s2);border:1px solid var(--b);
+  flex-shrink:0;transition:all .22s;
+}
+.crypto-row:hover .cr-rank{border-color:var(--b2);color:var(--text);}
+.cr-rank.r1{background:linear-gradient(135deg,#f0b429,#b8860b);color:#07090f;border-color:transparent;box-shadow:0 0 14px rgba(240,180,41,.45);}
+.cr-rank.r2{background:linear-gradient(135deg,#cbd5e1,#94a3b8);color:#07090f;border-color:transparent;box-shadow:0 0 10px rgba(203,213,225,.3);}
+.cr-rank.r3{background:linear-gradient(135deg,#cd7f32,#a0522d);color:#07090f;border-color:transparent;box-shadow:0 0 10px rgba(205,127,50,.35);}
+
+.cr-icon{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:.55rem;font-weight:700;
+  flex-shrink:0;overflow:hidden;background:var(--s2);position:relative;
+  box-shadow:0 0 0 2px var(--s1),0 0 0 3px rgba(255,255,255,.04);
+  transition:box-shadow .22s;
+}
+.crypto-row:hover .cr-icon{
+  box-shadow:0 0 0 2px var(--s1),0 0 0 3px rgba(56,189,248,.3),0 0 14px rgba(56,189,248,.2);
+}
 .cr-icon img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+
 .cr-info{flex:1;min-width:0;}
-.cr-symbol{font-size:.8rem;font-weight:700;color:var(--text);letter-spacing:0.5px;}
-.cr-name{font-size:.6rem;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.cr-right{text-align:right;flex-shrink:0;}
-.cr-price{font-family:var(--mono);font-size:.75rem;font-weight:500;color:var(--text);}
-.cr-chg{font-family:var(--mono);font-size:.65rem;font-weight:600;margin-top:2px;}
+.cr-symbol{font-size:.82rem;font-weight:800;color:var(--text);letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cr-name{font-size:.6rem;color:var(--muted);margin-top:2px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+.cr-right{text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+.cr-price{font-family:var(--mono);font-size:.75rem;font-weight:700;color:var(--text);letter-spacing:-.3px;}
+.cr-chg{
+  font-family:var(--mono);font-size:.62rem;font-weight:700;
+  padding:2px 6px;border-radius:5px;
+  min-width:56px;text-align:center;
+}
+.cr-chg.chg-green{color:var(--green);background:rgba(34,197,94,.1);}
+.cr-chg.chg-red{color:var(--red);background:rgba(239,68,68,.1);}
 
 .chg-green{color:var(--green) !important;}
 .chg-red{color:var(--red) !important;}
 
 .see-more-btn{
   display:flex;align-items:center;justify-content:center;gap:6px;
-  width:100%;padding:14px;background:none;border:none;border-top:1px solid var(--b);
-  color:var(--cyan);font-family:var(--mono);font-size:.65rem;
+  width:100%;padding:13px;background:none;border:none;border-top:1px solid var(--b);
+  color:var(--cyan);font-family:var(--mono);font-size:.63rem;font-weight:600;
   text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:all .2s;
 }
+.see-more-btn:hover{background:rgba(56,189,248,.05);color:var(--cyan);}
 .see-more-btn:active{background:var(--s2);}
 
 /* ─── TOP 100 — VERSION PREMIUM ─── */
@@ -303,26 +359,27 @@ section{scroll-margin-top:200px;}
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 
+/* Colonnes alignées mais largeur auto → plus d'espace vide */
 .top100-price{
   font-family:var(--mono);font-size:.8rem;font-weight:700;
-  color:var(--text);text-align:right;min-width:88px;flex-shrink:0;
-  letter-spacing:-.3px;
+  color:var(--text);text-align:right;flex-shrink:0;
+  letter-spacing:-.3px;min-width:0;
 }
 
 .top100-chg-wrap{
   display:flex;flex-direction:column;align-items:flex-end;gap:4px;
-  min-width:78px;flex-shrink:0;
+  flex-shrink:0;min-width:0;
 }
 .top100-chg{
   font-family:var(--mono);font-size:.68rem;font-weight:700;
   padding:2px 7px;border-radius:6px;text-align:right;
-  min-width:66px;
+  min-width:62px;
 }
 .top100-chg.up{color:var(--green);background:rgba(34,197,94,.1);}
 .top100-chg.down{color:var(--red);background:rgba(239,68,68,.1);}
 
 .top100-chg-bar{
-  width:66px;height:3px;border-radius:2px;background:var(--s3);overflow:hidden;
+  width:62px;height:3px;border-radius:2px;background:var(--s3);overflow:hidden;
 }
 .top100-chg-bar-fill{height:100%;border-radius:2px;transition:width .3s;}
 .top100-chg-bar-fill.up{background:linear-gradient(90deg,var(--green),#4ade80);}
@@ -330,7 +387,7 @@ section{scroll-margin-top:200px;}
 
 .top100-mcap{
   font-family:var(--mono);font-size:.66rem;color:var(--muted2);
-  text-align:right;min-width:82px;flex-shrink:0;
+  text-align:right;flex-shrink:0;min-width:0;
 }
 
 .top100-fav{
@@ -843,13 +900,13 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .logo-text-main{font-size:2.6rem;}
   .theme-btn{bottom:20px;right:20px;}
   .notification{top:184px;right:20px;left:auto;max-width:350px;}
-  .crypto-row{min-height:auto;padding:10px 14px;}
-  .crypto-row:hover{background:var(--s2);}
+  .crypto-row{padding:10px 12px;}
+  .crypto-row:hover{transform:translateX(3px);}
   .c-arrow:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(56,189,248,.07);}
   .ctab:hover{background:var(--s2);color:var(--cyan);border-color:rgba(56,189,248,.3);}
   .aff-circle:hover{transform:translateY(-4px);}
 
-  /* Top 100 — présentation tableau pour ordinateur */
+  /* Top 100 — présentation tableau pour ordinateur (sans espace vide) */
   .top100-col-hdr{
     display:flex;align-items:center;gap:12px;padding:12px 24px;
     border-bottom:1px solid var(--b);
@@ -858,14 +915,17 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
     letter-spacing:1px;color:var(--muted);
   }
   .top100-col-hdr .ch-rank{width:32px;text-align:center;flex-shrink:0;}
-  .top100-col-hdr .ch-name{flex:0 1 auto;max-width:240px;padding-left:46px;}
-  .top100-col-hdr .ch-price{min-width:88px;text-align:right;flex-shrink:0;}
-  .top100-col-hdr .ch-chg{min-width:78px;text-align:right;flex-shrink:0;}
-  .top100-col-hdr .ch-mcap{min-width:82px;text-align:right;flex-shrink:0;}
+  .top100-col-hdr .ch-name{flex:1;padding-left:46px;}
+  .top100-col-hdr .ch-price{width:110px;text-align:right;flex-shrink:0;}
+  .top100-col-hdr .ch-chg{width:96px;text-align:right;flex-shrink:0;}
+  .top100-col-hdr .ch-mcap{width:96px;text-align:right;flex-shrink:0;}
   .top100-col-hdr .ch-fav{width:26px;flex-shrink:0;}
 
   .top100-row{padding:12px 24px;gap:12px;margin:2px 8px;}
-  .top100-row .top100-info{flex:0 1 auto;max-width:240px;}
+  .top100-row .top100-info{flex:1;}
+  .top100-row .top100-price{width:110px;}
+  .top100-row .top100-chg-wrap{width:96px;}
+  .top100-row .top100-mcap{width:96px;}
   .top100-row:hover{transform:translateX(3px);}
 
   /* Sections Partenaires & Événements réduites (colonne droite) */
@@ -909,10 +969,7 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .logo-bar{height:88px;padding:0 10px;}
   .search-container{right:10px;}
   .top100-mcap{display:none;}
-  .top100-price{min-width:72px;font-size:.75rem;}
-  .top100-chg-wrap{min-width:70px;}
-  .top100-chg{min-width:60px;font-size:.63rem;}
-  .top100-chg-bar{width:60px;}
+  .top100-price{font-size:.78rem;}
 }
 
 /* ═══════════════════════════════
@@ -1597,9 +1654,6 @@ function mapPaprikaCoin(item){
 
 async function fetchPrices(){
   try{
-    // CoinPaprika : API gratuite, sans clé, CORS ouvert (CoinGecko exige désormais une clé pour cet usage)
-    // L'API renvoie déjà la totalité des cryptos suivies (~2500) en un seul appel : on garde
-    // les 100 premières pour l'affichage du site, et jusqu'à 2100 pour la recherche uniquement.
     const url=`https://api.coinpaprika.com/v1/tickers?quotes=USD`;
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
     const r=await fetch(url,{signal:controller.signal});clearTimeout(timeout);
@@ -1697,11 +1751,13 @@ function top100NextPage(){const totalPages=Math.ceil(allCoins.length/top100PerPa
 // ══════════════════════════════
 function buildCryptoRow(coin,rank){
   const id=coin.id,sym=symOf(coin);
-  const up=(coin.price_change_percentage_24h||0)>=0;
+  const chg=coin.price_change_percentage_24h||0;
+  const up=chg>=0;
   const isFav=favorites.has(id);
+  const rankClass=rank===1?'r1':rank===2?'r2':rank===3?'r3':'';
   const logoHTML=coin.image?`<img src="${escapeHTML(coin.image)}" alt="${escapeHTML(coin.name||'')}" loading="lazy" data-fallback="${escapeHTML(sym.slice(0,3))}">`:escapeHTML(sym.slice(0,3));
   return`<a href="javascript:void(0)" class="crypto-row" data-coin-id="${escapeHTML(id)}">
-    <div class="cr-rank">${rank}</div>
+    <div class="cr-rank ${rankClass}">${rank}</div>
     <div class="cr-icon">${logoHTML}</div>
     <div class="cr-info">
       <div class="cr-symbol">${escapeHTML(sym)}</div>
@@ -1709,7 +1765,7 @@ function buildCryptoRow(coin,rank){
     </div>
     <div class="cr-right">
       <div class="cr-price">${fmtP(coin.current_price)}</div>
-      <div class="cr-chg ${up?'chg-green':'chg-red'}">${fmtPct(coin.price_change_percentage_24h||0)}</div>
+      <div class="cr-chg ${up?'chg-green':'chg-red'}">${fmtPct(chg)}</div>
     </div>
     <button class="top100-fav${isFav?' active':''}" data-fav-id="${escapeHTML(id)}" data-fav-sym="${escapeHTML(sym)}" aria-label="${isFav?'Retirer':'Ajouter'} ${escapeHTML(sym)} aux favoris">${isFav?'★':'☆'}</button>
   </a>`;
@@ -1908,7 +1964,6 @@ function cdToggleDesc(){
   btn.innerHTML=cdDescExpanded?'Afficher moins ⌃':'Afficher plus ⌄';
 }
 
-// Remplit les champs calculables immédiatement à partir des données déjà chargées
 function cdFillInformations(d,sym){
   $('cdAboutTitle').textContent='À propos de '+sym;
   $('cdInfoPopRank').textContent=d.market_cap_rank?('N° '+d.market_cap_rank):'N/D';
@@ -2016,7 +2071,7 @@ async function loadCdChart(interval,limit,btn){
     clearTimeout(timeout);
     if(!r.ok)throw new Error('binance');
     const parsed=(await r.json()).map(k=>({t:+k[0],o:+k[1],h:+k[2],l:+k[3],c:+k[4],v:+k[5]}));
-    if(reqId!==cdChartReqId||coinAtRequest!==cdCurrentCoinId)return; // réponse obsolète, on l'ignore
+    if(reqId!==cdChartReqId||coinAtRequest!==cdCurrentCoinId)return;
     cdCandles=parsed;
   }catch(e){
     if(reqId!==cdChartReqId||coinAtRequest!==cdCurrentCoinId)return;
@@ -2135,7 +2190,6 @@ function cdDrawExtreme(ctx,pad,gap,idx,y,val){
   ctx.fillText(fmtAxis(val),x+18,y+3);
 }
 
-// ─── Zoom / pan sur le graphique (molette + pincement tactile) ───
 function cdResetView(){cdViewStart=0;cdViewEnd=cdCandles.length;drawCdChart();}
 
 function cdZoomBy(factor,centerRatio){
@@ -2211,9 +2265,6 @@ window.addEventListener('resize',debouncedCdResize);
 
 // ══════════════════════════════
 // FICHE CRYPTO — RÉPARTITION DU FLUX MONÉTAIRE (onglet Données)
-// Basé sur des données réelles Binance : volume d'achat "taker" des klines
-// (toujours réel), et détail par taille de transaction via aggTrades
-// (réel, disponible uniquement sur les fenêtres 5 m / 15 m).
 // ══════════════════════════════
 const CD_MF_LABELS={'5m':'5 minutes','15m':'15 minutes','1h':'1 heure','4h':'4 heures','1d':'1 jour'};
 const CD_MF_WINDOW_MS={'5m':5*60000,'15m':15*60000,'1h':60*60000,'4h':4*60*60000,'1d':24*60*60000};
@@ -2261,7 +2312,6 @@ async function loadCdMoneyFlow(period,btn){
   $('cdMfIn').textContent=buyVol.toFixed(2)+' '+sym;
   $('cdMfOut').textContent=sellVol.toFixed(2)+' '+sym;
 
-  // Détail par taille de transaction — réel, uniquement pour fenêtres courtes (limite API 1h par requête)
   if(period==='5m'||period==='15m'){
     try{
       const tr=await fetch(`https://api.binance.com/api/v3/aggTrades?symbol=${pair}&startTime=${startD.getTime()}&endTime=${now.getTime()}&limit=1000`);
@@ -2272,7 +2322,7 @@ async function loadCdMoneyFlow(period,btn){
       const buckets={in:{mega:0,large:0,moyen:0,petit:0},out:{mega:0,large:0,moyen:0,petit:0}};
       trades.forEach(t=>{
         const price=parseFloat(t.p),qty=parseFloat(t.q),notional=price*qty;
-        const dir=t.m?'out':'in'; // m=true → acheteur "maker" → trade initié par un vendeur agressif (sortant)
+        const dir=t.m?'out':'in';
         let tier;
         if(notional>=100000)tier='mega';else if(notional>=10000)tier='large';else if(notional>=1000)tier='moyen';else tier='petit';
         buckets[dir][tier]+=qty;
@@ -2571,9 +2621,7 @@ function updateMood(score,chg){
 }
 
 // ══════════════════════════════
-// ÉVÉNEMENTS — pool réel d'événements crypto à venir, avec dates ISO.
-// La liste affichée est recalculée à chaque chargement : un événement dont la
-// date est dépassée disparaît automatiquement et est remplacé par le suivant du pool.
+// ÉVÉNEMENTS
 // ══════════════════════════════
 const EVENTS_POOL=[
   {id:'rwa-brooklyn',title:'Real-World Asset Summit',icon:'🏢',start:'2026-09-01',end:'2026-09-02',location:'Brooklyn, New York',desc:'Sommet sur la tokenisation d\'actifs réels',details:'Rassemble les principaux acteurs de la tokenisation d\'actifs réels (immobilier, dette, matières premières) au William Vale, à Brooklyn.'},
@@ -2633,9 +2681,7 @@ function openEventModal(id){
 function closeEventModal(){$('eventModal').classList.remove('active');}
 
 // ══════════════════════════════
-// PAGES INFO (À propos / Contact / CGU / Confidentialité)
-// Intégrées directement dans l'app pour ne jamais dépendre de fichiers
-// externes séparés (évite tout risque de lien mort / 404).
+// PAGES INFO
 // ══════════════════════════════
 const INFO_PAGES={
   about:{title:"À propos",html:`
@@ -2739,7 +2785,7 @@ function goHome(){
 }
 
 // ══════════════════════════════
-// BANDEAU TICKER + LOGO — masqué au scroll vers le bas (ordinateur uniquement, via CSS)
+// BANDEAU TICKER + LOGO — masqué au scroll vers le bas (ordinateur uniquement)
 // ══════════════════════════════
 (function(){
   let lastY=window.scrollY,ticking=false;
@@ -2760,10 +2806,7 @@ document.getElementById('eventsList').addEventListener('click',function(e){
 });
 
 // ══════════════════════════════
-// AIRDROPS À FARMER — liste curée manuellement (pas d'API fiable et gratuite pour
-// détecter automatiquement les nouveaux airdrops). À METTRE À JOUR régulièrement :
-// ajouter/retirer des entrées dans AIRDROPS_POOL dès qu'un airdrop notable ouvre
-// son farming ou sa réclamation. Uniquement des liens vers les sites officiels.
+// AIRDROPS À FARMER
 // ══════════════════════════════
 const AIRDROPS_POOL=[
   {
@@ -2810,7 +2853,7 @@ function renderAirdrops(){
 renderAirdrops();
 
 // ══════════════════════════════
-// RÉSUMÉ VOCAL DU MARCHÉ — synthèse vocale native du navigateur, gratuite
+// RÉSUMÉ VOCAL DU MARCHÉ
 // ══════════════════════════════
 function speakMarketSummary(){
   const btn=$('voiceSummaryBtn');
@@ -2853,12 +2896,9 @@ function speakMarketSummary(){
 // ══════════════════════════════
 let carouselItems=[],carouselIdx=0,carouselTimer=null;
 
-// Traduction gratuite, sans clé (MyMemory). Best-effort : en cas d'échec,
-// le texte original est conservé plutôt que de bloquer l'affichage.
 async function translateToFR(text){
   if(!text)return text;
   const snippet=text.substring(0,480);
-  // 1) Google Translate (endpoint public non-officiel, sans clé) — plus fiable et sans quota strict
   try{
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),6000);
     const r=await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&q=${encodeURIComponent(snippet)}`,{signal:controller.signal});
@@ -2868,8 +2908,7 @@ async function translateToFR(text){
       const translated=(j?.[0]||[]).map(seg=>seg[0]).join('');
       if(translated&&translated.trim())return translated;
     }
-  }catch(e){/* on tente le repli ci-dessous */}
-  // 2) Repli : MyMemory
+  }catch(e){}
   try{
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),6000);
     const r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(snippet)}&langpair=en|fr`,{signal:controller.signal});
@@ -2890,9 +2929,6 @@ async function translateItems(items){
   }));
 }
 
-// ══════════════════════════════
-// LECTURE D'ARTICLE SUR LE SITE (résumé FR + lien vers l'original)
-// ══════════════════════════════
 function openArticleModal(idx){
   const item=carouselItems[idx];if(!item)return;
   const img=$('articleModalImg');
@@ -3049,10 +3085,7 @@ const CAROUSEL_HANDLERS={
 })();
 
 // ══════════════════════════════
-// PAROLES DE CRYPTO — déclarations réelles et récentes, reformulées
-// (résumés en français d'après la presse spécialisée, pas des citations exactes)
-// Seules celles de moins de 5 jours sont affichées ; ce pool doit être
-// réalimenté régulièrement pour rester à jour (pas de source Twitter/X en direct).
+// PAROLES DE CRYPTO
 // ══════════════════════════════
 const CRYPTO_POSTS = [
   {
@@ -3115,10 +3148,6 @@ function getRecentPosts(maxDays){
 function fetchCryptoTweets(){
   const recent=getRecentPosts(5);
   if(recent.length)return Promise.resolve(recent);
-  // Aucune déclaration de moins de 5 jours dans le pool actuel : on garde
-  // les précédentes affichées (mieux qu'une section vide) plutôt que de
-  // masquer la section. Pense à enrichir CRYPTO_POSTS régulièrement — dès
-  // qu'une entrée récente y est ajoutée, elle reprend automatiquement le dessus.
   return Promise.resolve(CRYPTO_POSTS.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)));
 }
 
@@ -3550,8 +3579,7 @@ function initStaticControls(){
 }
 
 // ══════════════════════════════
-// VAPEURS DE LOGOS CRYPTO — montée aléatoire (position, symbole, timing),
-// pas de tour à tour : chaque vapeur est indépendante des autres.
+// VAPEURS DE LOGOS CRYPTO
 // ══════════════════════════════
 const VAPOR_SYMBOLS=['BTC','ETH','DOGE','XMR','KAS','HYPE','SHIB','XRP','SOL','PUMP','TAO'];
 const prefersReducedMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -3563,15 +3591,12 @@ function spawnLogoVapor(){
   const sym=VAPOR_SYMBOLS[Math.floor(Math.random()*VAPOR_SYMBOLS.length)];
   const coin=Object.values(liveData).find(c=>symOf(c)===sym);
 
-  // Position aléatoire : n'importe où à gauche (2-34%) OU à droite (66-98%),
-  // choisi au hasard à chaque apparition — un même symbole (ex: BTC) peut donc
-  // sortir tantôt à gauche, tantôt à droite, jamais à une place fixe.
   const onLeft=Math.random()<0.5;
-  const pos=2+Math.random()*32; // 2% à 34%
-  const drift=(Math.random()*10-5).toFixed(1); // léger zigzag horizontal aléatoire
+  const pos=2+Math.random()*32;
+  const drift=(Math.random()*10-5).toFixed(1);
   const barHeight=container.clientHeight||96;
-  const rise=barHeight-4; // monte jusqu'en haut de l'en-tête, au ras des tickers
-  const speed=15+Math.random()*6; // px/s — vitesse moyenne normale, légèrement variable
+  const rise=barHeight-4;
+  const speed=15+Math.random()*6;
   const dur=(rise/speed).toFixed(2)+'s';
 
   let el;
@@ -3600,7 +3625,7 @@ function spawnLogoVapor(){
 
 function scheduleNextVapor(){
   spawnLogoVapor();
-  const nextDelay=350+Math.random()*900; // intervalle aléatoire, pas de rythme fixe
+  const nextDelay=350+Math.random()*900;
   setTimeout(scheduleNextVapor,nextDelay);
 }
 
@@ -3610,7 +3635,7 @@ function startLogoVapors(){
 }
 
 // ══════════════════════════════
-// EXPLORATEUR D'ADRESSES — mempool.space (BTC) et Blockscout (ETH), sans clé
+// EXPLORATEUR D'ADRESSES
 // ══════════════════════════════
 function detectAddressChain(addr){
   if(/^0x[a-fA-F0-9]{40}$/.test(addr))return'eth';
