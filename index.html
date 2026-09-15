@@ -79,7 +79,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--f);min-height:100v
 @keyframes slideIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
 
 /* ─── TICKERS (défilement en direct) ─── */
-.ticker{position:fixed;left:0;right:0;z-index:500;overflow:hidden;height:28px;background:rgba(7,9,15,.98);}
+.ticker{position:fixed;left:0;right:0;z-index:500;overflow:hidden;height:28px;background:rgba(7,9,15,.98);transition:transform .3s ease;}
 .t1{top:0;border-bottom:1px solid rgba(240,180,41,.15);}
 .t2{top:28px;border-bottom:1px solid rgba(56,189,248,.12);}
 .tk-lbl{color:rgba(240,180,41,.5);font-size:.6rem;letter-spacing:1px;text-transform:uppercase;}
@@ -95,7 +95,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--f);min-height:100v
   display:flex;align-items:center;justify-content:center;
   height:96px;background:rgba(7,9,15,.97);
   border-bottom:1px solid rgba(240,180,41,.1);backdrop-filter:blur(24px);
-  padding:0 20px;
+  padding:0 20px;transition:transform .3s ease;
+}
+
+@media(min-width:768px){
+  body.hdr-hidden .ticker,body.hdr-hidden .logo-bar{transform:translateY(-100%);}
 }
 
 .logo-center{display:flex;align-items:center;justify-content:center;position:relative;z-index:2;}
@@ -840,12 +844,13 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
     font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);
   }
   .top100-col-hdr .ch-rank{width:34px;text-align:center;flex-shrink:0;}
-  .top100-col-hdr .ch-name{flex:1;padding-left:38px;}
+  .top100-col-hdr .ch-name{flex:0 1 auto;max-width:240px;padding-left:38px;}
   .top100-col-hdr .ch-price{min-width:110px;text-align:right;flex-shrink:0;}
   .top100-col-hdr .ch-chg{min-width:90px;text-align:right;flex-shrink:0;}
   .top100-col-hdr .ch-mcap{min-width:110px;text-align:right;flex-shrink:0;}
   .top100-col-hdr .ch-fav{width:24px;flex-shrink:0;}
   .top100-row{padding:12px 18px;gap:14px;}
+  .top100-row .top100-info{flex:0 1 auto;max-width:240px;}
   .top100-row:nth-child(even){background:rgba(255,255,255,.012);}
   .top100-row:hover{background:var(--s2);border-left:3px solid var(--cyan);padding-left:15px;}
   .top100-rank{width:34px;font-size:.7rem;}
@@ -2716,6 +2721,22 @@ function goHome(){
   if($('articlePage')?.classList.contains('active'))closeArticleModal();
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+// ══════════════════════════════
+// BANDEAU TICKER + LOGO — masqué au scroll vers le bas (ordinateur uniquement, via CSS)
+// ══════════════════════════════
+(function(){
+  let lastY=window.scrollY,ticking=false;
+  function onScrollHeader(){
+    const y=window.scrollY;
+    if(y>90&&y>lastY){document.body.classList.add('hdr-hidden');}
+    else if(y<lastY-2||y<=80){document.body.classList.remove('hdr-hidden');}
+    lastY=y;ticking=false;
+  }
+  window.addEventListener('scroll',()=>{
+    if(!ticking){window.requestAnimationFrame(onScrollHeader);ticking=true;}
+  },{passive:true});
+})();
 
 document.getElementById('eventsList').addEventListener('click',function(e){
   const item=e.target.closest('[data-event-id]');
