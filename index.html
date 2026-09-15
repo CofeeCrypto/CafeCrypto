@@ -341,6 +341,7 @@ section{scroll-margin-top:200px;}
   color:var(--gold);
   border-color:rgba(240,180,41,.3);
 }
+.top100-col-hdr{display:none;}
 
 .pagination{
   display:flex;align-items:center;justify-content:center;gap:10px;
@@ -624,7 +625,7 @@ canvas#btcChart{position:absolute;inset:0;width:100%!important;height:100%!impor
 /* ─── FICHE CRYPTO PLEIN ÉCRAN (style OKX) ─── */
 .coin-detail-page{position:fixed;inset:0;z-index:2000;background:var(--bg);display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .coin-detail-page.active{display:flex;}
-.cd-header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--b);position:sticky;top:0;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);z-index:6;}
+.cd-header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--b);position:sticky;top:0;background:var(--bg);z-index:6;}
 .cd-back{background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer;display:flex;align-items:center;padding:4px;flex-shrink:0;border-radius:8px;transition:background .15s;}
 .cd-back:hover{background:var(--s2);}
 .cd-header-icon{width:26px;height:26px;border-radius:50%;flex-shrink:0;background:var(--s2);object-fit:cover;}
@@ -684,7 +685,7 @@ canvas#cdChart{position:absolute;inset:0;width:100%!important;height:100%!import
 /* ─── PAGES INFO (À propos / Contact / CGU / Confidentialité) ─── */
 .info-page{position:fixed;inset:0;z-index:2000;background:var(--bg);display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .info-page.active{display:flex;}
-.info-page-header{display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--b);position:sticky;top:0;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);z-index:6;}
+.info-page-header{display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--b);position:sticky;top:0;background:var(--bg);z-index:6;}
 .info-page-title{font-size:1rem;font-weight:800;}
 .info-page-body{padding:22px 18px 60px;max-width:640px;margin:0 auto;width:100%;}
 .info-page-body h1{font-size:1.4rem;font-weight:800;margin-bottom:8px;line-height:1.3;}
@@ -822,7 +823,7 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .main-grid{display:grid;grid-template-columns:1fr 310px;gap:24px;}
   .tri-grid{grid-template-columns:repeat(3,1fr);gap:14px;}
   .page{padding:40px 24px 60px;}
-  .logo-bar{height:120px;}
+  .logo-bar{height:120px;backdrop-filter:none;background:var(--bg);}
   .logo-text-main{font-size:2.6rem;}
   .theme-btn{bottom:20px;right:20px;}
   .notification{top:184px;right:20px;left:auto;max-width:350px;}
@@ -831,6 +832,30 @@ footer{border-top:1px solid var(--b);padding:16px 20px;display:flex;flex-directi
   .c-arrow:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(56,189,248,.07);}
   .ctab:hover{background:var(--s2);color:var(--cyan);border-color:rgba(56,189,248,.3);}
   .aff-circle:hover{transform:translateY(-4px);}
+
+  /* Top 100 — présentation tableau pour ordinateur */
+  .top100-col-hdr{
+    display:flex;align-items:center;gap:10px;padding:10px 18px;
+    border-bottom:1px solid var(--b);background:var(--s2);
+    font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);
+  }
+  .top100-col-hdr .ch-rank{width:34px;text-align:center;flex-shrink:0;}
+  .top100-col-hdr .ch-name{flex:1;padding-left:38px;}
+  .top100-col-hdr .ch-price{min-width:110px;text-align:right;flex-shrink:0;}
+  .top100-col-hdr .ch-chg{min-width:90px;text-align:right;flex-shrink:0;}
+  .top100-col-hdr .ch-mcap{min-width:110px;text-align:right;flex-shrink:0;}
+  .top100-col-hdr .ch-fav{width:24px;flex-shrink:0;}
+  .top100-row{padding:12px 18px;gap:14px;}
+  .top100-row:nth-child(even){background:rgba(255,255,255,.012);}
+  .top100-row:hover{background:var(--s2);border-left:3px solid var(--cyan);padding-left:15px;}
+  .top100-rank{width:34px;font-size:.7rem;}
+  .top100-icon{width:32px;height:32px;}
+  .top100-symbol{font-size:.85rem;}
+  .top100-name{font-size:.66rem;}
+  .top100-price{font-size:.82rem;min-width:110px;}
+  .top100-chg{font-size:.72rem;min-width:90px;}
+  .top100-mcap{font-size:.68rem;min-width:110px;}
+  .top100-fav{width:22px;height:22px;}
 
   /* Sections Partenaires & Événements réduites (colonne droite) */
   .partners-section .card-hdr,.events-section .card-hdr{padding:10px 14px;}
@@ -982,6 +1007,14 @@ img,canvas{max-width:100%;}
     <div class="top100-card">
       <div class="top100-hdr">
         <div class="top100-title">🏆 Top 100 Cryptos</div>
+      </div>
+      <div class="top100-col-hdr">
+        <span class="ch-rank">#</span>
+        <span class="ch-name">Nom</span>
+        <span class="ch-price">Prix</span>
+        <span class="ch-chg">Var. 24 h</span>
+        <span class="ch-mcap">Cap. marché</span>
+        <span class="ch-fav"></span>
       </div>
       <div class="top100-list" id="top100List">
         <div class="loader"><div class="spinner"></div>Chargement du Top 100…</div>
