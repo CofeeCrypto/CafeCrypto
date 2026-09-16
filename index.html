@@ -230,8 +230,8 @@ section{scroll-margin-top:200px;}
 .tab:hover:not(.active){color:var(--text);}
 
 .crypto-row{
-  display:flex;align-items:center;gap:9px;
-  padding:7px 14px;margin:1px 8px;border-radius:10px;
+  display:flex;align-items:center;gap:7px;
+  padding:7px 12px;margin:1px 8px;border-radius:10px;
   text-decoration:none;color:inherit;cursor:pointer;
   transition:all .22s cubic-bezier(.4,0,.2,1);
   position:relative;overflow:hidden;
@@ -273,11 +273,15 @@ section{scroll-margin-top:200px;}
 
 .cr-right{text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
 .cr-price{font-family:var(--mono);font-size:.74rem;font-weight:700;color:var(--text);letter-spacing:-.3px;}
-.cr-chg{font-family:var(--mono);font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:5px;min-width:54px;text-align:center;}
+.cr-chg{font-family:var(--mono);font-size:.58rem;font-weight:700;padding:2px 5px;border-radius:5px;min-width:46px;text-align:center;}
 .cr-chg.chg-green{color:var(--green);background:rgba(34,197,94,.1);}
 .cr-chg.chg-red{color:var(--red);background:rgba(239,68,68,.1);}
 .chg-green{color:var(--green) !important;}
 .chg-red{color:var(--red) !important;}
+
+.cr-spark{width:36px;height:20px;flex-shrink:0;position:relative;opacity:.85;transition:opacity .2s;}
+.crypto-row:hover .cr-spark{opacity:1;}
+.cr-spark canvas{width:100%;height:100%;display:block;}
 
 .see-more-btn{
   display:flex;align-items:center;justify-content:center;gap:6px;
@@ -935,7 +939,7 @@ img,canvas{max-width:100%;}
     <div class="top100-card">
       <div class="top100-hdr">
         <div class="top100-title">🏆 Top 100 Cryptos</div>
-        <span class="top100-sub">Classement par capitalisation</span>
+        <span class="top100-sub" id="top100Sub">Classement par capitalisation</span>
       </div>
       <div class="top100-filters" id="top100Filters"></div>
       <div class="top100-list" id="top100List">
@@ -1493,6 +1497,17 @@ let portfolio={};
 let currentCategoryFilter='all';
 let editingPortfolio=false;
 const sparklineCache={};
+let lastPriceUpdate=null;
+
+function updateLiveStatus(ok,source){
+  const el=$('top100Sub');if(!el)return;
+  if(ok&&lastPriceUpdate){
+    const hh=lastPriceUpdate.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    el.innerHTML=`<span style="color:var(--green)">●</span> Mis à jour ${hh} · ${escapeHTML(source)}`;
+  }else{
+    el.innerHTML=`<span style="color:var(--red)">●</span> Données de secours (hors ligne)`;
+  }
+}
 
 try{const saved=localStorage.getItem('cafeCryptoFavorites');if(saved)favorites=new Set(JSON.parse(saved));}catch(e){}
 try{const saved=localStorage.getItem('cafeCryptoPortfolio');if(saved)portfolio=JSON.parse(saved);}catch(e){}
@@ -1515,22 +1530,24 @@ $('themeBtn').addEventListener('click',()=>setTheme(!isLightTheme));
 // SPARKLINES
 // ═══════════════════════════════════════════════
 async function loadSparklinesForVisible(coins){
+  // Le fetch principal (CoinGecko) fournit déjà les sparklines 7j pour la plupart des cryptos.
+  // On ne complète ici que les cas rares où elles manquent (ex: source de secours CoinPaprika).
   const ids=coins.map(c=>c.id).filter(id=>!sparklineCache[id]||sparklineCache[id].length<10);
-  if(!ids.length){renderAllSparklines();return;}
-  const limited=ids.slice(0,10);
-  for(const id of limited){
+  if(!ids.length){renderAllSparklines();renderCryptoRowSparklines($('trendList'));renderCryptoRowSparklines($('winList'));renderCryptoRowSparklines($('loseList'));return;}
+  const limited=ids.slice(0,8);
+  await Promise.all(limited.map(async id=>{
     try{
       const controller=new AbortController();
       const to=setTimeout(()=>controller.abort(),6000);
-      const r=await fetch(`https://api.coinpaprika.com/v1/tickers/${encodeURIComponent(id)}/historical?start=${new Date(Date.now()-7*24*60*60*1000).toISOString().slice(0,10)}&interval=1d`,{signal:controller.signal});
+      const r=await fetch(`https://api.coingecko.com/api/v3/coins/${encodeURIComponent(id)}/market_chart?vs_currency=usd&days=7&interval=daily`,{signal:controller.signal});
       clearTimeout(to);
-      if(!r.ok)continue;
+      if(!r.ok)return;
       const data=await r.json();
-      if(Array.isArray(data)&&data.length)sparklineCache[id]=data.map(p=>p.price);
+      if(Array.isArray(data.prices)&&data.prices.length>1)sparklineCache[id]=data.prices.map(p=>p[1]);
     }catch(e){}
-  }
+  }));
   try{localStorage.setItem('cafeCryptoSparklines',JSON.stringify(sparklineCache));}catch(e){}
-  renderAllSparklines();
+  renderAllSparklines();renderCryptoRowSparklines($('trendList'));renderCryptoRowSparklines($('winList'));renderCryptoRowSparklines($('loseList'));
 }
 
 function renderAllSparklines(){
@@ -1709,6 +1726,26 @@ function filterCoinsByCategory(coins){
 // ═══════════════════════════════════════════════
 // PRIX
 // ═══════════════════════════════════════════════
+function mapGeckoCoin(item){
+  const coin={
+    id:item.id,name:item.name,symbol:item.symbol,
+    current_price:item.current_price,market_cap:item.market_cap,total_volume:item.total_volume,
+    price_change_percentage_24h:item.price_change_percentage_24h,
+    price_change_percentage_7d_in_currency:item.price_change_percentage_7d_in_currency,
+    image:item.image,
+    market_cap_rank:item.market_cap_rank,
+    ath:item.ath,atl:item.atl,
+    circulating_supply:item.circulating_supply,
+    total_supply:item.total_supply,
+    categories:[]
+  };
+  coin.categories=categorizeCoin(coin);
+  if(item.sparkline_in_7d&&Array.isArray(item.sparkline_in_7d.price)&&item.sparkline_in_7d.price.length>1){
+    sparklineCache[coin.id]=item.sparkline_in_7d.price;
+  }
+  return coin;
+}
+
 function mapPaprikaCoin(item){
   const q=item.quotes&&item.quotes.USD?item.quotes.USD:{};
   const tags=(item.tags||[]).map(t=>t.id).filter(Boolean);
@@ -1728,15 +1765,41 @@ function mapPaprikaCoin(item){
   return coin;
 }
 
+async function fetchPricesFromGecko(){
+  const url='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=true&price_change_percentage=24h,7d';
+  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
+  const r=await fetch(url,{signal:controller.signal});clearTimeout(timeout);
+  if(!r.ok)throw new Error('CoinGecko '+r.status);
+  const raw=await r.json();
+  if(!Array.isArray(raw)||!raw.length)throw new Error('CoinGecko empty');
+  return raw.map(mapGeckoCoin);
+}
+
+async function fetchPricesFromPaprika(){
+  const url='https://api.coinpaprika.com/v1/tickers?quotes=USD';
+  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
+  const r=await fetch(url,{signal:controller.signal});clearTimeout(timeout);
+  if(!r.ok)throw new Error('CoinPaprika '+r.status);
+  const raw=await r.json();
+  if(!Array.isArray(raw)||!raw.length)throw new Error('CoinPaprika empty');
+  return raw.filter(c=>c.quotes&&c.quotes.USD&&c.quotes.USD.price).sort((a,b)=>(a.rank||9999)-(b.rank||9999)).slice(0,300).map(mapPaprikaCoin);
+}
+
 async function fetchPrices(){
+  let sorted=null,sourceUsed='';
   try{
-    const url=`https://api.coinpaprika.com/v1/tickers?quotes=USD`;
-    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
-    const r=await fetch(url,{signal:controller.signal});clearTimeout(timeout);
-    if(!r.ok)throw new Error(r.status);
-    const raw=await r.json();
-    if(!Array.isArray(raw)||!raw.length)throw new Error('empty');
-    const sorted=raw.filter(c=>c.quotes&&c.quotes.USD&&c.quotes.USD.price).sort((a,b)=>(a.rank||9999)-(b.rank||9999)).slice(0,2100).map(mapPaprikaCoin);
+    sorted=await fetchPricesFromGecko();
+    sourceUsed='CoinGecko';
+  }catch(e1){
+    console.warn('CoinGecko failed:',e1.message);
+    try{
+      sorted=await fetchPricesFromPaprika();
+      sourceUsed='CoinPaprika';
+    }catch(e2){
+      console.warn('CoinPaprika failed:',e2.message);
+    }
+  }
+  if(sorted&&sorted.length){
     searchCoins=sorted;
     allCoins=sorted.slice(0,100);
     searchCoins.forEach(c=>{liveData[c.id]=c;});
@@ -1745,14 +1808,17 @@ async function fetchPrices(){
     btcUsd=btc?.current_price||btcUsd;
     btcChg24=btc?.price_change_percentage_24h||btcChg24;
     if(prevBtc>0&&btcUsd>0){const pctChange=((btcUsd-prevBtc)/prevBtc)*100;if(Math.abs(pctChange)>2)showNotification('Mouvement BTC','Prix BTC à '+fmtP(btcUsd)+' ('+fmtPct(pctChange)+')','📈');}
+    lastPriceUpdate=new Date();
+    updateLiveStatus(true,sourceUsed);
     buildTicker2();updateChartHeader();buildTop100();buildTriSections(allCoins);
     if(!editingPortfolio)updatePortfolioValuesOnly();
-  }catch(e){
-    console.warn('CoinPaprika failed:',e.message);
+    try{localStorage.setItem('cafeCryptoSparklines',JSON.stringify(sparklineCache));}catch(e){}
+  }else{
     allCoins=[...FALLBACK_COINS];
     searchCoins=[...FALLBACK_COINS];
     allCoins.forEach(c=>{liveData[c.id]=c;});
-    btcUsd=65000;btcChg24=2.5;
+    btcUsd=btcUsd||65000;btcChg24=btcChg24||2.5;
+    updateLiveStatus(false,'');
     buildTicker2();updateChartHeader();buildTop100();buildTriSections(allCoins);
     if(!editingPortfolio)updatePortfolioValuesOnly();
   }
@@ -1842,9 +1908,9 @@ function buildCryptoRow(coin,rank){
   const id=coin.id,sym=symOf(coin);
   const chg=coin.price_change_percentage_24h||0;
   const up=chg>=0;
-  const isFav=favorites.has(id);
   const rankClass=rank===1?'r1':rank===2?'r2':rank===3?'r3':'';
   const logoHTML=coin.image?`<img src="${escapeHTML(coin.image)}" alt="${escapeHTML(coin.name||'')}" loading="lazy" data-fallback="${escapeHTML(sym.slice(0,3))}">`:escapeHTML(sym.slice(0,3));
+  const hasSpark=sparklineCache[id]&&sparklineCache[id].length>1;
   return`<a href="javascript:void(0)" class="crypto-row" data-coin-id="${escapeHTML(id)}">
     <div class="cr-rank ${rankClass}">${rank}</div>
     <div class="cr-icon">${logoHTML}</div>
@@ -1852,11 +1918,11 @@ function buildCryptoRow(coin,rank){
       <div class="cr-symbol">${escapeHTML(sym)}</div>
       <div class="cr-name">${escapeHTML(coin.name||'')}</div>
     </div>
+    <div class="cr-spark">${hasSpark?`<canvas data-coin-id="${escapeHTML(id)}"></canvas>`:''}</div>
     <div class="cr-right">
       <div class="cr-price">${fmtP(coin.current_price)}</div>
       <div class="cr-chg ${up?'chg-green':'chg-red'}">${fmtPct(chg)}</div>
     </div>
-    <button class="top100-fav${isFav?' active':''}" data-fav-id="${escapeHTML(id)}" data-fav-sym="${escapeHTML(sym)}">${isFav?'★':'☆'}</button>
   </a>`;
 }
 
@@ -1864,20 +1930,27 @@ function buildTriSections(coins){
   trendData=[...coins].sort((a,b)=>(b.total_volume||0)-(a.total_volume||0));
   winData=[...coins].filter(c=>c.price_change_percentage_24h>0).sort((a,b)=>(b.price_change_percentage_24h||0)-(a.price_change_percentage_24h||0));
   loseData=[...coins].filter(c=>c.price_change_percentage_24h<0).sort((a,b)=>(a.price_change_percentage_24h||0)-(b.price_change_percentage_24h||0));
-  renderTrendList(trendData.slice(0,5));
-  renderWinList(winData.slice(0,5));
-  renderLoseList(loseData.slice(0,5));
+  renderTrendList(trendData.slice(0,10));
+  renderWinList(winData.slice(0,10));
+  renderLoseList(loseData.slice(0,10));
 }
 
-function renderTrendList(data){$('trendList').innerHTML=data.length?data.map((c,i)=>buildCryptoRow(c,i+1)).join(''):'<div class="loader-error">Aucune donnée</div>';}
-function renderWinList(data){$('winList').innerHTML=data.length?data.map((c,i)=>buildCryptoRow(c,i+1)).join(''):'<div class="loader-error">Aucune donnée</div>';}
-function renderLoseList(data){$('loseList').innerHTML=data.length?data.map((c,i)=>buildCryptoRow(c,i+1)).join(''):'<div class="loader-error">Aucune donnée</div>';}
+function renderCryptoRowSparklines(container){
+  if(!container)return;
+  container.querySelectorAll('.cr-spark canvas').forEach(cv=>{
+    const data=sparklineCache[cv.dataset.coinId];
+    if(data&&data.length>1)drawSparkline(cv,data);
+  });
+}
+function renderTrendList(data){$('trendList').innerHTML=data.length?data.map((c,i)=>buildCryptoRow(c,i+1)).join(''):'<div class="loader-error">Aucune donnée</div>';renderCryptoRowSparklines($('trendList'));}
+function renderWinList(data){$('winList').innerHTML=data.length?data.map((c,i)=>buildCryptoRow(c,i+1)).join(''):'<div class="loader-error">Aucune donnée</div>';renderCryptoRowSparklines($('winList'));}
+function renderLoseList(data){$('loseList').innerHTML=data.length?data.map((c,i)=>buildCryptoRow(c,i+1)).join(''):'<div class="loader-error">Aucune donnée</div>';renderCryptoRowSparklines($('loseList'));}
 
 let trendExpanded=false,winExpanded=false,loseExpanded=false;
 function showMore(sectionId){
-  if(sectionId==='trendList'){trendExpanded=!trendExpanded;renderTrendList(trendData.slice(0,trendExpanded?10:5));}
-  else if(sectionId==='winList'){winExpanded=!winExpanded;renderWinList(winData.slice(0,winExpanded?10:5));}
-  else if(sectionId==='loseList'){loseExpanded=!loseExpanded;renderLoseList(loseData.slice(0,loseExpanded?10:5));}
+  if(sectionId==='trendList'){trendExpanded=!trendExpanded;renderTrendList(trendData.slice(0,trendExpanded?20:10));}
+  else if(sectionId==='winList'){winExpanded=!winExpanded;renderWinList(winData.slice(0,winExpanded?20:10));}
+  else if(sectionId==='loseList'){loseExpanded=!loseExpanded;renderLoseList(loseData.slice(0,loseExpanded?20:10));}
   document.querySelectorAll('.see-more-btn').forEach(btn=>{
     if(btn.dataset.list===sectionId)btn.textContent=btn.textContent.includes('Voir moins')?'Voir plus ▼':'Voir moins ▲';
   });
@@ -2053,12 +2126,12 @@ function cdFillInformations(d,sym){
 async function cdLoadDescription(id){
   try{
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
-    const r=await fetch(`https://api.coinpaprika.com/v1/coins/${encodeURIComponent(id)}`,{signal:controller.signal});
+    const r=await fetch(`https://api.coingecko.com/api/v3/coins/${encodeURIComponent(id)}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false`,{signal:controller.signal});
     clearTimeout(timeout);
-    if(!r.ok)throw new Error('CoinPaprika');
+    if(!r.ok)throw new Error('CoinGecko');
     const coinData=await r.json();
     if(cdCurrentCoinId!==id)return;
-    const rawDesc=(coinData.description||'').replace(/<[^>]*>/g,'').trim();
+    const rawDesc=((coinData.description&&coinData.description.en)||'').replace(/<[^>]*>/g,'').trim();
     let descFR=rawDesc;
     if(rawDesc && rawDesc.length>10){descFR=await translateToFR(rawDesc.substring(0,900));}
     cdFullDesc=descFR||'Description non disponible.';
@@ -2070,16 +2143,15 @@ async function cdLoadDescription(id){
       $('cdDescContainer').innerHTML=`<p class="cd-desc">${escapeHTML(cdFullDesc)}</p>`;
       $('cdDescToggle').style.display='none';
     }
-    if(coinData.started_at){
-      try{$('cdInfoLaunch').textContent=new Date(coinData.started_at).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});}catch(e){}
+    if(coinData.genesis_date){
+      try{$('cdInfoLaunch').textContent=new Date(coinData.genesis_date).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});}catch(e){}
     }
     const links=[];
-    const site=coinData.links?.website?.[0];if(site)links.push({label:'Site officiel',icon:'🌐',url:site});
-    const explorer=coinData.links?.explorer?.[0];if(explorer)links.push({label:'Explorateur',icon:'🔎',url:explorer});
-    const github=coinData.links?.source_code?.[0];if(github)links.push({label:'GitHub',icon:'💻',url:github});
-    const whitepaper=coinData.whitepaper?.link;if(whitepaper)links.push({label:'Livre blanc',icon:'📄',url:whitepaper});
-    const twitterExt=(coinData.links_extended||[]).find(l=>l.type==='twitter'&&l.url);
-    if(twitterExt)links.push({label:'X',icon:'🐦',url:twitterExt.url});
+    const site=coinData.links?.homepage?.find(u=>u);if(site)links.push({label:'Site officiel',icon:'🌐',url:site});
+    const explorer=coinData.links?.blockchain_site?.find(u=>u);if(explorer)links.push({label:'Explorateur',icon:'🔎',url:explorer});
+    const github=coinData.links?.repos_url?.github?.find(u=>u);if(github)links.push({label:'GitHub',icon:'💻',url:github});
+    const whitepaper=coinData.links?.whitepaper;if(whitepaper)links.push({label:'Livre blanc',icon:'📄',url:whitepaper});
+    const twitter=coinData.links?.twitter_screen_name;if(twitter)links.push({label:'X',icon:'🐦',url:`https://x.com/${twitter}`});
     $('cdLinkRow').innerHTML=links.length
       ? links.map(l=>`<a class="cd-link-btn" href="${escapeHTML(safeUrl(l.url))}" target="_blank" rel="noopener noreferrer">${l.icon} ${escapeHTML(l.label)}</a>`).join('')
       : '<div style="color:var(--muted);font-size:.72rem;">Aucun lien officiel référencé.</div>';
@@ -2096,24 +2168,22 @@ async function cdLoadPriceHistory(id,currentCoin){
   try{
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
     const now=new Date();
-    const start1y=new Date(now.getTime()-365*24*60*60*1000);
-    const fmtDate=d=>d.toISOString().slice(0,10);
-    const r=await fetch(`https://api.coinpaprika.com/v1/tickers/${encodeURIComponent(id)}/historical?start=${fmtDate(start1y)}&interval=1d`,{signal:controller.signal});
+    const r=await fetch(`https://api.coingecko.com/api/v3/coins/${encodeURIComponent(id)}/market_chart?vs_currency=usd&days=365&interval=daily`,{signal:controller.signal});
     clearTimeout(timeout);
-    if(!r.ok)throw new Error('CoinPaprika historical');
-    const data=await r.json();
+    if(!r.ok)throw new Error('CoinGecko historical');
+    const json=await r.json();
+    const data=Array.isArray(json.prices)?json.prices:[];
     if(cdCurrentCoinId!==id)return;
-    if(!Array.isArray(data)||!data.length){cdFallbackPriceHistory(currentCoin);return;}
+    if(!data.length){cdFallbackPriceHistory(currentCoin);return;}
     const currentPrice=currentCoin.current_price;
     const findClosest=(daysAgo)=>{
       const targetTs=now.getTime()-daysAgo*24*60*60*1000;
       let closest=null,minDiff=Infinity;
       data.forEach(pt=>{
-        const ts=new Date(pt.timestamp).getTime();
-        const diff=Math.abs(ts-targetTs);
-        if(diff<minDiff){minDiff=diff;closest=pt;}
+        const diff=Math.abs(pt[0]-targetTs);
+        if(diff<minDiff){minDiff=diff;closest=pt[1];}
       });
-      return closest?closest.price:null;
+      return closest;
     };
     const p7d=findClosest(7),p30d=findClosest(30),p1y=findClosest(365);
     const setTile=(valId,chgId,oldPrice)=>{
@@ -2487,25 +2557,41 @@ setInterval(()=>loadChart(null,currentTF),30000);
 async function fetchGlobal(){
   try{
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),10000);
-    const r=await fetch('https://api.coinpaprika.com/v1/global',{signal:controller.signal});
+    let g,btcDom,ethDom,mcapUsd,volUsd,chg,cryptoCount;
+    try{
+      const r=await fetch('https://api.coingecko.com/api/v3/global',{signal:controller.signal});
+      if(!r.ok)throw new Error(r.status);
+      const j=await r.json();g=j.data;
+      if(!g)throw new Error('empty');
+      mcapUsd=g.total_market_cap?.usd||0;
+      volUsd=g.total_volume?.usd||0;
+      btcDom=g.market_cap_percentage?.btc||0;
+      ethDom=g.market_cap_percentage?.eth||0;
+      chg=g.market_cap_change_percentage_24h_usd||0;
+      cryptoCount=g.active_cryptocurrencies||0;
+    }catch(eGecko){
+      console.warn('CoinGecko global failed:',eGecko.message);
+      const r=await fetch('https://api.coinpaprika.com/v1/global',{signal:controller.signal});
+      if(!r.ok)throw new Error(r.status);
+      const j=await r.json();
+      mcapUsd=j.market_cap_usd||0;volUsd=j.volume_24h_usd||0;
+      btcDom=j.bitcoin_dominance_percentage||0;
+      const eth=allCoins.find(c=>symOf(c)==='ETH');
+      ethDom=(eth&&mcapUsd)?(eth.market_cap/mcapUsd*100):0;
+      chg=j.market_cap_change_24h||0;cryptoCount=j.cryptocurrencies_number||0;
+    }
     clearTimeout(timeout);
-    if(!r.ok)throw new Error(r.status);
-    const g=await r.json();
-    const btcDom=g.bitcoin_dominance_percentage||0;
-    const eth=allCoins.find(c=>symOf(c)==='ETH');
-    const ethDom=(eth&&g.market_cap_usd)?(eth.market_cap/g.market_cap_usd*100):0;
-    const chg=g.market_cap_change_24h||0;
     const stats=[
-      {l:'Market Cap',v:fmtBig(g.market_cap_usd),c:'gold'},
-      {l:'Volume 24h',v:fmtBig(g.volume_24h_usd),c:'cyan'},
+      {l:'Market Cap',v:fmtBig(mcapUsd),c:'gold'},
+      {l:'Volume 24h',v:fmtBig(volUsd),c:'cyan'},
       {l:'Dom. BTC',v:btcDom.toFixed(1)+'%',c:'gold'},
       {l:'Dom. ETH',v:ethDom.toFixed(1)+'%',c:'cyan'},
       {l:'Var. 24h',v:(chg>=0?'+':'')+chg.toFixed(2)+'%',c:chg>=0?'green':'red'},
-      {l:'Cryptos',v:(g.cryptocurrencies_number||0).toLocaleString(),c:'cyan'},
+      {l:'Cryptos',v:cryptoCount.toLocaleString(),c:'cyan'},
     ];
     const items=[...stats,...stats];
     $('t1').innerHTML=items.map(s=>`<div class="tk"><span class="tk-lbl">${escapeHTML(s.l)}</span><span class="tk-val ${s.c}">${escapeHTML(s.v)}</span></div>`).join('');
-    globalData={marketCap:g.market_cap_usd||0,volume24h:g.volume_24h_usd||0,btcDom,ethDom,mcapChg24:chg,cryptoCount:g.cryptocurrencies_number||0};
+    globalData={marketCap:mcapUsd,volume24h:volUsd,btcDom,ethDom,mcapChg24:chg,cryptoCount};
   }catch(e){console.warn('Global:',e);}
 }
 
