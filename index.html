@@ -504,6 +504,7 @@ section{scroll-margin-top:200px;}
 .fng-note{font-size:.68rem;color:var(--muted2);margin-top:4px;line-height:1.4;}
 .mood-line{padding:10px 16px;border-top:1px solid var(--border-red);border-bottom:1px solid var(--border-red);font-size:.72rem;color:var(--muted2);background:var(--s2);}
 .voice-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 32px);margin:12px 16px 0;padding:10px;border-radius:10px;border:1px solid var(--b2);background:var(--s2);color:var(--red);font-family:var(--mono);font-size:.66rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.voice-hint{text-align:center;font-family:var(--mono);font-size:.56rem;color:var(--muted);margin:6px 16px 0;}
 .voice-btn:hover{border-color:var(--red);background:rgba(220,38,38,.07);}
 .voice-btn.speaking{color:var(--gold);border-color:var(--gold);background:rgba(240,180,41,.08);}
 .fng-history{padding:14px 16px;}
@@ -1076,6 +1077,7 @@ img,canvas{max-width:100%;}
       </div>
       <div class="mood-line" id="moodLine">☕ Analyse de l'ambiance du marché…</div>
       <button class="voice-btn" id="voiceSummaryBtn">🔊 Écouter le résumé du marché</button>
+      <div class="voice-hint">≈ 2 min · voix la plus naturelle disponible dans votre navigateur</div>
       <div class="fng-history">
         <div class="fng-history-title">Historique · 7 derniers jours</div>
         <canvas class="fng-history-chart" id="fngHistoryChart"></canvas>
@@ -2503,6 +2505,7 @@ async function fetchGlobal(){
     ];
     const items=[...stats,...stats];
     $('t1').innerHTML=items.map(s=>`<div class="tk"><span class="tk-lbl">${escapeHTML(s.l)}</span><span class="tk-val ${s.c}">${escapeHTML(s.v)}</span></div>`).join('');
+    globalData={marketCap:g.market_cap_usd||0,volume24h:g.volume_24h_usd||0,btcDom,ethDom,mcapChg24:chg,cryptoCount:g.cryptocurrencies_number||0};
   }catch(e){console.warn('Global:',e);}
 }
 
@@ -2511,6 +2514,7 @@ async function fetchGlobal(){
 // ═══════════════════════════════════════════════
 const FNG_LABELS={'Extreme Fear':{t:'Peur Extrême',c:'var(--red)',n:'Ventes massives.'},'Fear':{t:'Peur',c:'var(--orange)',n:'Les vendeurs dominent.'},'Neutral':{t:'Neutre',c:'var(--gold)',n:'Le marché hésite.'},'Greed':{t:'Avidité',c:'var(--green)',n:'Momentum positif.'},'Extreme Greed':{t:'Avidité Extrême',c:'var(--cyan)',n:'Euphorie générale.'}};
 let fngHistory=[];
+let globalData={marketCap:0,volume24h:0,btcDom:0,ethDom:0,mcapChg24:0,cryptoCount:0};
 
 async function fetchFearGreed(){
   try{
@@ -2718,24 +2722,129 @@ renderAirdrops();
 // ═══════════════════════════════════════════════
 // VOCAL
 // ═══════════════════════════════════════════════
+// Formate un grand nombre en milliards, pour une lecture naturelle à voix haute
+function fmtSpeechMilliards(n){
+  if(!n)return null;
+  const mds=n/1e9;
+  const val=mds>=10?Math.round(mds).toLocaleString('fr-FR'):mds.toFixed(1).replace('.',',');
+  return `${val} milliards de dollars`;
+}
+function fmtSpeechPct(n){
+  const v=Math.abs(n).toFixed(2).replace('.',',');
+  return n>=0?`en hausse de ${v} pour cent`:`en baisse de ${v} pour cent`;
+}
+function fmtSpeechPrice(n){
+  if(n==null)return '—';
+  if(n>=1)return `${Math.round(n).toLocaleString('fr-FR')} dollars`;
+  return `${n.toFixed(4).replace('.',',')} dollars`;
+}
+
+// Choisit la voix française la plus naturelle disponible dans le navigateur
+function pickBestFrenchVoice(voices){
+  const scored=voices.map(v=>{
+    let score=0;
+    if(v.lang&&v.lang.toLowerCase().startsWith('fr'))score+=10;else return{v,score:-1};
+    if(/google/i.test(v.name))score+=6;
+    if(/neural|natural|online|premium|enhanced|wavenet|microsoft/i.test(v.name))score+=5;
+    if(v.localService===false)score+=2;
+    if(/denise|henri|audrey|thomas|amelie|amélie/i.test(v.name))score+=3;
+    return{v,score};
+  }).filter(s=>s.score>=0).sort((a,b)=>b.score-a.score);
+  return scored.length?scored[0].v:null;
+}
+
+// Construit le texte du résumé de marché (environ 2 minutes de lecture)
+function buildMarketSummaryText(){
+  const parts=[];
+  parts.push("Bonjour, et bienvenue dans le résumé du marché crypto de Café Crypto.");
+
+  const mcapTxt=fmtSpeechMilliards(globalData.marketCap);
+  const volTxt=fmtSpeechMilliards(globalData.volume24h);
+  if(mcapTxt){
+    parts.push(`Commençons par une vue d'ensemble. La capitalisation totale du marché s'élève aujourd'hui à environ ${mcapTxt}, ${fmtSpeechPct(globalData.mcapChg24)} sur les dernières vingt-quatre heures.`);
+  }
+  if(volTxt){
+    const activite=globalData.volume24h>(globalData.marketCap*0.04)?"un signe d'activité assez soutenue":"un niveau d'échanges plutôt calme";
+    parts.push(`Le volume total échangé sur la même période atteint environ ${volTxt}, ${activite}.`);
+  }
+
+  if(btcUsd){
+    parts.push(`Du côté du Bitcoin, la référence du marché, le cours actuel se situe autour de ${fmtSpeechPrice(btcUsd)}, ${fmtSpeechPct(btcChg24)} sur la journée.`);
+  }
+  if(globalData.btcDom){
+    parts.push(`Sa dominance représente environ ${globalData.btcDom.toFixed(1).replace('.',',')} pour cent de la capitalisation totale du marché, contre environ ${globalData.ethDom.toFixed(1).replace('.',',')} pour cent pour l'Ethereum.`);
+  }
+
+  const gainers=(winData||[]).slice(0,3);
+  if(gainers.length){
+    parts.push("Penchons-nous maintenant sur les valeurs qui bougent le plus aujourd'hui. Du côté des hausses,");
+    const bits=gainers.map((c,i)=>`${c.name} qui progresse de ${Math.abs(c.price_change_percentage_24h||0).toFixed(1).replace('.',',')} pour cent`);
+    parts.push(bits.join(', puis ')+'.');
+  }
+  const losers=(loseData||[]).slice(0,3);
+  if(losers.length){
+    parts.push("À l'inverse, parmi les baisses les plus marquées, on retrouve");
+    const bits=losers.map((c,i)=>`${c.name}, en repli de ${Math.abs(c.price_change_percentage_24h||0).toFixed(1).replace('.',',')} pour cent`);
+    parts.push(bits.join(', puis ')+'.');
+  }
+
+  const fngScore=$('fngVal')?.textContent,fngLbl=$('fngLbl')?.textContent,fngNote=$('fngNote')?.textContent;
+  if(fngScore&&fngScore!=='—'){
+    parts.push(`Concernant le climat général du marché, l'indice Fear and Greed affiche un score de ${fngScore} sur cent, ce qui place le sentiment des investisseurs en zone de ${fngLbl}.`);
+    if(fngNote)parts.push(fngNote);
+  }
+
+  parts.push("Comme toujours, gardez à l'esprit que ce résumé est purement informatif et ne constitue en aucun cas un conseil financier. Les marchés crypto restent volatils, alors restez prudents.");
+  parts.push("Merci de votre écoute, et à très bientôt sur Café Crypto.");
+
+  return parts.filter(Boolean);
+}
+
+let cdVoiceQueue=[],cdVoiceIdx=0,cdVoicePicked=null;
+
+function speakNextSentence(btn){
+  if(cdVoiceIdx>=cdVoiceQueue.length){
+    if(btn){btn.classList.remove('speaking');btn.textContent='🔊 Écouter le résumé du marché';}
+    return;
+  }
+  const sentence=cdVoiceQueue[cdVoiceIdx++];
+  const utter=new SpeechSynthesisUtterance(sentence);
+  utter.lang='fr-FR';
+  utter.rate=0.95;utter.pitch=1.02;utter.volume=1;
+  if(cdVoicePicked)utter.voice=cdVoicePicked;
+  utter.onend=()=>{setTimeout(()=>speakNextSentence(btn),260);};
+  utter.onerror=()=>speakNextSentence(btn);
+  window.speechSynthesis.speak(utter);
+}
+
+function startSpeaking(btn){
+  const voices=window.speechSynthesis.getVoices();
+  cdVoicePicked=pickBestFrenchVoice(voices);
+  cdVoiceQueue=buildMarketSummaryText();
+  cdVoiceIdx=0;
+  if(btn){btn.classList.add('speaking');btn.textContent='⏸️ Arrêter la lecture';}
+  speakNextSentence(btn);
+}
+
 function speakMarketSummary(){
   const btn=$('voiceSummaryBtn');
   if(!('speechSynthesis' in window)){showNotification('Non disponible',"Pas de lecture vocale",'⚠️');return;}
-  if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();if(btn){btn.classList.remove('speaking');btn.textContent='🔊 Écouter le résumé du marché';}return;}
-  const btcTxt=btcUsd?`Le bitcoin s'échange à ${Math.round(btcUsd).toLocaleString('fr-FR')} dollars.`:'';
-  const fngScore=$('fngVal')?.textContent,fngLbl=$('fngLbl')?.textContent;
-  const fngTxt=(fngScore&&fngScore!=='—')?`L'indice Fear & Greed est à ${fngScore} sur cent, en zone ${fngLbl}.`:'';
-  const fullText=['Bonjour, voici le résumé du marché crypto.',btcTxt,fngTxt,'Bonne journée sur Café Crypto.'].filter(Boolean).join(' ');
-  const utter=new SpeechSynthesisUtterance(fullText);
-  utter.lang='fr-FR';utter.rate=1;
-  const voices=window.speechSynthesis.getVoices();
-  const frVoice=voices.find(v=>v.lang&&v.lang.startsWith('fr'));
-  if(frVoice)utter.voice=frVoice;
-  utter.onstart=()=>{if(btn){btn.classList.add('speaking');btn.textContent='⏸️ Arrêter la lecture';}};
-  utter.onend=()=>{if(btn){btn.classList.remove('speaking');btn.textContent='🔊 Écouter le résumé du marché';}};
-  utter.onerror=()=>{if(btn){btn.classList.remove('speaking');btn.textContent='🔊 Écouter le résumé du marché';}};
+  if(window.speechSynthesis.speaking||window.speechSynthesis.pending){
+    window.speechSynthesis.cancel();
+    cdVoiceQueue=[];cdVoiceIdx=0;
+    if(btn){btn.classList.remove('speaking');btn.textContent='🔊 Écouter le résumé du marché';}
+    return;
+  }
   window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utter);
+  const voices=window.speechSynthesis.getVoices();
+  if(!voices.length){
+    // Certains navigateurs chargent les voix de façon asynchrone
+    window.speechSynthesis.onvoiceschanged=()=>{startSpeaking(btn);window.speechSynthesis.onvoiceschanged=null;};
+    // filet de sécurité si l'événement ne se déclenche pas
+    setTimeout(()=>{if(!window.speechSynthesis.speaking&&cdVoiceIdx===0&&cdVoiceQueue.length===0)startSpeaking(btn);},400);
+  }else{
+    startSpeaking(btn);
+  }
 }
 
 // ═══════════════════════════════════════════════
