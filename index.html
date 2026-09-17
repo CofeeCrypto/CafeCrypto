@@ -267,7 +267,7 @@ section{scroll-margin-top:200px;}
 .crypto-row:hover .cr-icon{box-shadow:0 0 0 2px var(--s1),0 0 0 3px rgba(220,38,38,.3),0 0 14px rgba(220,38,38,.2);}
 .cr-icon img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
 
-.cr-info{flex:1;min-width:0;}
+.cr-info{flex:0 1 90px;min-width:0;}
 .cr-symbol{font-size:.8rem;font-weight:800;color:var(--text);letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .cr-name{font-size:.6rem;color:var(--muted);margin-top:2px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
@@ -279,9 +279,10 @@ section{scroll-margin-top:200px;}
 .chg-green{color:var(--green) !important;}
 .chg-red{color:var(--red) !important;}
 
-.cr-spark{width:36px;height:20px;flex-shrink:0;position:relative;opacity:.85;transition:opacity .2s;}
+.cr-spark{flex:1 1 auto;min-width:16px;display:flex;align-items:center;justify-content:center;opacity:.85;transition:opacity .2s;}
 .crypto-row:hover .cr-spark{opacity:1;}
-.cr-spark canvas{width:100%;height:100%;display:block;}
+.cr-spark-inner{width:36px;height:20px;flex-shrink:0;}
+.cr-spark-inner canvas{width:100%;height:100%;display:block;}
 
 .see-more-btn{
   display:flex;align-items:center;justify-content:center;gap:6px;
@@ -352,13 +353,14 @@ section{scroll-margin-top:200px;}
 .top100-row:hover .top100-icon{box-shadow:0 0 0 2px var(--s1),0 0 0 3px rgba(220,38,38,.3),0 0 16px rgba(220,38,38,.2);}
 .top100-icon img{width:100%;height:100%;object-fit:cover;}
 
-.top100-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;overflow:hidden;}
+.top100-info{flex:0 1 180px;min-width:0;display:flex;flex-direction:column;gap:2px;overflow:hidden;}
 .top100-symbol{font-size:.8rem;font-weight:800;color:var(--text);letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .top100-name{font-size:.58rem;color:var(--muted);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-.top100-spark{width:80px;height:28px;flex-shrink:0;position:relative;opacity:.85;transition:opacity .2s;}
+.top100-spark{flex:1 1 auto;min-width:24px;display:flex;align-items:center;justify-content:center;opacity:.85;transition:opacity .2s;}
 .top100-row:hover .top100-spark{opacity:1;}
-.top100-spark canvas{width:100%;height:100%;display:block;}
+.top100-spark-inner{width:80px;height:28px;flex-shrink:0;}
+.top100-spark-inner canvas{width:100%;height:100%;display:block;}
 
 .top100-price{font-family:var(--mono);font-size:.75rem;font-weight:700;color:var(--text);text-align:right;flex-shrink:0;letter-spacing:-.3px;min-width:70px;}
 
@@ -619,6 +621,9 @@ canvas#btcChart{position:absolute;inset:0;width:100%!important;height:100%!impor
 .cd-share-btn{width:34px;height:34px;border-radius:10px;flex-shrink:0;border:1px solid var(--b2);background:var(--s2);color:var(--muted2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;}
 .cd-share-btn:hover{border-color:var(--red);color:var(--red);background:rgba(220,38,38,.08);}
 .cd-share-btn svg{width:16px;height:16px;}
+.cd-fav-btn{width:34px;height:34px;border-radius:10px;flex-shrink:0;border:1px solid var(--b2);background:var(--s2);color:var(--muted2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:1.05rem;line-height:1;}
+.cd-fav-btn:hover{border-color:rgba(240,180,41,.5);color:var(--gold);background:rgba(240,180,41,.08);}
+.cd-fav-btn.active{background:linear-gradient(135deg,rgba(240,180,41,.25),rgba(240,180,41,.1));color:var(--gold);border-color:rgba(240,180,41,.5);box-shadow:0 0 12px rgba(240,180,41,.3);}
 
 /* BLOC PRIX */
 .cd-price-row{
@@ -829,7 +834,7 @@ footer{border-top:1px solid var(--border-red);padding:16px 20px;display:flex;fle
   .logo-bar{height:88px;padding:0 10px;}
   .search-container{right:10px;}
   .top100-mcap{display:none;}
-  .top100-spark{width:56px;height:24px;}
+  .top100-spark-inner{width:56px;height:24px;}
   .top100-price{font-size:.7rem;min-width:0;}
   .top100-chg{min-width:50px;font-size:.58rem;}
   .top100-chg-bar{width:50px;}
@@ -1259,6 +1264,7 @@ img,canvas{max-width:100%;}
         <span class="cd-symbol" id="cdSymbol">—</span>
         <span class="cd-header-name" id="cdHeaderName">—</span>
       </div>
+      <button class="cd-fav-btn" id="cdFavBtn" aria-label="Ajouter aux favoris">☆</button>
       <button class="cd-share-btn" id="cdShareBtn" aria-label="Partager">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
       </button>
@@ -1551,7 +1557,7 @@ async function loadSparklinesForVisible(coins){
 }
 
 function renderAllSparklines(){
-  document.querySelectorAll('.top100-spark canvas').forEach(cv=>{
+  document.querySelectorAll('.top100-spark-inner canvas').forEach(cv=>{
     const id=cv.dataset.coinId;
     const data=sparklineCache[id];
     if(data&&data.length>1)drawSparkline(cv,data);
@@ -1601,7 +1607,7 @@ function renderPortfolio(){
   const list=$('portfolioList');if(!list)return;
   const entries=Object.entries(portfolio);
   if(!entries.length){
-    list.innerHTML='<div class="portfolio-empty">Ajoutez des cryptos depuis vos favoris ⭐<br><br>Cliquez sur ★ puis "Ajouter depuis les favoris"</div>';
+    list.innerHTML='<div class="portfolio-empty">Ajoutez des cryptos depuis vos favoris ⭐<br><br>Ouvrez la fiche d\'une crypto, cliquez sur ☆ pour la mettre en favori, puis "Ajouter depuis les favoris"</div>';
     $('portfolioTotal').textContent='$0.00';$('portfolioPnl').textContent='—';return;
   }
   let totalValue=0,totalCost=0;
@@ -1858,7 +1864,6 @@ function renderTop100(){
     const id=coin.id,sym=symOf(coin);
     const chg=coin.price_change_percentage_24h||0;
     const up=chg>=0;
-    const isFav=favorites.has(id);
     const rank=start+index+1;
     const rankClass=rank===1?'r1':rank===2?'r2':rank===3?'r3':'';
     const barPct=Math.min(Math.abs(chg)*5,100);
@@ -1871,14 +1876,13 @@ function renderTop100(){
           <span class="top100-symbol">${escapeHTML(sym)}</span>
           <span class="top100-name">${escapeHTML(coin.name||'')}</span>
         </div>
-        <div class="top100-spark">${hasSpark?`<canvas data-coin-id="${escapeHTML(id)}"></canvas>`:''}</div>
+        <div class="top100-spark">${hasSpark?`<div class="top100-spark-inner"><canvas data-coin-id="${escapeHTML(id)}"></canvas></div>`:''}</div>
         <div class="top100-price">${fmtP(coin.current_price)}</div>
         <div class="top100-chg-wrap">
           <div class="top100-chg ${up?'up':'down'}">${fmtPct(chg)}</div>
           <div class="top100-chg-bar"><div class="top100-chg-bar-fill ${up?'up':'down'}" style="width:${barPct}%"></div></div>
         </div>
         <div class="top100-mcap">${fmtBig(coin.market_cap||0)}</div>
-        <button class="top100-fav${isFav?' active':''}" data-fav-id="${escapeHTML(id)}" data-fav-sym="${escapeHTML(sym)}">${isFav?'★':'☆'}</button>
       </div>`;
   }).join('');
   
@@ -1918,7 +1922,7 @@ function buildCryptoRow(coin,rank){
       <div class="cr-symbol">${escapeHTML(sym)}</div>
       <div class="cr-name">${escapeHTML(coin.name||'')}</div>
     </div>
-    <div class="cr-spark">${hasSpark?`<canvas data-coin-id="${escapeHTML(id)}"></canvas>`:''}</div>
+    <div class="cr-spark">${hasSpark?`<div class="cr-spark-inner"><canvas data-coin-id="${escapeHTML(id)}"></canvas></div>`:''}</div>
     <div class="cr-right">
       <div class="cr-price">${fmtP(coin.current_price)}</div>
       <div class="cr-chg ${up?'chg-green':'chg-red'}">${fmtPct(chg)}</div>
@@ -1930,14 +1934,14 @@ function buildTriSections(coins){
   trendData=[...coins].sort((a,b)=>(b.total_volume||0)-(a.total_volume||0));
   winData=[...coins].filter(c=>c.price_change_percentage_24h>0).sort((a,b)=>(b.price_change_percentage_24h||0)-(a.price_change_percentage_24h||0));
   loseData=[...coins].filter(c=>c.price_change_percentage_24h<0).sort((a,b)=>(a.price_change_percentage_24h||0)-(b.price_change_percentage_24h||0));
-  renderTrendList(trendData.slice(0,10));
-  renderWinList(winData.slice(0,10));
-  renderLoseList(loseData.slice(0,10));
+  renderTrendList(trendData.slice(0,5));
+  renderWinList(winData.slice(0,5));
+  renderLoseList(loseData.slice(0,5));
 }
 
 function renderCryptoRowSparklines(container){
   if(!container)return;
-  container.querySelectorAll('.cr-spark canvas').forEach(cv=>{
+  container.querySelectorAll('.cr-spark-inner canvas').forEach(cv=>{
     const data=sparklineCache[cv.dataset.coinId];
     if(data&&data.length>1)drawSparkline(cv,data);
   });
@@ -1948,9 +1952,9 @@ function renderLoseList(data){$('loseList').innerHTML=data.length?data.map((c,i)
 
 let trendExpanded=false,winExpanded=false,loseExpanded=false;
 function showMore(sectionId){
-  if(sectionId==='trendList'){trendExpanded=!trendExpanded;renderTrendList(trendData.slice(0,trendExpanded?20:10));}
-  else if(sectionId==='winList'){winExpanded=!winExpanded;renderWinList(winData.slice(0,winExpanded?20:10));}
-  else if(sectionId==='loseList'){loseExpanded=!loseExpanded;renderLoseList(loseData.slice(0,loseExpanded?20:10));}
+  if(sectionId==='trendList'){trendExpanded=!trendExpanded;renderTrendList(trendData.slice(0,trendExpanded?10:5));}
+  else if(sectionId==='winList'){winExpanded=!winExpanded;renderWinList(winData.slice(0,winExpanded?10:5));}
+  else if(sectionId==='loseList'){loseExpanded=!loseExpanded;renderLoseList(loseData.slice(0,loseExpanded?10:5));}
   document.querySelectorAll('.see-more-btn').forEach(btn=>{
     if(btn.dataset.list===sectionId)btn.textContent=btn.textContent.includes('Voir moins')?'Voir plus ▼':'Voir moins ▲';
   });
@@ -2037,6 +2041,14 @@ function toggleFavorite(id,sym){
   else{favorites.add(id);showNotification(`${sym} ajouté aux favoris`,'','⭐',3000);}
   try{localStorage.setItem('cafeCryptoFavorites',JSON.stringify([...favorites]));}catch(e){}
   renderTop100();buildTriSections(allCoins);
+  if(cdCurrentCoinId===id)cdUpdateFavBtn(id);
+}
+
+function cdUpdateFavBtn(id){
+  const btn=$('cdFavBtn');if(!btn)return;
+  const isFav=favorites.has(id);
+  btn.classList.toggle('active',isFav);
+  btn.textContent=isFav?'★':'☆';
 }
 
 // ═══════════════════════════════════════════════
@@ -2066,6 +2078,7 @@ async function openCoinDetail(id){
   const chgEl=$('cdChgPct');chgEl.textContent=fmtPct(d.price_change_percentage_24h||0);chgEl.style.color=up?'var(--green)':'var(--red)';
   const moodEl=$('cdMoodBadge');moodEl.textContent=up?'Haussier ↑':'Baissier ↓';moodEl.style.color=up?'var(--green)':'var(--red)';
   $('cdRankBadge').textContent='🔥 N° '+(d.market_cap_rank||'—');
+  cdUpdateFavBtn(id);
   $('cdStatHigh').textContent='—';$('cdStatLow').textContent='—';
   cdFillInformations(d,sym);
   $('cdDescContainer').innerHTML='<div class="cd-desc-loading"><div class="spinner"></div>Chargement…</div>';
@@ -3345,6 +3358,11 @@ function initStaticControls(){
     }catch(e){
       try{await navigator.clipboard.writeText(window.location.href);showNotification('Lien copié','','📋',2500);}catch(err){}
     }
+  });
+  $('cdFavBtn').addEventListener('click',()=>{
+    if(!cdCurrentCoinId)return;
+    const d=liveData[cdCurrentCoinId];
+    toggleFavorite(cdCurrentCoinId,d?symOf(d):cdCurrentCoinId);
   });
 }
 
