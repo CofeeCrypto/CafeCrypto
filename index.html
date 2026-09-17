@@ -41,6 +41,7 @@
   --chart-label:rgba(138,163,190,.75);
   --rank-bg:#1a2332;
   --shadow-color:rgba(0,0,0,.85);
+  --mood-accent:#ef4444;--mood-accent-soft:rgba(239,68,68,.35);
 }
 body.light-theme{
   --bg:#eef2f7;
@@ -89,13 +90,14 @@ body{background:var(--bg);background-image:var(--bg-gradient);background-attachm
   display:flex;align-items:center;justify-content:center;
   height:96px;background:var(--logo-bar-bg);
   border-bottom:1px solid var(--border-red);backdrop-filter:blur(24px);
-  padding:0 20px;transition:transform .3s ease,background .3s;
+  padding:0 20px;transition:transform .3s ease,background .3s,box-shadow 1.2s ease;
+  box-shadow:0 1px 0 var(--mood-accent-soft);
 }
 @media(min-width:768px){
   body.hdr-hidden .ticker,body.hdr-hidden .logo-bar{transform:translateY(-100%);}
 }
 .logo-center{display:flex;align-items:center;justify-content:center;position:relative;z-index:2;}
-.logo-text-main{font-family:var(--hp);font-size:2.1rem;letter-spacing:.5px;background:linear-gradient(90deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.logo-text-main{font-family:var(--hp);font-size:2.1rem;letter-spacing:.5px;background:linear-gradient(90deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 10px var(--mood-accent-soft));transition:filter 1.2s ease;}
 .logo-vapors{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
 .logo-vapor-img{
   position:absolute;bottom:4px;width:18px;height:18px;border-radius:50%;
@@ -117,6 +119,42 @@ body{background:var(--bg);background-image:var(--bg-gradient);background-attachm
   100%{transform:translate(var(--drift,0px),var(--rise,-58px));opacity:0;}
 }
 @media(prefers-reduced-motion:reduce){.logo-vapor-img,.logo-vapor-fallback{display:none;}}
+
+/* ÉCRAN DE CHARGEMENT — la tasse qui infuse */
+.brew-loader{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg-gradient,var(--bg));
+  transition:opacity .5s ease,visibility .5s ease;
+}
+.brew-loader.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.brew-loader-inner{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.brew-cup{overflow:visible;}
+.brew-liquid{
+  animation:brewFill 2.2s cubic-bezier(.45,0,.4,1) infinite;
+  transition:fill 1.2s ease;
+}
+@keyframes brewFill{
+  0%{y:100px;height:0px;}
+  55%{y:38px;height:62px;}
+  85%{y:38px;height:62px;}
+  100%{y:100px;height:0px;}
+}
+.brew-steam path{stroke-dasharray:24;stroke-dashoffset:0;transform-origin:center;animation:brewSteam 2.2s ease-in-out infinite;}
+.brew-steam-2{animation-delay:.25s !important;}
+.brew-steam-3{animation-delay:.5s !important;}
+@keyframes brewSteam{
+  0%{opacity:0;transform:translateY(6px) scaleY(.7);}
+  30%{opacity:.6;}
+  70%{opacity:.55;}
+  100%{opacity:0;transform:translateY(-8px) scaleY(1.05);}
+}
+.brew-loader-title{font-family:var(--hp);font-size:1.3rem;letter-spacing:.5px;background:linear-gradient(90deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.brew-loader-sub{font-family:var(--mono);font-size:.68rem;color:var(--muted2);letter-spacing:.4px;}
+@media(prefers-reduced-motion:reduce){
+  .brew-liquid{animation:none;y:38px;height:62px;}
+  .brew-steam{display:none;}
+}
 
 /* RECHERCHE */
 .search-container{position:absolute;right:20px;top:50%;transform:translateY(-50%);z-index:401;}
@@ -664,6 +702,30 @@ canvas#cdChart{position:absolute;inset:0;width:100%!important;height:100%!import
 .cd-hist-val{font-family:var(--mono);font-size:.95rem;font-weight:800;color:var(--text);letter-spacing:-.3px;}
 .cd-hist-chg{font-family:var(--mono);font-size:.68rem;font-weight:700;margin-top:5px;}
 
+/* SIMULATEUR "ET SI..." */
+.cd-whatif-block{}
+.cd-whatif-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;}
+.cd-whatif-field{display:flex;flex-direction:column;gap:8px;}
+.cd-whatif-field label{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;}
+.cd-whatif-amount-wrap{display:flex;align-items:center;gap:6px;background:var(--s2);border:1px solid var(--border-red);border-radius:10px;padding:8px 12px;width:130px;transition:border-color .2s;}
+.cd-whatif-amount-wrap:focus-within{border-color:var(--mood-accent,var(--red));}
+.cd-whatif-amount-wrap span{color:var(--muted2);font-family:var(--mono);font-weight:700;}
+.cd-whatif-amount-wrap input{background:none;border:none;outline:none;color:var(--text);font-family:var(--mono);font-size:.85rem;font-weight:700;width:100%;min-width:0;}
+.cd-whatif-amount-wrap input::-webkit-outer-spin-button,.cd-whatif-amount-wrap input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.cd-whatif-presets{display:flex;gap:6px;flex-wrap:wrap;}
+.cd-whatif-preset{font-family:var(--mono);font-size:.62rem;font-weight:600;padding:8px 12px;border-radius:9px;border:1px solid var(--border-red);background:var(--s2);color:var(--muted2);cursor:pointer;transition:all .2s;}
+.cd-whatif-preset:hover{border-color:var(--border-red-hover);color:var(--text);}
+.cd-whatif-preset.active{background:var(--mood-accent,var(--red));border-color:var(--mood-accent,var(--red));color:#0a0d14;}
+.cd-whatif-result{background:var(--s2);border:1px solid var(--border-red);border-radius:12px;padding:16px;}
+.cd-whatif-loading{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-align:center;padding:8px 0;}
+.cd-whatif-summary{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.cd-whatif-summary-text{font-size:.82rem;color:var(--text);line-height:1.5;}
+.cd-whatif-summary-text b{font-family:var(--mono);}
+.cd-whatif-badge{font-family:var(--mono);font-size:1rem;font-weight:800;padding:8px 14px;border-radius:10px;white-space:nowrap;}
+.cd-whatif-badge.up{color:var(--green);background:rgba(34,197,94,.12);}
+.cd-whatif-badge.down{color:var(--red);background:rgba(220,38,38,.12);}
+.cd-whatif-note{margin-top:10px;font-family:var(--mono);font-size:.6rem;color:var(--muted);}
+
 /* INFOS */
 .cd-info-block{margin-top:20px;padding:18px;border:1px solid var(--border-red);border-radius:14px;background:linear-gradient(180deg,var(--s1) 0%,var(--card-gradient-end) 100%);transition:border-color .3s;}
 .cd-info-block:hover{border-color:var(--border-red-hover);}
@@ -855,6 +917,34 @@ img,canvas{max-width:100%;}
 </style>
 </head>
 <body>
+
+<div class="brew-loader" id="brewLoader" aria-hidden="true">
+  <div class="brew-loader-inner">
+    <svg class="brew-cup" viewBox="0 0 120 120" width="88" height="88">
+      <defs>
+        <clipPath id="brewCupClip">
+          <path d="M30 40 L34 92 Q36 100 46 100 L74 100 Q84 100 86 92 L90 40 Z"/>
+        </clipPath>
+      </defs>
+      <!-- Anse -->
+      <path d="M90 50 Q112 50 112 68 Q112 86 90 84" fill="none" stroke="var(--mood-accent,var(--gold))" stroke-width="5" stroke-linecap="round"/>
+      <!-- Vapeur -->
+      <g class="brew-steam" stroke="var(--muted2)" stroke-width="3" fill="none" stroke-linecap="round" opacity=".55">
+        <path class="brew-steam-1" d="M46 28 Q40 20 46 12 Q52 4 46 -4"/>
+        <path class="brew-steam-2" d="M64 28 Q58 20 64 12 Q70 4 64 -4"/>
+        <path class="brew-steam-3" d="M55 30 Q49 22 55 14 Q61 6 55 -2"/>
+      </g>
+      <!-- Corps de la tasse -->
+      <path d="M30 40 L34 92 Q36 100 46 100 L74 100 Q84 100 86 92 L90 40 Z" fill="var(--s2)" stroke="var(--b2)" stroke-width="2.5"/>
+      <!-- Liquide qui monte -->
+      <rect class="brew-liquid" x="26" y="100" width="68" height="0" fill="var(--mood-accent,var(--gold))" clip-path="url(#brewCupClip)"/>
+      <!-- Soucoupe -->
+      <ellipse cx="60" cy="103" rx="34" ry="5" fill="var(--s3)"/>
+    </svg>
+    <div class="brew-loader-title">CaféCrypto</div>
+    <div class="brew-loader-sub" id="brewLoaderSub">Le marché infuse…</div>
+  </div>
+</div>
 
 <div class="ticker t1">
   <div class="ticker-inner" id="t1">
@@ -1320,6 +1410,33 @@ img,canvas{max-width:100%;}
           <div class="cd-hist-val" id="cdHist1y">—</div>
           <div class="cd-hist-chg" id="cdHist1yChg">—</div>
         </div>
+      </div>
+    </div>
+
+    <!-- SIMULATEUR "ET SI..." -->
+    <div class="cd-perf-block cd-whatif-block">
+      <div class="cd-perf-hdr">💭 Et si j'avais investi…</div>
+      <div class="cd-whatif-row">
+        <div class="cd-whatif-field">
+          <label for="cdWhatifAmount">Montant investi</label>
+          <div class="cd-whatif-amount-wrap">
+            <span>$</span>
+            <input type="number" id="cdWhatifAmount" value="100" min="1" step="1">
+          </div>
+        </div>
+        <div class="cd-whatif-field">
+          <label>Il y a</label>
+          <div class="cd-whatif-presets" id="cdWhatifPresets">
+            <button class="cd-whatif-preset" data-days="7">7j</button>
+            <button class="cd-whatif-preset" data-days="30">1 mois</button>
+            <button class="cd-whatif-preset active" data-days="90">3 mois</button>
+            <button class="cd-whatif-preset" data-days="180">6 mois</button>
+            <button class="cd-whatif-preset" data-days="365">1 an</button>
+          </div>
+        </div>
+      </div>
+      <div class="cd-whatif-result" id="cdWhatifResult">
+        <div class="cd-whatif-loading">Chargez l'historique pour simuler…</div>
       </div>
     </div>
 
@@ -2073,6 +2190,9 @@ async function openCoinDetail(id){
   cdFullDesc='';cdDescExpanded=false;
   ['cdHist7d','cdHist30d','cdHist1y'].forEach(id=>$(id).textContent='—');
   ['cdHist7dChg','cdHist30dChg','cdHist1yChg'].forEach(id=>{$(id).textContent='—';$(id).style.color='';});
+  cdWhatifSeries=null;cdWhatifCoin=null;cdWhatifDays=90;
+  $('cdWhatifPresets')?.querySelectorAll('.cd-whatif-preset').forEach(b=>b.classList.toggle('active',b.dataset.days==='90'));
+  cdRenderWhatif();
   cdMAOn=false;cdEMAOn=false;cdBOLLOn=false;
   document.querySelectorAll('.cd-ind-tab').forEach(t=>t.classList.remove('active'));
   const volTab=document.querySelector('.cd-ind-tab');if(volTab)volTab.classList.add('active');
@@ -2196,6 +2316,9 @@ async function cdLoadPriceHistory(id,currentCoin){
     setTile('cdHist7d','cdHist7dChg',p7d);
     setTile('cdHist30d','cdHist30dChg',p30d);
     setTile('cdHist1y','cdHist1yChg',p1y);
+    // Alimente le simulateur "Et si..." avec la même série de prix
+    cdWhatifSeries=data;cdWhatifCoin=currentCoin;
+    cdRenderWhatif();
   }catch(e){cdFallbackPriceHistory(currentCoin);}
 }
 
@@ -2207,6 +2330,79 @@ function cdFallbackPriceHistory(coin){
     $('cdHist7d').textContent=fmtP(p7d);
     $('cdHist7dChg').textContent=fmtPct(chg7d);
     $('cdHist7dChg').style.color=chg7d>=0?'var(--green)':'var(--red)';
+  }
+  cdWhatifSeries=null;cdWhatifCoin=coin;
+  cdRenderWhatif();
+}
+
+// ═══════════════════════════════════════════════
+// SIMULATEUR "ET SI J'AVAIS INVESTI…"
+// ═══════════════════════════════════════════════
+let cdWhatifSeries=null,cdWhatifCoin=null,cdWhatifDays=90;
+
+function cdFindPriceAt(daysAgo){
+  if(!cdWhatifSeries||!cdWhatifSeries.length)return null;
+  const targetTs=Date.now()-daysAgo*24*60*60*1000;
+  let closest=null,minDiff=Infinity;
+  cdWhatifSeries.forEach(pt=>{
+    const diff=Math.abs(pt[0]-targetTs);
+    if(diff<minDiff){minDiff=diff;closest=pt[1];}
+  });
+  return closest;
+}
+
+function cdRenderWhatif(){
+  const box=$('cdWhatifResult');if(!box)return;
+  if(!cdWhatifCoin||!cdWhatifCoin.current_price){
+    box.innerHTML='<div class="cd-whatif-loading">Chargement de l\'historique…</div>';
+    return;
+  }
+  const amountInput=$('cdWhatifAmount');
+  const amount=Math.max(0,parseFloat(amountInput?.value)||0);
+  const currentPrice=cdWhatifCoin.current_price;
+  let oldPrice=cdFindPriceAt(cdWhatifDays);
+  let approx=false;
+  if(oldPrice==null&&cdWhatifDays===7&&cdWhatifCoin.price_change_percentage_7d_in_currency!=null){
+    oldPrice=currentPrice/(1+cdWhatifCoin.price_change_percentage_7d_in_currency/100);approx=true;
+  }
+  if(oldPrice==null||!oldPrice||!amount){
+    box.innerHTML='<div class="cd-whatif-loading">Historique indisponible pour cette période.</div>';
+    return;
+  }
+  const units=amount/oldPrice;
+  const nowValue=units*currentPrice;
+  const pct=((nowValue-amount)/amount)*100;
+  const up=pct>=0;
+  const sym=symOf(cdWhatifCoin);
+  const periodLabel=cdWhatifDays===7?'il y a 7 jours':cdWhatifDays===30?'il y a 1 mois':cdWhatifDays===90?'il y a 3 mois':cdWhatifDays===180?'il y a 6 mois':'il y a 1 an';
+  box.innerHTML=`
+    <div class="cd-whatif-summary">
+      <div class="cd-whatif-summary-text">
+        En investissant <b>$${amount.toLocaleString('fr-FR')}</b> en ${escapeHTML(sym)} ${periodLabel} (à ${fmtP(oldPrice)}),
+        vous auriez aujourd'hui <b>${fmtP(nowValue)}</b>.
+      </div>
+      <div class="cd-whatif-badge ${up?'up':'down'}">${fmtPct(pct)}</div>
+    </div>
+    ${approx?'<div class="cd-whatif-note">⚠️ Estimation basée sur la variation 7 jours (historique détaillé indisponible).</div>':'<div class="cd-whatif-note">Simulation à titre informatif, hors frais — ne constitue pas un conseil financier.</div>'}
+  `;
+}
+
+function cdInitWhatifControls(){
+  const presets=$('cdWhatifPresets');
+  if(presets&&!presets.dataset.wired){
+    presets.dataset.wired='1';
+    presets.addEventListener('click',e=>{
+      const btn=e.target.closest('.cd-whatif-preset');if(!btn)return;
+      presets.querySelectorAll('.cd-whatif-preset').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      cdWhatifDays=parseInt(btn.dataset.days,10)||90;
+      cdRenderWhatif();
+    });
+  }
+  const amountInput=$('cdWhatifAmount');
+  if(amountInput&&!amountInput.dataset.wired){
+    amountInput.dataset.wired='1';
+    amountInput.addEventListener('input',()=>cdRenderWhatif());
   }
 }
 
@@ -2620,6 +2816,7 @@ async function fetchFearGreed(){
     fngHistory=rows.map(row=>parseInt(row.value,10)).reverse();
     drawFngHistory(fngHistory);
     updateMood(score,btcChg24);
+    applyMoodPalette(score);
   }catch(e){const note=$('fngNote');if(note)note.textContent='Indice indisponible.';}
 }
 
@@ -2638,6 +2835,36 @@ function drawFngHistory(history){
   ctx.strokeStyle=last>=first?'#22c55e':'#ef4444';
   ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
   history.forEach((v,i)=>{const x=history.length>1?(i/(history.length-1))*W:0;ctx.beginPath();ctx.arc(x,toY(v),2.5,0,Math.PI*2);ctx.fillStyle=v>=50?'#22c55e':'#ef4444';ctx.fill();});
+}
+
+// Palette réactive à l'indice Fear & Greed (dégradé peur→avidité)
+const MOOD_COLOR_STOPS=[
+  {pos:0,hex:'#ef4444'},   // Peur extrême — rouge
+  {pos:25,hex:'#fb923c'},  // Peur — orange
+  {pos:50,hex:'#f0b429'},  // Neutre — doré
+  {pos:75,hex:'#22c55e'},  // Avidité — vert
+  {pos:100,hex:'#38bdf8'}, // Avidité extrême — cyan
+];
+function hexToRgb(hex){const n=parseInt(hex.slice(1),16);return[(n>>16)&255,(n>>8)&255,n&255];}
+function moodColorAt(score){
+  const s=Math.max(0,Math.min(100,score));
+  let a=MOOD_COLOR_STOPS[0],b=MOOD_COLOR_STOPS[MOOD_COLOR_STOPS.length-1];
+  for(let i=0;i<MOOD_COLOR_STOPS.length-1;i++){
+    if(s>=MOOD_COLOR_STOPS[i].pos&&s<=MOOD_COLOR_STOPS[i+1].pos){a=MOOD_COLOR_STOPS[i];b=MOOD_COLOR_STOPS[i+1];break;}
+  }
+  const t=(b.pos===a.pos)?0:(s-a.pos)/(b.pos-a.pos);
+  const [r1,g1,bl1]=hexToRgb(a.hex),[r2,g2,bl2]=hexToRgb(b.hex);
+  const r=Math.round(r1+(r2-r1)*t),g=Math.round(g1+(g2-g1)*t),bl=Math.round(bl1+(bl2-bl1)*t);
+  return{r,g,b:bl};
+}
+let currentMoodIntensity=0.5; // 0=calme (peur/neutre) … 1=agité (avidité/peur extrêmes)
+function applyMoodPalette(score){
+  const {r,g,b}=moodColorAt(score);
+  const root=document.documentElement.style;
+  root.setProperty('--mood-accent',`rgb(${r},${g},${b})`);
+  root.setProperty('--mood-accent-soft',`rgba(${r},${g},${b},.35)`);
+  // Agitation : plus extrême aux deux bouts de l'échelle (marché nerveux), plus calme au centre
+  currentMoodIntensity=Math.min(1,Math.abs(score-50)/50);
 }
 
 const MOOD_MESSAGES={
@@ -3351,6 +3578,7 @@ function initStaticControls(){
     const d=liveData[cdCurrentCoinId];
     toggleFavorite(cdCurrentCoinId,d?symOf(d):cdCurrentCoinId);
   });
+  cdInitWhatifControls();
 }
 
 // Vapeurs
@@ -3363,17 +3591,20 @@ function spawnLogoVapor(){
   const coin=Object.values(liveData).find(c=>symOf(c)===sym);
   const onLeft=Math.random()<0.5;
   const pos=2+Math.random()*32;
-  const drift=(Math.random()*10-5).toFixed(1);
+  const drift=((Math.random()*10-5)*(1+currentMoodIntensity*.6)).toFixed(1);
   const barHeight=container.clientHeight||96;
   const rise=barHeight-4;
-  const dur=((rise)/(15+Math.random()*6)).toFixed(2)+'s';
+  // Marché nerveux (peur/avidité extrêmes) = vapeur plus rapide et agitée ; marché neutre = vapeur calme
+  const speedBoost=1+currentMoodIntensity*.8;
+  const dur=((rise)/((15+Math.random()*6)*speedBoost)).toFixed(2)+'s';
   let el;
   if(coin&&coin.image){
     el=document.createElement('img');el.className='logo-vapor-img';el.src=coin.image;el.alt=sym;el.loading='lazy';
     el.onerror=function(){this.remove();};
+    el.style.filter=`drop-shadow(0 0 3px var(--mood-accent-soft))`;
   }else{
     el=document.createElement('div');el.className='logo-vapor-fallback';el.textContent=sym.slice(0,4);
-    el.style.background=Math.random()<0.5?'var(--gold)':'var(--red)';
+    el.style.background='var(--mood-accent)';
   }
   el.style.animationDuration=dur;
   if(onLeft)el.style.left=pos+'%';else el.style.right=pos+'%';
@@ -3382,7 +3613,12 @@ function spawnLogoVapor(){
   container.appendChild(el);
   setTimeout(()=>el.remove(),parseFloat(dur)*1000+200);
 }
-function scheduleNextVapor(){spawnLogoVapor();setTimeout(scheduleNextVapor,350+Math.random()*900);}
+function scheduleNextVapor(){
+  spawnLogoVapor();
+  // Cadence de vapeur plus soutenue quand le marché est nerveux (peur ou avidité extrêmes)
+  const baseMin=350-currentMoodIntensity*160,baseMax=900-currentMoodIntensity*380;
+  setTimeout(scheduleNextVapor,baseMin+Math.random()*baseMax);
+}
 function startLogoVapors(){if(prefersReducedMotion)return;scheduleNextVapor();}
 
 // ═══════════════════════════════════════════════
@@ -3517,6 +3753,21 @@ async function searchAddress(){
 // ═══════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════
+const BREW_SUB_MESSAGES=['Le marché infuse…','On tire les prix du percolateur…','Chargement des grains numériques…','Un instant, ça chauffe…'];
+let brewHidden=false,brewSubTimer=null;
+function rotateBrewSub(){
+  const el=$('brewLoaderSub');if(!el)return;
+  let i=0;
+  brewSubTimer=setInterval(()=>{i=(i+1)%BREW_SUB_MESSAGES.length;el.textContent=BREW_SUB_MESSAGES[i];},1600);
+}
+function hideBrewLoader(){
+  if(brewHidden)return;brewHidden=true;
+  if(brewSubTimer)clearInterval(brewSubTimer);
+  const el=$('brewLoader');
+  if(el){el.classList.add('hide');setTimeout(()=>el.remove(),600);}
+}
+rotateBrewSub();
+
 attachRowClickHandler('trendList');
 attachRowClickHandler('winList');
 attachRowClickHandler('loseList');
@@ -3532,6 +3783,11 @@ fetchFearGreed();
 fetchNews();
 loadChart(null,'1m');
 fetchCryptoTweets().then(renderTweets);
+
+Promise.allSettled([
+  new Promise(res=>{const t=setInterval(()=>{if(allCoins&&allCoins.length){clearInterval(t);res();}},150);setTimeout(()=>{clearInterval(t);res();},8000);}),
+]).then(hideBrewLoader);
+setTimeout(hideBrewLoader,6500);
 
 $('explorerBtn').addEventListener('click',searchAddress);
 $('explorerInput').addEventListener('keydown',e=>{if(e.key==='Enter')searchAddress();});
