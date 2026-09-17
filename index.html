@@ -161,7 +161,6 @@ section{scroll-margin-top:200px;}
 .p-orange{color:var(--orange);border-color:rgba(251,146,60,.25);background:rgba(251,146,60,.07);}
 .p-gold{color:var(--gold);border-color:rgba(240,180,41,.25);background:rgba(240,180,41,.07);}
 .p-purple{color:var(--purple);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.07);}
-.p-red{color:var(--red);border-color:rgba(220,38,38,.3);background:rgba(220,38,38,.08);}
 .p-static{color:var(--muted2);border-color:rgba(122,149,178,.25);background:rgba(122,149,178,.07);}
 
 .loader{display:flex;align-items:center;gap:8px;padding:20px 16px;color:var(--muted2);font-family:var(--mono);font-size:.7rem;}
@@ -374,16 +373,6 @@ section{scroll-margin-top:200px;}
 .top100-chg-bar-fill.down{background:linear-gradient(90deg,#f87171,var(--red));}
 
 .top100-mcap{font-family:var(--mono);font-size:.62rem;color:var(--muted2);text-align:right;flex-shrink:0;min-width:72px;}
-
-.top100-fav{
-  width:24px;height:24px;border-radius:8px;
-  border:1px solid var(--b);background:rgba(255,255,255,.02);
-  color:var(--muted2);font-size:.72rem;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;transition:all .2s;
-}
-.top100-fav:hover{border-color:rgba(240,180,41,.5);color:var(--gold);background:rgba(240,180,41,.08);transform:scale(1.1);}
-.top100-fav.active{background:linear-gradient(135deg,rgba(240,180,41,.25),rgba(240,180,41,.1));color:var(--gold);border-color:rgba(240,180,41,.5);box-shadow:0 0 12px rgba(240,180,41,.3);}
 
 .pagination{
   display:flex;align-items:center;justify-content:center;gap:12px;
@@ -1485,8 +1474,6 @@ function showNotification(title,text,icon='🔔',duration=5000){
 function attachRowClickHandler(containerId){
   const el=$(containerId);if(!el)return;
   el.addEventListener('click',function(e){
-    const favBtn=e.target.closest('.top100-fav');
-    if(favBtn){e.preventDefault();e.stopPropagation();const id=favBtn.dataset.favId,sym=favBtn.dataset.favSym;if(id)toggleFavorite(id,sym);return;}
     const row=e.target.closest('[data-coin-id]');
     if(row&&el.contains(row)){const id=row.dataset.coinId;if(id)openCoinDetail(id);}
   });
@@ -3539,6 +3526,7 @@ initStaticControls();
 initKnowledgeBase();
 startLogoVapors();
 renderPortfolio();
+renderEvents();
 fetchPrices().then(fetchGlobal);
 fetchFearGreed();
 fetchNews();
