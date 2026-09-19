@@ -402,6 +402,16 @@ section{scroll-margin-top:200px;}
   .arb-side{flex:1;min-width:0;order:2;}
   .arb-spread{order:3;margin-left:0;}
 }
+/* Volet latéral (desktop) : même largeur étroite que le mobile, on empile la ligne */
+.col-right .arb-hdr{padding:14px 16px;}
+.col-right .arb-note{padding:10px 16px 14px;}
+.col-right .arb-row{flex-wrap:wrap;gap:7px;padding:10px 16px;}
+.col-right .arb-coin{min-width:100%;flex-basis:100%;order:1;}
+.col-right .arb-name{display:none;}
+.col-right .arb-arrow{display:none;}
+.col-right .arb-side{flex:1;min-width:0;order:2;padding:5px 8px;}
+.col-right .arb-price{font-size:.66rem;}
+.col-right .arb-spread{order:3;margin-left:0;font-size:.72rem;padding:5px 10px;}
 
 .top100-filters{
   display:flex;gap:6px;padding:10px 16px;overflow-x:auto;
@@ -923,11 +933,11 @@ footer{border-top:1px solid var(--border-red);padding:16px 20px;display:flex;fle
   .col-left{display:contents;}
   .col-right{display:contents;}
   .crypto-sections{order:1;}
-  .arb-section{order:2;}
-  .top100-section{order:3;}
-  .articles-section{order:4;}
-  .pub-section{order:5;}
-  .fng-section{order:6;}
+  .top100-section{order:2;}
+  .articles-section{order:3;}
+  .pub-section{order:4;}
+  .fng-section{order:5;}
+  .arb-section{order:6;}
   .portfolio-section{order:7;}
   .crypto-tweets-section{order:8;}
   .knowledge-section{order:9;}
@@ -1073,19 +1083,6 @@ img,canvas{max-width:100%;}
         <div id="loseList"><div class="loader"><div class="spinner"></div>Chargement…</div></div>
         <button class="see-more-btn" data-list="loseList">Voir plus ▼</button>
       </div>
-    </div>
-  </div>
-
-  <div class="arb-section">
-    <div class="arb-card">
-      <div class="arb-hdr">
-        <div class="arb-title">🔀 Alertes d'arbitrage</div>
-        <span class="arb-sub" id="arbSub">Analyse du Top 100 en cours…</span>
-      </div>
-      <div class="arb-list" id="arbList">
-        <div class="loader"><div class="spinner"></div>Scrutation du Top 100 sur 5 exchanges…</div>
-      </div>
-      <div class="arb-note">Seuls les écarts ≥ 1% entre exchanges sont affichés, calculés sur les cryptos du Top 100 (Binance, Gate.io, OKX, MEXC, Bybit). Écarts bruts, avant frais de trading, de retrait et délais de transfert — purement informatif, ne constitue pas un conseil financier.</div>
     </div>
   </div>
 
@@ -1240,6 +1237,19 @@ img,canvas{max-width:100%;}
         <div class="fng-history-title">Historique · 7 derniers jours</div>
         <canvas class="fng-history-chart" id="fngHistoryChart"></canvas>
       </div>
+    </div>
+  </div>
+
+  <div class="arb-section">
+    <div class="arb-card">
+      <div class="arb-hdr">
+        <div class="arb-title">🔀 Alertes d'arbitrage</div>
+        <span class="arb-sub" id="arbSub">Analyse du Top 100 en cours…</span>
+      </div>
+      <div class="arb-list" id="arbList">
+        <div class="loader"><div class="spinner"></div>Scrutation du Top 100 sur 5 exchanges…</div>
+      </div>
+      <div class="arb-note">Seuls les écarts ≥ 1% entre exchanges sont affichés, calculés sur les cryptos du Top 100 (Binance, Gate.io, OKX, MEXC, Bybit). Écarts bruts, avant frais de trading, de retrait et délais de transfert — purement informatif, ne constitue pas un conseil financier.</div>
     </div>
   </div>
 
