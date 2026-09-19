@@ -347,6 +347,62 @@ section{scroll-margin-top:200px;}
 .top100-title::before{content:'';width:3px;height:20px;border-radius:2px;background:linear-gradient(180deg,var(--gold),var(--orange));box-shadow:0 0 12px rgba(240,180,41,.6);}
 .top100-sub{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
 
+/* ARBITRAGE */
+.arb-section{margin-top:20px;animation:fadeUp .5s ease both;}
+.arb-card{
+  background:linear-gradient(180deg,var(--s1) 0%,var(--card-gradient-end) 100%);
+  border:1px solid var(--border-red);border-radius:20px;overflow:hidden;
+  box-shadow:0 20px 50px -30px var(--shadow-color);
+  transition:border-color .3s;
+}
+.arb-card:hover{border-color:var(--border-red-hover);}
+.arb-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;border-bottom:1px solid var(--border-red);flex-wrap:wrap;gap:10px;
+  background:linear-gradient(90deg,rgba(220,38,38,.05),transparent 60%);
+}
+.arb-title{font-size:1rem;font-weight:800;display:flex;align-items:center;gap:10px;letter-spacing:.2px;}
+.arb-title::before{content:'';width:3px;height:20px;border-radius:2px;background:linear-gradient(180deg,var(--cyan),var(--purple));box-shadow:0 0 12px rgba(56,189,248,.5);}
+.arb-sub{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.arb-list{padding:6px 0;}
+.arb-row{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 20px;margin:2px 8px;border-radius:12px;
+  transition:background .2s;flex-wrap:wrap;
+}
+.arb-row:hover{background:rgba(255,255,255,.03);}
+.arb-row+.arb-row{border-top:1px solid var(--border-red);margin-top:0;border-radius:0;}
+.arb-coin{display:flex;align-items:center;gap:9px;min-width:130px;flex:1 1 130px;}
+.arb-icon{width:28px;height:28px;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-family:var(--mono);font-size:.55rem;font-weight:700;color:var(--muted2);}
+.arb-icon img{width:100%;height:100%;object-fit:cover;}
+.arb-coin-info{display:flex;flex-direction:column;gap:1px;min-width:0;}
+.arb-sym{font-weight:700;font-size:.78rem;letter-spacing:.2px;}
+.arb-name{font-size:.6rem;color:var(--muted2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.arb-side{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:78px;padding:5px 10px;border-radius:9px;}
+.arb-side.buy{background:rgba(34,197,94,.08);}
+.arb-side.sell{background:rgba(220,38,38,.08);}
+.arb-side-lbl{font-family:var(--mono);font-size:.52rem;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);}
+.arb-side.buy .arb-side-lbl{color:var(--green);}
+.arb-side.sell .arb-side-lbl{color:var(--red);}
+.arb-ex{font-size:.66rem;font-weight:700;}
+.arb-price{font-family:var(--mono);font-size:.72rem;font-weight:700;}
+.arb-arrow{color:var(--muted2);font-size:.8rem;flex-shrink:0;}
+.arb-spread{
+  font-family:var(--mono);font-size:.78rem;font-weight:800;
+  padding:6px 12px;border-radius:9px;margin-left:auto;flex-shrink:0;
+}
+.arb-spread.mild{color:var(--gold);background:rgba(240,180,41,.1);}
+.arb-spread.warm{color:var(--orange);background:rgba(251,146,60,.12);}
+.arb-spread.hot{color:var(--red);background:rgba(220,38,38,.14);box-shadow:0 0 10px rgba(220,38,38,.2);}
+.arb-note{padding:12px 20px 16px;font-family:var(--mono);font-size:.58rem;color:var(--muted);line-height:1.5;border-top:1px solid var(--border-red);}
+@media(max-width:767px){
+  .arb-row{gap:8px;}
+  .arb-coin{min-width:100%;flex-basis:100%;order:1;}
+  .arb-arrow{display:none;}
+  .arb-side{flex:1;min-width:0;order:2;}
+  .arb-spread{order:3;margin-left:0;}
+}
+
 .top100-filters{
   display:flex;gap:6px;padding:10px 16px;overflow-x:auto;
   border-bottom:1px solid var(--border-red);
@@ -867,19 +923,20 @@ footer{border-top:1px solid var(--border-red);padding:16px 20px;display:flex;fle
   .col-left{display:contents;}
   .col-right{display:contents;}
   .crypto-sections{order:1;}
-  .top100-section{order:2;}
-  .articles-section{order:3;}
-  .pub-section{order:4;}
-  .fng-section{order:5;}
-  .portfolio-section{order:6;}
-  .crypto-tweets-section{order:7;}
-  .knowledge-section{order:8;}
-  .explorer-section{order:9;}
-  .airdrops-section{order:10;}
-  .events-section{order:11;}
-  .partners-section{order:12;}
-  .community-section{order:13;}
-  .chart-section{order:14;}
+  .arb-section{order:2;}
+  .top100-section{order:3;}
+  .articles-section{order:4;}
+  .pub-section{order:5;}
+  .fng-section{order:6;}
+  .portfolio-section{order:7;}
+  .crypto-tweets-section{order:8;}
+  .knowledge-section{order:9;}
+  .explorer-section{order:10;}
+  .airdrops-section{order:11;}
+  .events-section{order:12;}
+  .partners-section{order:13;}
+  .community-section{order:14;}
+  .chart-section{order:15;}
   
   .page{padding:20px 14px 40px;}
   .logo-bar{height:88px;padding:0 10px;}
@@ -1016,6 +1073,19 @@ img,canvas{max-width:100%;}
         <div id="loseList"><div class="loader"><div class="spinner"></div>Chargement…</div></div>
         <button class="see-more-btn" data-list="loseList">Voir plus ▼</button>
       </div>
+    </div>
+  </div>
+
+  <div class="arb-section">
+    <div class="arb-card">
+      <div class="arb-hdr">
+        <div class="arb-title">🔀 Opportunités d'arbitrage</div>
+        <span class="arb-sub" id="arbSub">Analyse en cours…</span>
+      </div>
+      <div class="arb-list" id="arbList">
+        <div class="loader"><div class="spinner"></div>Comparaison des exchanges…</div>
+      </div>
+      <div class="arb-note">Écarts bruts entre exchanges, avant frais de trading, de retrait et délais de transfert. Purement informatif — ne constitue pas un conseil financier.</div>
     </div>
   </div>
 
@@ -2750,6 +2820,146 @@ setInterval(()=>loadChart(null,currentTF),30000);
 // ═══════════════════════════════════════════════
 // TICKER 1
 // ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
+// ARBITRAGE MULTI-EXCHANGES
+// ═══════════════════════════════════════════════
+const ARB_SYMBOLS=['BTC','ETH','BNB','SOL','XRP','ADA','DOGE','TRX','LINK','AVAX','DOT','LTC','MATIC','ATOM','NEAR','APT','SUI','SHIB','PEPE','ETC','FIL','ICP','ARB','OP','INJ','AAVE','UNI','SAND','ALGO','VET'];
+const ARB_EXCHANGES=[
+  {id:'binance',label:'Binance'},
+  {id:'gate',label:'Gate.io'},
+  {id:'okx',label:'OKX'},
+  {id:'mexc',label:'MEXC'},
+  {id:'bybit',label:'Bybit'},
+];
+let arbData={},arbLastUpdate=null;
+
+async function fetchExchangePrices(id){
+  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),10000);
+  try{
+    let url;
+    if(id==='binance')url='https://api.binance.com/api/v3/ticker/price';
+    else if(id==='gate')url='https://api.gateio.ws/api/v4/spot/tickers';
+    else if(id==='okx')url='https://www.okx.com/api/v5/market/tickers?instType=SPOT';
+    else if(id==='mexc')url='https://api.mexc.com/api/v3/ticker/price';
+    else if(id==='bybit')url='https://api.bybit.com/v5/market/tickers?category=spot';
+    else return null;
+    const r=await fetch(url,{signal:controller.signal});clearTimeout(timeout);
+    if(!r.ok)throw new Error(id+' '+r.status);
+    const json=await r.json();
+    const map={};
+    if(id==='binance'||id==='mexc'){
+      (Array.isArray(json)?json:[]).forEach(t=>{
+        const sym=ARB_SYMBOLS.find(s=>t.symbol===s+'USDT');
+        if(sym&&t.price)map[sym]=parseFloat(t.price);
+      });
+    }else if(id==='gate'){
+      (Array.isArray(json)?json:[]).forEach(t=>{
+        const sym=ARB_SYMBOLS.find(s=>t.currency_pair===s+'_USDT');
+        if(sym&&t.last)map[sym]=parseFloat(t.last);
+      });
+    }else if(id==='okx'){
+      ((json&&json.data)||[]).forEach(t=>{
+        const sym=ARB_SYMBOLS.find(s=>t.instId===s+'-USDT');
+        if(sym&&t.last)map[sym]=parseFloat(t.last);
+      });
+    }else if(id==='bybit'){
+      ((json&&json.result&&json.result.list)||[]).forEach(t=>{
+        const sym=ARB_SYMBOLS.find(s=>t.symbol===s+'USDT');
+        if(sym&&t.lastPrice)map[sym]=parseFloat(t.lastPrice);
+      });
+    }
+    return map;
+  }catch(e){clearTimeout(timeout);console.warn('Arbitrage',id,e.message);return null;}
+}
+
+function arbExLabel(id){const e=ARB_EXCHANGES.find(x=>x.id===id);return e?e.label:id;}
+
+function buildArbRow(entry){
+  const coin=Object.values(liveData).find(c=>symOf(c)===entry.sym);
+  const name=coin?coin.name:entry.sym;
+  const icon=coin&&coin.image
+    ?`<img src="${escapeHTML(coin.image)}" alt="${escapeHTML(entry.sym)}" loading="lazy">`
+    :escapeHTML(entry.sym.slice(0,3));
+  const spreadClass=entry.spread>=1?'hot':entry.spread>=0.4?'warm':'mild';
+  return `<div class="arb-row" data-coin-id="${coin?escapeHTML(coin.id):''}">
+    <div class="arb-coin">
+      <div class="arb-icon">${icon}</div>
+      <div class="arb-coin-info"><span class="arb-sym">${escapeHTML(entry.sym)}</span><span class="arb-name">${escapeHTML(name)}</span></div>
+    </div>
+    <div class="arb-side buy">
+      <span class="arb-side-lbl">Achat</span>
+      <span class="arb-ex">${escapeHTML(arbExLabel(entry.minEx))}</span>
+      <span class="arb-price">${fmtP(entry.minP)}</span>
+    </div>
+    <div class="arb-arrow">→</div>
+    <div class="arb-side sell">
+      <span class="arb-side-lbl">Vente</span>
+      <span class="arb-ex">${escapeHTML(arbExLabel(entry.maxEx))}</span>
+      <span class="arb-price">${fmtP(entry.maxP)}</span>
+    </div>
+    <div class="arb-spread ${spreadClass}">+${entry.spread.toFixed(2)}%</div>
+  </div>`;
+}
+
+function renderArbitrage(){
+  const list=$('arbList');if(!list)return;
+  const entries=Object.entries(arbData).map(([sym,prices])=>{
+    let minEx=null,maxEx=null,minP=Infinity,maxP=-Infinity;
+    Object.entries(prices).forEach(([ex,p])=>{
+      if(p<minP){minP=p;minEx=ex;}
+      if(p>maxP){maxP=p;maxEx=ex;}
+    });
+    const spread=(minP>0&&isFinite(minP))?((maxP-minP)/minP*100):0;
+    return{sym,minEx,maxEx,minP,maxP,spread};
+  }).filter(e=>e.spread>0.05&&e.minEx!==e.maxEx)
+   .sort((a,b)=>b.spread-a.spread)
+   .slice(0,12);
+
+  if(!entries.length){
+    list.innerHTML='<div class="loader-error">Aucun écart significatif détecté pour le moment — les exchanges sont alignés.</div>';
+  }else{
+    list.innerHTML=entries.map(buildArbRow).join('');
+  }
+  const sub=$('arbSub');
+  if(sub){
+    if(arbLastUpdate){
+      const hh=arbLastUpdate.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+      sub.textContent=`Mis à jour ${hh} · Binance · Gate.io · OKX · MEXC · Bybit`;
+    }else{
+      sub.textContent='Analyse indisponible';
+    }
+  }
+}
+
+async function fetchArbitrage(){
+  const results=await Promise.allSettled(ARB_EXCHANGES.map(ex=>fetchExchangePrices(ex.id)));
+  const byExchange={};
+  let anySuccess=false;
+  results.forEach((res,i)=>{
+    const val=res.status==='fulfilled'?res.value:null;
+    byExchange[ARB_EXCHANGES[i].id]=val;
+    if(val&&Object.keys(val).length)anySuccess=true;
+  });
+  if(!anySuccess){
+    const list=$('arbList');
+    if(list)list.innerHTML='<div class="loader-error">Impossible de joindre les exchanges pour le moment.</div>';
+    const sub=$('arbSub');if(sub)sub.textContent='Hors ligne';
+    return;
+  }
+  const table={};
+  ARB_SYMBOLS.forEach(sym=>{
+    const prices={};
+    ARB_EXCHANGES.forEach(ex=>{
+      const m=byExchange[ex.id];
+      if(m&&m[sym]!=null)prices[ex.id]=m[sym];
+    });
+    if(Object.keys(prices).length>=2)table[sym]=prices;
+  });
+  arbData=table;
+  arbLastUpdate=new Date();
+  renderArbitrage();
+}
+
 async function fetchGlobal(){
   try{
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),10000);
@@ -3772,6 +3982,7 @@ attachRowClickHandler('trendList');
 attachRowClickHandler('winList');
 attachRowClickHandler('loseList');
 attachRowClickHandler('top100List');
+attachRowClickHandler('arbList');
 setupSearch();
 initStaticControls();
 initKnowledgeBase();
@@ -3783,6 +3994,8 @@ fetchFearGreed();
 fetchNews();
 loadChart(null,'1m');
 fetchCryptoTweets().then(renderTweets);
+fetchArbitrage();
+setInterval(fetchArbitrage,45000);
 
 Promise.allSettled([
   new Promise(res=>{const t=setInterval(()=>{if(allCoins&&allCoins.length){clearInterval(t);res();}},150);setTimeout(()=>{clearInterval(t);res();},8000);}),
