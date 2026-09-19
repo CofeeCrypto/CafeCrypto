@@ -1079,13 +1079,13 @@ img,canvas{max-width:100%;}
   <div class="arb-section">
     <div class="arb-card">
       <div class="arb-hdr">
-        <div class="arb-title">🔀 Opportunités d'arbitrage</div>
-        <span class="arb-sub" id="arbSub">Analyse en cours…</span>
+        <div class="arb-title">🔀 Alertes d'arbitrage</div>
+        <span class="arb-sub" id="arbSub">Analyse du Top 100 en cours…</span>
       </div>
       <div class="arb-list" id="arbList">
-        <div class="loader"><div class="spinner"></div>Comparaison des exchanges…</div>
+        <div class="loader"><div class="spinner"></div>Scrutation du Top 100 sur 5 exchanges…</div>
       </div>
-      <div class="arb-note">Écarts bruts entre exchanges, avant frais de trading, de retrait et délais de transfert. Purement informatif — ne constitue pas un conseil financier.</div>
+      <div class="arb-note">Seuls les écarts ≥ 1% entre exchanges sont affichés, calculés sur les cryptos du Top 100 (Binance, Gate.io, OKX, MEXC, Bybit). Écarts bruts, avant frais de trading, de retrait et délais de transfert — purement informatif, ne constitue pas un conseil financier.</div>
     </div>
   </div>
 
@@ -2823,7 +2823,12 @@ setInterval(()=>loadChart(null,currentTF),30000);
 // ═══════════════════════════════════════════════
 // ARBITRAGE MULTI-EXCHANGES
 // ═══════════════════════════════════════════════
-const ARB_SYMBOLS=['BTC','ETH','BNB','SOL','XRP','ADA','DOGE','TRX','LINK','AVAX','DOT','LTC','MATIC','ATOM','NEAR','APT','SUI','SHIB','PEPE','ETC','FIL','ICP','ARB','OP','INJ','AAVE','UNI','SAND','ALGO','VET'];
+const ARB_MIN_SPREAD=1; // seuil d'alerte : 1% d'écart minimum
+function getArbSymbols(){
+  // Scrute le Top 100 réel plutôt qu'une liste figée
+  const syms=(allCoins&&allCoins.length?allCoins:FALLBACK_COINS).map(c=>symOf(c)).filter(Boolean);
+  return [...new Set(syms)];
+}
 const ARB_EXCHANGES=[
   {id:'binance',label:'Binance'},
   {id:'gate',label:'Gate.io'},
@@ -2831,9 +2836,9 @@ const ARB_EXCHANGES=[
   {id:'mexc',label:'MEXC'},
   {id:'bybit',label:'Bybit'},
 ];
-let arbData={},arbLastUpdate=null;
+let arbData={},arbLastUpdate=null,arbAlerted=new Set();
 
-async function fetchExchangePrices(id){
+async function fetchExchangePrices(id,symbols){
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),10000);
   try{
     let url;
@@ -2848,23 +2853,27 @@ async function fetchExchangePrices(id){
     const json=await r.json();
     const map={};
     if(id==='binance'||id==='mexc'){
+      const pairMap=new Map(symbols.map(s=>[s+'USDT',s]));
       (Array.isArray(json)?json:[]).forEach(t=>{
-        const sym=ARB_SYMBOLS.find(s=>t.symbol===s+'USDT');
+        const sym=pairMap.get(t.symbol);
         if(sym&&t.price)map[sym]=parseFloat(t.price);
       });
     }else if(id==='gate'){
+      const pairMap=new Map(symbols.map(s=>[s+'_USDT',s]));
       (Array.isArray(json)?json:[]).forEach(t=>{
-        const sym=ARB_SYMBOLS.find(s=>t.currency_pair===s+'_USDT');
+        const sym=pairMap.get(t.currency_pair);
         if(sym&&t.last)map[sym]=parseFloat(t.last);
       });
     }else if(id==='okx'){
+      const pairMap=new Map(symbols.map(s=>[s+'-USDT',s]));
       ((json&&json.data)||[]).forEach(t=>{
-        const sym=ARB_SYMBOLS.find(s=>t.instId===s+'-USDT');
+        const sym=pairMap.get(t.instId);
         if(sym&&t.last)map[sym]=parseFloat(t.last);
       });
     }else if(id==='bybit'){
+      const pairMap=new Map(symbols.map(s=>[s+'USDT',s]));
       ((json&&json.result&&json.result.list)||[]).forEach(t=>{
-        const sym=ARB_SYMBOLS.find(s=>t.symbol===s+'USDT');
+        const sym=pairMap.get(t.symbol);
         if(sym&&t.lastPrice)map[sym]=parseFloat(t.lastPrice);
       });
     }
@@ -2911,12 +2920,11 @@ function renderArbitrage(){
     });
     const spread=(minP>0&&isFinite(minP))?((maxP-minP)/minP*100):0;
     return{sym,minEx,maxEx,minP,maxP,spread};
-  }).filter(e=>e.spread>0.05&&e.minEx!==e.maxEx)
-   .sort((a,b)=>b.spread-a.spread)
-   .slice(0,12);
+  }).filter(e=>e.spread>=ARB_MIN_SPREAD&&e.minEx!==e.maxEx)
+   .sort((a,b)=>b.spread-a.spread);
 
   if(!entries.length){
-    list.innerHTML='<div class="loader-error">Aucun écart significatif détecté pour le moment — les exchanges sont alignés.</div>';
+    list.innerHTML=`<div class="loader-error">Aucun écart ≥ ${ARB_MIN_SPREAD}% détecté pour le moment — les exchanges sont alignés.</div>`;
   }else{
     list.innerHTML=entries.map(buildArbRow).join('');
   }
@@ -2924,15 +2932,25 @@ function renderArbitrage(){
   if(sub){
     if(arbLastUpdate){
       const hh=arbLastUpdate.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-      sub.textContent=`Mis à jour ${hh} · Binance · Gate.io · OKX · MEXC · Bybit`;
+      sub.textContent=`${entries.length} écart${entries.length>1?'s':''} ≥${ARB_MIN_SPREAD}% · Mis à jour ${hh}`;
     }else{
       sub.textContent='Analyse indisponible';
     }
   }
+  // Alerte : notifie uniquement les nouveaux écarts qui franchissent le seuil
+  const currentHot=new Set(entries.map(e=>e.sym));
+  entries.forEach(e=>{
+    if(!arbAlerted.has(e.sym)){
+      showNotification(`Arbitrage ${e.sym}`,`${arbExLabel(e.minEx)} → ${arbExLabel(e.maxEx)} : ${fmtPct(e.spread)}`,'🔀',5000);
+    }
+  });
+  arbAlerted=currentHot;
 }
 
 async function fetchArbitrage(){
-  const results=await Promise.allSettled(ARB_EXCHANGES.map(ex=>fetchExchangePrices(ex.id)));
+  const symbols=getArbSymbols();
+  if(!symbols.length)return;
+  const results=await Promise.allSettled(ARB_EXCHANGES.map(ex=>fetchExchangePrices(ex.id,symbols)));
   const byExchange={};
   let anySuccess=false;
   results.forEach((res,i)=>{
@@ -2947,7 +2965,7 @@ async function fetchArbitrage(){
     return;
   }
   const table={};
-  ARB_SYMBOLS.forEach(sym=>{
+  symbols.forEach(sym=>{
     const prices={};
     ARB_EXCHANGES.forEach(ex=>{
       const m=byExchange[ex.id];
@@ -3989,12 +4007,13 @@ initKnowledgeBase();
 startLogoVapors();
 renderPortfolio();
 renderEvents();
-fetchPrices().then(fetchGlobal);
+const pricesReady=fetchPrices();
+pricesReady.then(fetchGlobal);
 fetchFearGreed();
 fetchNews();
 loadChart(null,'1m');
 fetchCryptoTweets().then(renderTweets);
-fetchArbitrage();
+pricesReady.then(fetchArbitrage); // premier passage juste après le chargement du vrai Top 100
 setInterval(fetchArbitrage,45000);
 
 Promise.allSettled([
